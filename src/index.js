@@ -1,9 +1,10 @@
-import { typeDefs } from './graphql-schema';
-import { ApolloServer } from 'apollo-server-express';
-import express from 'express';
-import { v1 as neo4j } from 'neo4j-driver';
-import { makeAugmentedSchema } from 'neo4j-graphql-js';
-import dotenv from 'dotenv';
+const typeDefs = require('./graphql-schema').typeDefs;
+const ApolloServer = require('apollo-server-express').ApolloServer;
+const express = require('express');
+const neo4j = require('neo4j-driver').v1;
+const makeAugmentedSchema = require('neo4j-graphql-js').makeAugmentedSchema;
+const dotenv = require('dotenv');
+
 
 // set environment variables from ../.env
 dotenv.config();
