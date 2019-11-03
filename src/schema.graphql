@@ -1,23 +1,22 @@
 type Node {
-    id: String
-    latitude: String
-    longitude: String
-    name: String
-    edges: [Edge]
+  id: String
+  latitude: String
+  longitude: String
+  name: String
+  edges: [Edge]
 }
 
 type Edge @relation(name: "EDGE") {
-    from: Node
-    to: Node
-    startTime: String
-    stopTime: String
-    bikeID: String
-    userType: String
-    gender: String
-    birthYear: String
+  from: Node
+  to: Node
+  startTime: String
+  stopTime: String
+  bikeID: String
+  userType: String
+  gender: String
+  birthYear: String
 }
 
 type Query {
-  edges: [Edge]
-    @cypher(statement: "MATCH p=()-[r:EDGE]->() RETURN p")
+  edges: [Edge] @cypher(statement: "MATCH (Node)-[r:EDGE]->(Node) RETURN r")
 }
