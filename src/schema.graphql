@@ -63,4 +63,9 @@ type Query {
   nodesBySubid(subID: String): [Node]
     @cypher(statement: "MATCH (p:Node) WHERE p.id CONTAINS $subID RETURN p")
   edges: [Edge] @cypher(statement: "MATCH (Node)-[r:EDGE]->(Node) RETURN r")
+
+  coolEdge(from: String, to: String): [Edge]
+    @cypher(
+      statement: "MATCH (p1:Node)-[e:EDGE]->(p2:Node) WHERE p1.id = $from AND p2.id = $to RETURN e"
+    )
 }
