@@ -5,7 +5,6 @@ const neo4j = require('neo4j-driver').v1;
 const makeAugmentedSchema = require('neo4j-graphql-js').makeAugmentedSchema;
 const dotenv = require('dotenv');
 
-
 // set environment variables from ../.env
 dotenv.config();
 
@@ -19,8 +18,46 @@ const app = express();
  * https://grandstack.io/docs/neo4j-graphql-js-api.html#makeaugmentedschemaoptions-graphqlschema
  */
 
+const resolvers = {
+  Query: {
+    async Edge(obj, params, ctx, resolveInfo) {
+      let session = ctx.driver.session();
+      let result = await session.run('MATCH p=(p1:Node)-[e:EDGE]->(p2:Node) RETURN p');
+
+      return result.records.map(record => record._fields[0].segments[0]);
+    },
+  },
+  Edge: {
+    startNode(obj, params, ctx, resolveInfo) {
+      return obj.start.properties;
+    },
+    stopNode(obj, params, ctx, resolveInfo) {
+      return obj.end.properties;
+    },
+    startTime(obj, params, ctx, resolveInfo) {
+      return obj.relationship.properties['startTime'];
+    },
+    stopTime(obj, params, ctx, resolveInfo) {
+      return obj.relationship.properties['stopTime'];
+    },
+    bikeID(obj, params, ctx, resolveInfo) {
+      return obj.relationship.properties['bikeID'];
+    },
+    userType(obj, params, ctx, resolveInfo) {
+      return obj.relationship.properties['userType'];
+    },
+    gender(obj, params, ctx, resolveInfo) {
+      return obj.relationship.properties['gender'];
+    },
+    birthYear(obj, params, ctx, resolveInfo) {
+      return obj.relationship.properties['birthYear'];
+    },
+  },
+};
+
 const schema = makeAugmentedSchema({
   typeDefs,
+  resolvers,
 });
 
 /*

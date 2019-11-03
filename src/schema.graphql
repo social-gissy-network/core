@@ -46,9 +46,9 @@ type Node {
   edges: [Edge]
 }
 
-type Edge @relation(name: "EDGE") {
-  from: Node
-  to: Node
+type Edge {
+  startNode: Node
+  stopNode: Node
   startTime: String
   stopTime: String
   bikeID: String
@@ -62,7 +62,6 @@ type Query {
     @cypher(statement: "MATCH (u:User) WHERE u.name CONTAINS $substring RETURN u")
   nodesBySubid(subID: String): [Node]
     @cypher(statement: "MATCH (p:Node) WHERE p.id CONTAINS $subID RETURN p")
-  edges: [Edge] @cypher(statement: "MATCH (Node)-[r:EDGE]->(Node) RETURN r")
 
   coolEdge(from: String, to: String): [Edge]
     @cypher(
