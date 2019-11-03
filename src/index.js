@@ -24,7 +24,7 @@ const resolvers = {
       let session = ctx.driver.session();
       let result = await session.run('MATCH p=(p1:Node)-[e:EDGE]->(p2:Node) RETURN p');
 
-      return result.records.map(record => record._fields[0].segments[0]);
+      return result.records.map(record => result.records[0].toObject().p.segments[0]);
     },
   },
   Edge: {
