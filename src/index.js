@@ -2,7 +2,7 @@ const typeDefs = require('./graphql-schema').typeDefs;
 const ApolloServer = require('apollo-server-express').ApolloServer;
 const express = require('express');
 const neo4j = require('neo4j-driver').v1;
-const makeAugmentedSchema = require('neo4j-graphql-js').makeAugmentedSchema;
+const {makeAugmentedSchema, neo4jgraphql} = require('neo4j-graphql-js');
 const dotenv = require('dotenv');
 
 // set environment variables from ../.env
@@ -21,11 +21,10 @@ const app = express();
 const resolvers = {
   Query: {
     async Edge(obj, params, ctx, resolveInfo) {
-      let session = ctx.driver.session();
-      let result = await session.run('MATCH p=(p1:Node)-[e:EDGE]->(p2:Node) RETURN p');
-
+      let db = ctx.db;
+      let result = await db.getAllEdges();
       return result.records.map(record => result.records[0].toObject().p.segments[0]);
-    },
+    }
   },
   Edge: {
     startNode(obj, params, ctx, resolveInfo) {
@@ -53,6 +52,34 @@ const resolvers = {
       return obj.relationship.properties['birthYear'];
     },
   },
+  Mutation: {
+    async CreateEdge(obj, params, ctx, resolveInfo) {
+      let db = ctx.db;
+      let startNode = params.startNode;
+      let stopNode = params.stopNode;
+      delete params.startNode;
+      delete params.stopNode;
+
+      // everything else is edgeInfo
+      let edgeInfo = params;
+
+      let startNodeResult = await db.insertNode(startNode);
+      let stopNodeResult = await db.insertNode(stopNode);
+      let edgeResult = await db.insertEdge(startNode, stopNode, edgeInfo);
+
+      return {
+        start: {
+          properties: startNodeResult.records[0].toObject().n.properties
+        },
+        end: {
+          properties: stopNodeResult.records[0].toObject().n.properties
+        },
+        relationship: {
+          properties: edgeResult.records[0].toObject().r.properties
+        },
+      };
+    }
+  }
 };
 
 const schema = makeAugmentedSchema({
@@ -65,10 +92,8 @@ const schema = makeAugmentedSchema({
  * using credentials specified as environment variables
  * with fallback to defaults
  */
-const driver = neo4j.driver(
-  process.env.NEO4J_URI || 'bolt://localhost:7687',
-  neo4j.auth.basic(process.env.NEO4J_USER || 'neo4j', process.env.NEO4J_PASSWORD || 'neo4j'),
-);
+const db = require("./neo4j.js");
+db.init();
 
 /*
  * Create a new ApolloServer instance, serving the GraphQL schema
@@ -77,7 +102,7 @@ const driver = neo4j.driver(
  * generated resolvers to connect to the database.
  */
 const server = new ApolloServer({
-  context: { driver },
+  context: { db },
   schema: schema,
   introspection: true,
   playground: true,

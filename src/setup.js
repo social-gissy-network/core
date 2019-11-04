@@ -1,40 +1,17 @@
-const neo4j = require('neo4j-driver').v1;
-// Create a session to run Cypher statements in.
-// Note: Always make sure to close sessions when you are done using them!
-
-const driver = neo4j.driver(
-  process.env.NEO4J_URI || 'bolt://localhost:7687',
-  neo4j.auth.basic(process.env.NEO4J_USER || 'neo4j', process.env.NEO4J_PASSWORD || 'neo4j'),
-);
-
 const csvFilePath = 'data/201901-bluebikes-tripdata.xls';
 const csv = require('csvtojson');
 
-const session = driver.session();
-
-// remove quotes on properties
-const stringify = object => JSON.stringify(object).replace(/"([^(")"]+)":/g, '$1:');
-
-const removeAllNodes = async () => session.run(`MATCH (n:Node) DELETE n`);
-
-const removeAllEdges = async () => session.run(`MATCH e=(s1)-[r:EDGE]->(s2) DELETE e`);
-
-const insertNode = async node => session.run(`CREATE (:Node ${stringify(node)})`);
-
-const insertEdge = async (startNode, endNode, edgeInfo) => {
-  // MATCH (n {name: "Alice"})-->(m)
-  const query = `MATCH (n1:Node {id: "${startNode.id}"}),(n2:Node {id: "${endNode.id}"})
-    CREATE (n1)-[r:EDGE ${stringify(edgeInfo)}]->(n2)`;
-  return session.run(query);
-};
+const db = require("./neo4j.js");
+db.init();
 
 (async () => {
+
   const dataset = await csv().fromFile(csvFilePath);
 
-  await removeAllEdges();
-  await removeAllNodes();
+  // await db.setNodeConstraints();
+  // await db.removeAllEdges();
+  // await db.removeAllNodes();
 
-  await session.run('CREATE CONSTRAINT ON (p:Node) ASSERT p.id IS UNIQUE');
 
   const nodes = [];
 
@@ -57,11 +34,11 @@ const insertEdge = async (startNode, endNode, edgeInfo) => {
     };
 
     if (!nodes.find(node => node.id === startNode.id)) {
-      await insertNode(startNode);
+      await db.insertNode(startNode);
       nodes.push(startNode);
     }
     if (!nodes.find(node => node.id === endNode.id)) {
-      await insertNode(endNode);
+      await db.insertNode(endNode);
       nodes.push(endNode);
     }
 
@@ -76,12 +53,12 @@ const insertEdge = async (startNode, endNode, edgeInfo) => {
       gender: dataElement['gender'],
     };
 
-    await insertEdge(startNode, endNode, edgeInfo);
+    await db.insertEdge(startNode, endNode, edgeInfo);
   }
 })()
   .catch(error => {
-    // console.log(error);
+    console.log(error);
   })
   .then(() => {
-    session.close();
+    db.close();
   });
