@@ -1,28 +1,28 @@
 type Node {
-  id: ID!
-  latitude: String
-  longitude: String
-  name: String
+	id: ID!
+	latitude: String
+	longitude: String
+	name: String
 }
 
 input NodeInput {
-  id: ID!
-  latitude: String
-  longitude: String
-  name: String
+	id: ID!
+	latitude: String
+	longitude: String
+	name: String
 }
 
 type Edge {
-  startNode: Node
-  stopNode: Node
-  startTime: String
-  stopTime: String
-  bikeID: String
-  userType: String
-  gender: String
-  birthYear: String
+	startTime: String
+	stopTime: String
+	bikeID: String
+	userType: String
+	birthYear: String
+	gender: String
+	startNode: Node
+	stopNode: Node
 }
 
 type Mutation {
-  CreateEdge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String): Edge
+	CreateEdge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String): Edge
 }

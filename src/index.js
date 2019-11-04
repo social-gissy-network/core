@@ -1,8 +1,7 @@
-const typeDefs = require('./graphql-schema').typeDefs;
 const ApolloServer = require('apollo-server-express').ApolloServer;
 const express = require('express');
 const neo4j = require('neo4j-driver').v1;
-const {makeAugmentedSchema, neo4jgraphql} = require('neo4j-graphql-js');
+const {makeAugmentedSchema} = require('neo4j-graphql-js');
 const dotenv = require('dotenv');
 
 // set environment variables from ../.env
@@ -18,7 +17,9 @@ const app = express();
  * https://grandstack.io/docs/neo4j-graphql-js-api.html#makeaugmentedschemaoptions-graphqlschema
  */
 
-const resolvers = {
+const {fieldsMapping} =  require("./consts");
+
+let resolvers = {
   Query: {
     async Edge(obj, params, ctx, resolveInfo) {
       let db = ctx.db;
@@ -32,25 +33,7 @@ const resolvers = {
     },
     stopNode(obj, params, ctx, resolveInfo) {
       return obj.end.properties;
-    },
-    startTime(obj, params, ctx, resolveInfo) {
-      return obj.relationship.properties['startTime'];
-    },
-    stopTime(obj, params, ctx, resolveInfo) {
-      return obj.relationship.properties['stopTime'];
-    },
-    bikeID(obj, params, ctx, resolveInfo) {
-      return obj.relationship.properties['bikeID'];
-    },
-    userType(obj, params, ctx, resolveInfo) {
-      return obj.relationship.properties['userType'];
-    },
-    gender(obj, params, ctx, resolveInfo) {
-      return obj.relationship.properties['gender'];
-    },
-    birthYear(obj, params, ctx, resolveInfo) {
-      return obj.relationship.properties['birthYear'];
-    },
+    }
   },
   Mutation: {
     async CreateEdge(obj, params, ctx, resolveInfo) {
@@ -63,24 +46,31 @@ const resolvers = {
       // everything else is edgeInfo
       let edgeInfo = params;
 
-      let startNodeResult = await db.insertNode(startNode);
-      let stopNodeResult = await db.insertNode(stopNode);
-      let edgeResult = await db.insertEdge(startNode, stopNode, edgeInfo);
-
-      return {
+      let result = {
         start: {
-          properties: startNodeResult.records[0].toObject().n.properties
+          properties: await db.insertNode(startNode)
         },
         end: {
-          properties: stopNodeResult.records[0].toObject().n.properties
+          properties: await db.insertNode(stopNode)
         },
         relationship: {
-          properties: edgeResult.records[0].toObject().r.properties
+          properties: await db.insertEdge(startNode, stopNode, edgeInfo)
         },
       };
+
+      return result;
     }
   }
 };
+
+
+for (const edgeProperty of fieldsMapping.edgeInfo) {
+  resolvers.Edge[edgeProperty.name] = (obj, params, ctx, resolveInfo) => {
+    return obj.relationship.properties[edgeProperty.name]
+  };
+}
+
+const typeDefs = require('./graphql-schema').typeDefs;
 
 const schema = makeAugmentedSchema({
   typeDefs,

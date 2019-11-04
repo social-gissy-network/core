@@ -1,38 +1,68 @@
-const csvFilePath = 'data/201901-bluebikes-tripdata.xls';
+const csvFilePath = 'data/201901-bluebikes-tripdata.csv';
 const csv = require('csvtojson');
+
+const {fieldsMapping} =  require("./consts");
 
 const db = require("./neo4j.js");
 db.init();
 
 (async () => {
+  // create schema
+  let typeDefs = ``;
+
+  typeDefs += `type Node {\n`;
+  for (const property of fieldsMapping.startNode) {
+    typeDefs += (`\t${property.name}: ${property.type}\n`)
+  }
+  typeDefs += `}\n\n`;
+
+
+  typeDefs += `input NodeInput {\n`;
+  for (const property of fieldsMapping.startNode) {
+    typeDefs += (`\t${property.name}: ${property.type}\n`)
+  }
+  typeDefs += `}\n\n`;
+
+
+  typeDefs += `type Edge {\n`;
+  for (const property of fieldsMapping.edgeInfo) {
+    typeDefs += (`\t${property.name}: ${property.type}\n`)
+  }
+  typeDefs += (`\tstartNode: Node\n`);
+  typeDefs += (`\tstopNode: Node\n`);
+
+  typeDefs += `}\n\n`;
+
+  typeDefs +=`type Mutation {\n`;
+  typeDefs += `\tCreateEdge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String): Edge\n`;
+  typeDefs += `}`;
+
+  const fs = require("fs");
+  fs.writeFileSync("schema.graphql", typeDefs);
 
   const dataset = await csv().fromFile(csvFilePath);
 
   // await db.setNodeConstraints();
-  // await db.removeAllEdges();
-  // await db.removeAllNodes();
+  await db.removeAllEdges();
+  await db.removeAllNodes();
 
 
   const nodes = [];
 
   for (const dataElement of dataset) {
+    // construct nodes
+    let startNode = {}, endNode = {};
+
+    for (const property of fieldsMapping.startNode) {
+      startNode[property.name] = dataElement[property.dataName];
+    }
+
+    for (const property of fieldsMapping.endNode) {
+      endNode[property.name] = dataElement[property.dataName];
+    }
+
+
     // insert nodes if needed
-    const startNode = {
-      longitude: dataElement['start station longitude'],
-      latitude: dataElement['start station latitude'],
-
-      id: dataElement['start station id'],
-      name: dataElement['start station name'],
-    };
-
-    const endNode = {
-      longitude: dataElement['end station longitude'],
-      latitude: dataElement['end station latitude'],
-
-      id: dataElement['end station id'],
-      name: dataElement['end station name'],
-    };
-
     if (!nodes.find(node => node.id === startNode.id)) {
       await db.insertNode(startNode);
       nodes.push(startNode);
@@ -42,16 +72,12 @@ db.init();
       nodes.push(endNode);
     }
 
-    // insert edge
-    const edgeInfo = {
-      startTime: dataElement['starttime'],
-      stopTime: dataElement['stoptime'],
 
-      bikeID: dataElement['bikeid'],
-      userType: dataElement['usertype'],
-      birthYear: dataElement['birth year'],
-      gender: dataElement['gender'],
-    };
+    // construct edgeInfo
+    let edgeInfo = {};
+    for (const property of fieldsMapping.edgeInfo) {
+      edgeInfo[property.name] = dataElement[property.dataName];
+    }
 
     await db.insertEdge(startNode, endNode, edgeInfo);
   }
