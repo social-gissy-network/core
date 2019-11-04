@@ -23,19 +23,28 @@ let resolvers = {
   Query: {
     async Edge(obj, params, ctx, resolveInfo) {
       let db = ctx.db;
-      let result = await db.getAllEdges();
-      return result.records.map(record => result.records[0].toObject().p.segments[0]);
-    }
-  },
-  Edge: {
-    startNode(obj, params, ctx, resolveInfo) {
-      return obj.start.properties;
+      return await db.getAllEdges();
     },
-    stopNode(obj, params, ctx, resolveInfo) {
-      return obj.end.properties;
+    async Node(obj, params, ctx, resolveInfo) {
+      let db = ctx.db;
+      return await db.getAllNodes();
     }
   },
   Mutation: {
+    async CreateNode(obj, params, ctx, resolveInfo) {
+      let db = ctx.db;
+      return await db.insertNode(params);
+    },
+    async UpdateNode(obj, params, ctx, resolveInfo) {
+      let db = ctx.db;
+      return await db.updateNodeByID(params.id, params);
+    },
+    async DeleteNode(obj, params, ctx, resolveInfo) {
+      let db = ctx.db;
+      let result = await db.deleteNodeByID(params.id);
+      return result;
+    },
+
     async CreateEdge(obj, params, ctx, resolveInfo) {
       let db = ctx.db;
       let startNode = params.startNode;
@@ -59,11 +68,53 @@ let resolvers = {
       };
 
       return result;
-    }
+    },
+    async DeleteEdge(obj, params, ctx, resolveInfo) {
+      let db = ctx.db;
+      let startNode = params.startNode;
+      let stopNode = params.stopNode;
+      delete params.startNode;
+      delete params.stopNode;
+
+      // everything else is edgeInfo
+      let edgeInfo = params;
+
+      let result = {
+        start: {
+          properties: await db.insertNode(startNode)
+        },
+        end: {
+          properties: await db.insertNode(stopNode)
+        },
+        relationship: {
+          properties: await db.insertEdge(startNode, stopNode, edgeInfo)
+        },
+      };
+
+      return result;
+    },
+
   }
 };
 
+resolvers.Node = {};
+for (const nodeProperty of fieldsMapping.startNode) {
+  resolvers.Node[nodeProperty.name] = (obj, params, ctx, resolveInfo) => {
+    if (!obj[nodeProperty.name]) {
+      return null;
+    }
+    return obj[nodeProperty.name];
+  };
+}
 
+resolvers.Edge = {
+  startNode(obj, params, ctx, resolveInfo) {
+    return obj.start.properties;
+  },
+  stopNode(obj, params, ctx, resolveInfo) {
+    return obj.end.properties;
+  }
+};
 for (const edgeProperty of fieldsMapping.edgeInfo) {
   resolvers.Edge[edgeProperty.name] = (obj, params, ctx, resolveInfo) => {
     return obj.relationship.properties[edgeProperty.name]
@@ -71,26 +122,15 @@ for (const edgeProperty of fieldsMapping.edgeInfo) {
 }
 
 const typeDefs = require('./graphql-schema').typeDefs;
-
 const schema = makeAugmentedSchema({
   typeDefs,
   resolvers,
 });
 
-/*
- * Create a Neo4j driver instance to connect to the database
- * using credentials specified as environment variables
- * with fallback to defaults
- */
-const db = require("./neo4j.js");
+
+const db = require("./neo4j.js"); // for the Edge's manual generated Query fields
 db.init();
 
-/*
- * Create a new ApolloServer instance, serving the GraphQL schema
- * created using makeAugmentedSchema above and injecting the Neo4j driver
- * instance into the context object so it is available in the
- * generated resolvers to connect to the database.
- */
 const server = new ApolloServer({
   context: { db },
   schema: schema,

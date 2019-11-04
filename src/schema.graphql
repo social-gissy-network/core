@@ -1,4 +1,4 @@
-# schema dynamically created by setup.js on 2019-11-04T16:23:08.872Z
+# schema dynamically created by setup.js on 2019-11-04T19:39:17.705Z
 
 type Node {
 	id: ID!
@@ -27,4 +27,5 @@ type Edge {
 
 type Mutation {
 	CreateEdge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String): Edge
+	DeleteNode(id: ID!): String
 }

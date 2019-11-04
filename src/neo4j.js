@@ -26,7 +26,15 @@ exports.close = () => driver.close();
 
 exports.removeAllNodes = async () => session.run(`MATCH (n:Node) DELETE n`);
 
-exports.getAllEdges = async () => session.run(`MATCH p=(p1:Node)-[e:EDGE]->(p2:Node) RETURN p`);
+exports.getAllEdges = async () => {
+  let result = await session.run(`MATCH p=(p1:Node)-[e:EDGE]->(p2:Node) RETURN p`);
+  return result.records.map(record => result.records[0].toObject().p.segments[0]);
+};
+
+exports.getAllNodes = async () => {
+  let result = await session.run(`MATCH (n:Node) RETURN n`);
+  return result.records.map(record => record.toObject().n.properties);
+};
 
 exports.removeAllEdges = async () => session.run(`MATCH e=(s1)-[r:EDGE]->(s2) DELETE e`);
 
@@ -37,7 +45,27 @@ exports.insertNode = async (node) => {
   return result.records[0].toObject().n.properties
 };
 
+exports.updateNodeByID = async (nodeID, newNode) => {
+  let result = await session.run(`MATCH (n:Node) WHERE n.id = "${nodeID}" SET n = ${_stringify(newNode)} RETURN n`);
+  return result.records[0].toObject().n.properties
+};
+
+exports.deleteNodeByID = async (nodeID) => {
+  let result = await session.run(`MATCH (n:Node) WHERE n.id = "${nodeID}" DETACH DELETE (n) RETURN n`);
+  return result.records[0].toObject().n.properties
+};
+
 exports.insertEdge = async (startNode, endNode, edgeInfo) => {
+  const query = `
+    MATCH (n1:Node {id: "${startNode.id}"}),(n2:Node {id: "${endNode.id}"})
+    CREATE (n1)-[r:EDGE ${_stringify(edgeInfo)}]->(n2)
+    RETURN r
+  `;
+  let result = await session.run(query);
+  return result.records[0].toObject().r.properties
+};
+
+exports.deleteEdge = async (startNode, endNode, edgeInfo) => {
   const query = `
     MATCH (n1:Node {id: "${startNode.id}"}),(n2:Node {id: "${endNode.id}"})
     CREATE (n1)-[r:EDGE ${_stringify(edgeInfo)}]->(n2)
