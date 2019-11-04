@@ -8,7 +8,7 @@ db.init();
 
 (async () => {
   // create schema
-  let typeDefs = ``;
+  let typeDefs = `# schema dynamically created by setup.js on ${(new Date()).toISOString()}\n\n`;
 
   typeDefs += `type Node {\n`;
   for (const property of fieldsMapping.startNode) {

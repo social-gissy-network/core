@@ -1,3 +1,5 @@
+# schema dynamically created by setup.js on 2019-11-04T16:23:08.872Z
+
 type Node {
 	id: ID!
 	latitude: String
