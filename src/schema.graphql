@@ -1,4 +1,4 @@
-# schema dynamically created by setup.js on 2019-11-04T19:39:17.705Z
+# schema dynamically created by setup.js on 2019-11-05T10:41:28.230Z
 
 type Node {
   id: ID!
@@ -38,24 +38,34 @@ type EdgeUpdateResponse {
 }
 
 type Query {
-  Node(id: ID, latitude: String, longitude: String, name: String): [Node]
-  Edge(
-    startNode: NodeInput
-    stopNode: NodeInput
+  Node(id: ID!, latitude: String, longitude: String, name: String): [Node]
+  Edge(id: ID!, latitude: String, longitude: String, name: String): [Edge]
+}
+
+type Mutation {
+  CreateEdge(
     startTime: String
     stopTime: String
     bikeID: String
     userType: String
     birthYear: String
     gender: String
-  ): [Edge]
-}
+    startNode: NodeInput
+    stopNode: NodeInput
+  ): EdgeUpdateResponse
+  UpdateEdge(
+    startTime: String
+    stopTime: String
+    bikeID: String
+    userType: String
+    birthYear: String
+    gender: String
+    startNode: NodeInput
+    stopNode: NodeInput
+  ): EdgeUpdateResponse
+  DeleteEdge(id: ID!): EdgeUpdateResponse
 
-type Mutation {
   CreateNode(id: ID!, latitude: String, longitude: String, name: String): NodeUpdateResponse
   UpdateNode(id: ID!, latitude: String, longitude: String, name: String): NodeUpdateResponse
   DeleteNode(id: ID!): NodeUpdateResponse
-
-  CreateEdge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String): Edge
-  DeleteEdge(id: ID!): EdgeUpdateResponse
 }
