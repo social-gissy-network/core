@@ -18,10 +18,10 @@
     "apollo-client": "^2.6.4",
     "apollo-link-http": "^1.5.16",
     "apollo-server": "^2.9.7",
+    "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
     "graphql-tag": "^2.10.1",
     "neo4j-driver": "^1.7.6",
-    "neo4j-graphql-js": "^2.8.0",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
@@ -32,18 +32,18 @@
     "@babel/preset-env": "^7.6.3",
     "@dennisvash/eslint-config": "1.1.0",
     "@dennisvash/prettier-config": "^1.0.0",
-    "babel-eslint": "^10.x.x",
-    "eslint": "^5.x.x",
-    "eslint-config-prettier": "^4.x.x",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "nodemon": "^1.19.4",
-    "prettier": "^1.x.x",
+    "prettier": "^1.18.2",
     "pretty-quick": "^2.0.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && lint-staged"
+      "pre-commit": "pretty-quick --staged"
     }
   },
   "lint-staged": {
