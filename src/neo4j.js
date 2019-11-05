@@ -16,20 +16,7 @@ function _stringify(object) {
   return JSON.stringify(object).replace(/"([^(")"]+)":/g, '$1:');
 }
 
-function _matchQueryByParams(typeName, params) {
-  let query = `MATCH (n:${typeName}) `;
-  let counter = 0;
-  for (const paramName of Object.keys(params)) {
-    query += counter === 0 ? `WHERE ` : ``;
-
-    query += `n.${paramName} = "${params[paramName]}" `;
-    counter++;
-
-    query += counter < Object.keys(params).length ? `AND ` : ``;
-  }
-  query += `RETURN n`;
-  return query;
-}
+// general operations
 
 exports.init = () => {
   // Create a driver instance, for the user neo4j with password neo4j.
@@ -43,24 +30,70 @@ exports.init = () => {
 
 exports.close = () => driver.close();
 
-exports.removeAllNodes = async () => session.run(`MATCH (n:Node) DELETE n`);
-
-exports.getAllEdges = async () => {
-  let result = await session.run(`MATCH p=(p1:Node)-[e:EDGE]->(p2:Node) RETURN p`);
-  return result.records.map(record => result.records[0].toObject().p.segments[0]);
+exports.setNodeConstraints = async () => {
+  return session.run('CREATE CONSTRAINT ON (p:Node) ASSERT p.id IS UNIQUE');
 };
 
-exports.getAllNodes = async () => {
-  let result = await session.run(`MATCH (n:Node) RETURN n`);
+// node operations
+
+exports.insertNode = async node => {
+  let result = await session.run(`CREATE (n:Node ${_stringify(node)}) RETURN n`);
+  return result.records[0].toObject().n.properties;
+};
+
+exports.getNodesByParams = async params => {
+  let query = `MATCH (n:Node) `;
+  let counter = 0;
+  let totalAndConditions = 0;
+
+  for (const paramName of params ? Object.keys(params) : []) {
+    query += counter === 0 ? `WHERE ` : ``;
+
+    query += `n.${paramName} = "${params[paramName]}" `;
+    counter++;
+
+    query += counter < totalAndConditions ? `AND ` : ``;
+  }
+  query += `RETURN n`;
+  let result = await session.run(query);
   return result.records.map(record => record.toObject().n.properties);
 };
 
-exports.getNodeByParams = async params => {
-  let result = await session.run(_matchQueryByParams('Node', params));
-  return result.records.map(record => record.toObject().n.properties);
+exports.updateNodeByID = async (nodeID, newNode) => {
+  let result = await session.run(
+    `MATCH (n:Node) WHERE n.id = "${nodeID}" SET n = ${_stringify(newNode)} RETURN n`,
+  );
+  if (result.records.length < 1) {
+    throw ERROR.NODE_DOESNT_EXIST;
+  }
+  return result.records[0].toObject().n.properties;
 };
 
-exports.getEdgeByParams = async params => {
+exports.deleteNodeByID = async nodeID => {
+  let result = await session.run(
+    `MATCH (n:Node) WHERE n.id = "${nodeID}" DETACH DELETE (n) RETURN n`,
+  );
+  if (result.records.length < 1) {
+    throw ERROR.NODE_DOESNT_EXIST;
+  }
+  return result.records[0].toObject().n.properties;
+};
+
+exports.deleteAllNodes = async () => session.run(`MATCH (n:Node) DELETE n`);
+
+// edge operations
+
+exports.insertEdge = async (startNode, endNode, edgeInfo) => {
+  const query = `
+    MATCH (n1:Node {id: "${startNode.id}"}),(n2:Node {id: "${endNode.id}"})
+    CREATE (n1)-[r:EDGE ${_stringify(edgeInfo)}]->(n2)
+    RETURN r
+  `;
+  let result = await session.run(query);
+  return result.records[0].toObject().r.properties;
+};
+
+exports.getEdgesByParams = async params => {
   let startNodeInput = params.startNode;
   let stopNodeInput = params.stopNode;
   delete params.startNode;
@@ -68,7 +101,7 @@ exports.getEdgeByParams = async params => {
 
   let query = `MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) `;
   let counter = 0;
-  let totalAndConditions = Object.keys(params).length;
+  let totalAndConditions = 0;
 
   if (startNodeInput) {
     totalAndConditions += Object.keys(startNodeInput).length;
@@ -78,7 +111,7 @@ exports.getEdgeByParams = async params => {
   }
 
   // add the edgeInfo params
-  for (const paramName of Object.keys(params)) {
+  for (const paramName of params ? Object.keys(params) : []) {
     query += counter === 0 ? `WHERE ` : ``;
 
     query += `e.${paramName} = "${params[paramName]}" `;
@@ -107,50 +140,17 @@ exports.getEdgeByParams = async params => {
     query += counter < totalAndConditions ? `AND ` : ``;
   }
 
-  query += `RETURN p`;
+  query += `RETURN p, id(e) as edgeID`;
 
   let result = await session.run(query);
-  return result.records.map(record => result.records[0].toObject().p.segments[0]);
-};
-
-exports.removeAllEdges = async () => session.run(`MATCH e=(s1)-[r:EDGE]->(s2) DELETE e`);
-
-exports.setNodeConstraints = async () =>
-  session.run('CREATE CONSTRAINT ON (p:Node) ASSERT p.id IS UNIQUE');
-
-exports.insertNode = async node => {
-  let result = await session.run(`CREATE (n:Node ${_stringify(node)}) RETURN n`);
-  return result.records[0].toObject().n.properties;
-};
-
-exports.updateNodeByID = async (nodeID, newNode) => {
-  let result = await session.run(
-    `MATCH (n:Node) WHERE n.id = "${nodeID}" SET n = ${_stringify(newNode)} RETURN n`,
-  );
   if (result.records.length < 1) {
-    throw ERROR.NODE_DOESNT_EXIST;
+    return [];
   }
-  return result.records[0].toObject().n.properties;
+  return result.records.map(record => record.toObject().p.segments[0]);
 };
 
-exports.deleteNodeByID = async nodeID => {
-  let result = await session.run(
-    `MATCH (n:Node) WHERE n.id = "${nodeID}" DETACH DELETE (n) RETURN n`,
-  );
-  if (result.records.length < 1) {
-    throw ERROR.NODE_DOESNT_EXIST;
-  }
-  return result.records[0].toObject().n.properties;
-};
-
-exports.insertEdge = async (startNode, endNode, edgeInfo) => {
-  const query = `
-    MATCH (n1:Node {id: "${startNode.id}"}),(n2:Node {id: "${endNode.id}"})
-    CREATE (n1)-[r:EDGE ${_stringify(edgeInfo)}]->(n2)
-    RETURN r
-  `;
-  let result = await session.run(query);
-  return result.records[0].toObject().r.properties;
+exports.deleteAllEdges = async () => {
+  return session.run(`MATCH e=(s1)-[r:EDGE]->(s2) DELETE e`);
 };
 
 exports.deleteEdge = async (startNode, endNode, edgeInfo) => {

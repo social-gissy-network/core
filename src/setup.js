@@ -18,6 +18,7 @@ let createGraphQLSchema = fieldsMapping => {
     GraphQLNonNull,
     GraphQLString,
     GraphQLBoolean,
+    GraphQLList,
   } = require('graphql');
 
   const nodeTypeConfig = {
@@ -42,6 +43,11 @@ let createGraphQLSchema = fieldsMapping => {
   for (const property of fieldsMapping.edgeInfo) {
     edgeTypeConfig.fields[property.name] = { type: property.type };
   }
+
+  // if id is not set by the data, we'll use internal db id
+  if (!edgeTypeConfig.fields.id) {
+    edgeTypeConfig.fields.id = { type: GraphQLID };
+  }
   const edgeType = new GraphQLObjectType(edgeTypeConfig);
 
   const nodeUpdateResponseType = new GraphQLObjectType({
@@ -62,6 +68,14 @@ let createGraphQLSchema = fieldsMapping => {
     },
   });
 
+  const nodeTypeMutationArgs = {};
+  for (const property of fieldsMapping.startNode) {
+    if (property.name === 'id') {
+      property.type = new GraphQLNonNull(property.type);
+    }
+    nodeTypeMutationArgs[property.name] = { type: property.type };
+  }
+
   const edgeTypeMutationArgs = {
     startNode: { type: nodeInputType },
     stopNode: { type: nodeInputType },
@@ -73,8 +87,8 @@ let createGraphQLSchema = fieldsMapping => {
   const queryTypeConfig = {
     name: 'Query',
     fields: {
-      Node: { type: nodeType, args: nodeTypeConfig.fields },
-      Edge: { type: edgeType, args: edgeTypeMutationArgs },
+      Node: { type: new GraphQLList(nodeType), args: nodeTypeConfig.fields },
+      Edge: { type: new GraphQLList(edgeType), args: edgeTypeMutationArgs },
     },
   };
 
@@ -90,7 +104,7 @@ let createGraphQLSchema = fieldsMapping => {
         args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       },
       CreateNode: { type: nodeUpdateResponseType, args: nodeTypeConfig.fields },
-      UpdateNode: { type: nodeUpdateResponseType, args: nodeTypeConfig.fields },
+      UpdateNode: { type: nodeUpdateResponseType, args: nodeTypeMutationArgs },
       DeleteNode: {
         type: nodeUpdateResponseType,
         args: { id: { type: new GraphQLNonNull(GraphQLID) } },
@@ -162,8 +176,8 @@ let storeDataOnDB = async (dataset, fieldsMapping) => {
   const dataset = await csv().fromFile(consts.csvFilePath);
 
   // 4. clean database: uncomment following lines if you'd like to remove existing data on db
-  await db.removeAllEdges();
-  await db.removeAllNodes();
+  await db.deleteAllEdges();
+  await db.deleteAllNodes();
 
   // 5. set constraints
   await db.setNodeConstraints();

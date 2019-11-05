@@ -11,11 +11,7 @@ const GRAPHQL = require('graphql');
 exports.fieldsMapping = {
   startNode: [
     // required:
-    {
-      name: 'id',
-      dataName: 'start station id',
-      type: new GRAPHQL.GraphQLNonNull(GRAPHQL.GraphQLID),
-    },
+    { name: 'id', dataName: 'start station id', type: GRAPHQL.GraphQLID },
     { name: 'latitude', dataName: 'start station latitude', type: GRAPHQL.GraphQLString },
     { name: 'longitude', dataName: 'start station longitude', type: GRAPHQL.GraphQLString },
 
@@ -25,7 +21,7 @@ exports.fieldsMapping = {
 
   endNode: [
     // required:
-    { name: 'id', dataName: 'end station id', type: new GRAPHQL.GraphQLNonNull(GRAPHQL.GraphQLID) },
+    { name: 'id', dataName: 'end station id', type: GRAPHQL.GraphQLID },
     { name: 'latitude', dataName: 'end station latitude', type: GRAPHQL.GraphQLString },
     { name: 'longitude', dataName: 'end station longitude', type: GRAPHQL.GraphQLString },
 
@@ -33,6 +29,7 @@ exports.fieldsMapping = {
     { name: 'name', dataName: 'end station name', type: GRAPHQL.GraphQLString },
   ],
 
+  // Note: if the edgeInfo don't have an ID, the internal db ID will be used in order supply CRUD functionality by ID
   edgeInfo: [
     // required:
     { name: 'startTime', dataName: 'starttime', type: GRAPHQL.GraphQLString },
