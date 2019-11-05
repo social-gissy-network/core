@@ -30,7 +30,7 @@
 
    ```sh
    now secrets add neo4j_uri <YOUR_NEO4J_URI>
-   now secrets add neo4j_user <YOUR_NEO4J_USER
+   now secrets add neo4j_user <YOUR_NEO4J_USER>
    now secrets add neo4j_password <YOUR_NEO4J_PASSWORD>
    now
    ```
