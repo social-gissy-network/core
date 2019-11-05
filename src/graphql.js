@@ -63,28 +63,36 @@ let resolvers = {
 
     CreateEdge: async (obj, params, ctx, resolveInfo) => {
       let db = ctx.db;
-      let startNode = params.startNode;
-      let stopNode = params.stopNode;
+
+      let startNodes = await db.getNodesByParams(params.startNode);
+      let stopNodes = await db.getNodesByParams(params.stopNode);
       delete params.startNode;
       delete params.stopNode;
 
       // everything else is edgeInfo
       let edgeInfo = params;
 
-      let result = {
-        start: {
-          properties: await db.insertNode(startNode),
-        },
-        end: {
-          properties: await db.insertNode(stopNode),
-        },
-        relationship: {
-          properties: await db.insertEdge(startNode, stopNode, edgeInfo),
-        },
-      };
+      let results = [];
 
-      return result;
+      for (const startNode of startNodes) {
+        for (const stopNode of stopNodes) {
+          let result = {
+            startNode: startNode,
+            edgeInfo: await db.insertEdge(startNode, stopNode, edgeInfo), // todo try catch
+            stopNode: stopNode,
+          };
+          results.push(result);
+        }
+      }
+
+      return {
+        success: true,
+        message: 'edge(s) created',
+        edges: results,
+      };
     },
+
+    // todo
     DeleteEdge: async (obj, params, ctx, resolveInfo) => {
       let db = ctx.db;
       let startNode = params.startNode;
@@ -117,11 +125,17 @@ let resolvers = {
     node: (obj, params, ctx, resolveInfo) => (obj.node ? obj.node : null),
   },
 
+  EdgeUpdateResponse: {
+    success: (obj, params, ctx, resolveInfo) => obj.success,
+    message: (obj, params, ctx, resolveInfo) => obj.message,
+    edges: (obj, params, ctx, resolveInfo) => (obj.edges ? obj.edges : null),
+  },
+
   Node: {}, // fields resolvers - dynamic binding by fieldsMapping
 
   Edge: {
-    startNode: (obj, params, ctx, resolveInfo) => obj.start.properties,
-    stopNode: (obj, params, ctx, resolveInfo) => obj.end.properties,
+    startNode: (obj, params, ctx, resolveInfo) => obj.startNode,
+    stopNode: (obj, params, ctx, resolveInfo) => obj.stopNode,
     // more fields resolvers - dynamic binding by fieldsMapping
   },
 };
@@ -138,7 +152,7 @@ for (const nodeProperty of fieldsMapping.startNode) {
 
 for (const edgeProperty of fieldsMapping.edgeInfo) {
   resolvers.Edge[edgeProperty.name] = (obj, params, ctx, resolveInfo) => {
-    let propertyValue = obj.relationship.properties[edgeProperty.name];
+    let propertyValue = obj.edgeInfo[edgeProperty.name];
     if (!propertyValue) {
       return null;
     }
@@ -148,11 +162,7 @@ for (const edgeProperty of fieldsMapping.edgeInfo) {
 
 // if id is not set by the data, we'll use internal db id
 if (!resolvers.Edge.id) {
-  resolvers.Edge.id = (obj, params, ctx, resolveInfo) => {
-    let internalID =
-      obj.relationship.identity.low.toString() + obj.relationship.identity.high.toString();
-    return internalID;
-  };
+  resolvers.Edge.id = (obj, params, ctx, resolveInfo) => obj.edgeInfo.id;
 }
 
 exports.resolvers = resolvers;

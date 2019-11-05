@@ -64,7 +64,7 @@ let createGraphQLSchema = fieldsMapping => {
     fields: {
       success: { type: GraphQLBoolean },
       message: { type: GraphQLString },
-      edge: { type: edgeType },
+      edges: { type: new GraphQLList(edgeType) },
     },
   });
 
