@@ -1,28 +1,22 @@
 <h1 align="center">
-
+   
+<a href="https://docs.gissy.now.sh/">
 <img src=".github/Banner.svg" alt="3dLogo" style="width: 50vw;">
 
 </h1>
 
-- [Project Info](https://docs.google.com/document/d/13jBvjWZJGnerSwUwTJ4TDnX-6lxB2-N4us-v--1UHHo/edit?usp=sharing)
-- Bootstrapped from [`GRANDstack-backend-starter`](https://github.com/denvash/GRANDstack-backend-starter)
-- [Figma Drafts](https://www.figma.com/file/D9wmoj9rx7prAYEhUZDoJY/Gissy?node-id=0%3A1)
-
-## Deployments
-
-- [Neo4j](https://10-0-1-104-35408.neo4jsandbox.com/browser/)
-- [GraphQL Server](https://core.gissy.now.sh/graphql)
-- [△ now](https://zeit.co/gissy)
+- [Docs](https://docs.gissy.now.sh/)
+- [**Playground**](https://core.gissy.now.sh/graphql)
 
 ## Quick Start
 
-1. Install Dependencies
+### Install Dependencies
 
    ```sh
    yarn install
    ```
 
-2. Development
+### Development
 
    ```sh
    yarn develop
@@ -30,12 +24,13 @@
    yarn seed
    ```
 
-3. Deployment
-
-   ```sh
-   npm i -g now
-   now login
-   now
-   ```
+### Deployment
 
    [![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/social-gissy-network/core&env=NEO4J_USER&env=NEO4J_URI&env=NEO4J_PASSWORD)
+
+   ```sh
+   now secrets add neo4j_uri <YOUR_NEO4J_URI>
+   now secrets add neo4j_user <YOUR_NEO4J_USER
+   now secrets add neo4j_password <YOUR_NEO4J_PASSWORD>
+   now
+   ```
