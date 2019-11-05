@@ -6,36 +6,44 @@
  * One should define following constants before running setup.js, according to specific data (e.g. csv headers)
  **/
 
+const GRAPHQL = require('graphql');
+
 exports.fieldsMapping = {
   startNode: [
     // required:
-    {name: "id", dataName: "start station id", type: "ID!"},
-    {name: "latitude", dataName: "start station latitude", type: "String"},
-    {name: "longitude", dataName: "start station longitude", type: "String"},
+    {
+      name: 'id',
+      dataName: 'start station id',
+      type: new GRAPHQL.GraphQLNonNull(GRAPHQL.GraphQLID),
+    },
+    { name: 'latitude', dataName: 'start station latitude', type: GRAPHQL.GraphQLString },
+    { name: 'longitude', dataName: 'start station longitude', type: GRAPHQL.GraphQLString },
 
     // optional:
-    {name: "name", dataName: "start station name", type: "String"},
+    { name: 'name', dataName: 'start station name', type: GRAPHQL.GraphQLString },
   ],
 
   endNode: [
     // required:
-    {name: "id", dataName: "end station id", type: "ID!"},
-    {name: "latitude", dataName: "end station latitude", type: "String"},
-    {name: "longitude", dataName: "end station longitude", type: "String"},
+    { name: 'id', dataName: 'end station id', type: new GRAPHQL.GraphQLNonNull(GRAPHQL.GraphQLID) },
+    { name: 'latitude', dataName: 'end station latitude', type: GRAPHQL.GraphQLString },
+    { name: 'longitude', dataName: 'end station longitude', type: GRAPHQL.GraphQLString },
 
     // optional:
-    {name: "name", dataName: "end station name", type: "String"},
+    { name: 'name', dataName: 'end station name', type: GRAPHQL.GraphQLString },
   ],
 
   edgeInfo: [
     // required:
-    {name: "startTime", dataName: "starttime", type: "String"},
-    {name: "stopTime", dataName: "stoptime", type: "String"},
+    { name: 'startTime', dataName: 'starttime', type: GRAPHQL.GraphQLString },
+    { name: 'stopTime', dataName: 'stoptime', type: GRAPHQL.GraphQLString },
 
     // optional:
-    {name: "bikeID", dataName: "bikeid", type: "String"},
-    {name: "userType", dataName: "usertype", type: "String"},
-    {name: "birthYear", dataName: "birth year", type: "String"},
-    {name: "gender", dataName: "gender", type: "String"},
-  ]
+    { name: 'bikeID', dataName: 'bikeid', type: GRAPHQL.GraphQLString },
+    { name: 'userType', dataName: 'usertype', type: GRAPHQL.GraphQLString },
+    { name: 'birthYear', dataName: 'birth year', type: GRAPHQL.GraphQLString },
+    { name: 'gender', dataName: 'gender', type: GRAPHQL.GraphQLString },
+  ],
 };
+
+exports.csvFilePath = 'data/201901-bluebikes-tripdata.csv';

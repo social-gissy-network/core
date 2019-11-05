@@ -1,82 +1,119 @@
-const csvFilePath = 'data/201901-bluebikes-tripdata.csv';
-const csv = require('csvtojson');
-
-const { fieldsMapping } = require('./consts');
+const consts = require('./consts.js');
 
 const db = require('./neo4j.js');
 db.init();
 
-(async () => {
-  // create schema
-  let typeDefs = `# schema dynamically created by setup.js on ${new Date().toISOString()}\n\n`;
+/**
+ * automatically generates GraphQLSchema object from fieldsMapping object
+ * @param fieldsMapping
+ * @returns {string}: SDL representation of the schema
+ */
+let createGraphQLSchema = fieldsMapping => {
+  const {
+    printSchema,
+    GraphQLID,
+    GraphQLObjectType,
+    GraphQLInputObjectType,
+    GraphQLSchema,
+    GraphQLNonNull,
+    GraphQLString,
+    GraphQLBoolean,
+  } = require('graphql');
 
-  let nodeProperties = `\n`;
-  typeDefs += `type Node {\n`;
+  const nodeTypeConfig = {
+    name: 'Node',
+    fields: {},
+  };
   for (const property of fieldsMapping.startNode) {
-    typeDefs += `\t${property.name}: ${property.type}\n`;
-    nodeProperties += `\t\t${property.name}: ${property.type}\n`;
+    nodeTypeConfig.fields[property.name] = { type: property.type };
   }
-  typeDefs += `}\n\n`;
+  const nodeType = new GraphQLObjectType(nodeTypeConfig);
 
-  typeDefs += `input NodeInput {\n`;
-  for (const property of fieldsMapping.startNode) {
-    typeDefs += `\t${property.name}: ${property.type}\n`;
-  }
-  typeDefs += `}\n\n`;
+  nodeTypeConfig.name = 'NodeInput';
+  const nodeInputType = new GraphQLInputObjectType(nodeTypeConfig);
 
-  let edgeProperties = `\n`;
-  typeDefs += `type Edge {\n`;
+  const edgeTypeConfig = {
+    name: 'Edge',
+    fields: {
+      startNode: { type: nodeType },
+      stopNode: { type: nodeType },
+    },
+  };
   for (const property of fieldsMapping.edgeInfo) {
-    typeDefs += `\t${property.name}: ${property.type}\n`;
-    edgeProperties += `\t\t${property.name}: ${property.type}\n`;
+    edgeTypeConfig.fields[property.name] = { type: property.type };
   }
-  typeDefs += `\tstartNode: Node\n`;
-  edgeProperties += `\t\tstartNode: Node\n`;
-  typeDefs += `\tstopNode: Node\n`;
-  edgeProperties += `\t\tstopNode: Node\n`;
+  const edgeType = new GraphQLObjectType(edgeTypeConfig);
 
-  typeDefs += `}\n\n`;
+  const nodeUpdateResponseType = new GraphQLObjectType({
+    name: 'NodeUpdateResponse',
+    fields: {
+      success: { type: GraphQLBoolean },
+      message: { type: GraphQLString },
+      node: { type: nodeType },
+    },
+  });
 
-  typeDefs += `type NodeUpdateResponse {\n`;
-  typeDefs += `\tsuccess: Boolean!\n`;
-  typeDefs += `\tmessage: String\n`;
-  typeDefs += `\tnode: Node\n`;
-  typeDefs += `}\n\n`;
+  const edgeUpdateResponseType = new GraphQLObjectType({
+    name: 'EdgeUpdateResponse',
+    fields: {
+      success: { type: GraphQLBoolean },
+      message: { type: GraphQLString },
+      edge: { type: edgeType },
+    },
+  });
 
-  typeDefs += `type EdgeUpdateResponse {\n`;
-  typeDefs += `\tsuccess: Boolean!\n`;
-  typeDefs += `\tmessage: String\n`;
-  typeDefs += `\tedge: Edge\n`;
-  typeDefs += `}\n\n`;
+  const edgeTypeMutationArgs = {
+    startNode: { type: nodeInputType },
+    stopNode: { type: nodeInputType },
+  };
+  for (const property of fieldsMapping.edgeInfo) {
+    edgeTypeMutationArgs[property.name] = { type: property.type };
+  }
 
-  typeDefs += `type Query {\n`;
-  typeDefs += `\tNode(${nodeProperties}\t): [Node]\n`;
-  typeDefs += `\tEdge(${nodeProperties}\t): [Edge]\n`;
-  typeDefs += `}\n\n`;
+  const queryTypeConfig = {
+    name: 'Query',
+    fields: {
+      Node: { type: nodeType, args: nodeTypeConfig.fields },
+      Edge: { type: edgeType, args: edgeTypeMutationArgs },
+    },
+  };
 
-  typeDefs += `type Mutation {\n`;
-  typeDefs += `\tCreateEdge(${edgeProperties
-    .split(': Node')
-    .join(': NodeInput')}\t): EdgeUpdateResponse\n`;
-  typeDefs += `\tUpdateEdge(${edgeProperties
-    .split(': Node')
-    .join(': NodeInput')}\t): EdgeUpdateResponse\n`;
-  typeDefs += `\tDeleteEdge(id: ID!): EdgeUpdateResponse\n`; // todo how to delete edge? by what?
-  typeDefs += `\n`;
-  typeDefs += `\tCreateNode(${nodeProperties}\t): NodeUpdateResponse\n`;
-  typeDefs += `\tUpdateNode(${nodeProperties}\t): NodeUpdateResponse\n`;
-  typeDefs += `\tDeleteNode(id: ID!): NodeUpdateResponse\n`;
-  typeDefs += `}`;
+  const queryType = new GraphQLObjectType(queryTypeConfig);
 
-  const fs = require('fs');
-  fs.writeFileSync('schema.graphql', typeDefs);
+  const mutationTypeConfig = {
+    name: 'Mutation',
+    fields: {
+      CreateEdge: { type: edgeUpdateResponseType, args: edgeTypeMutationArgs },
+      UpdateEdge: { type: edgeUpdateResponseType, args: edgeTypeMutationArgs },
+      DeleteEdge: {
+        type: edgeUpdateResponseType,
+        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+      },
+      CreateNode: { type: nodeUpdateResponseType, args: nodeTypeConfig.fields },
+      UpdateNode: { type: nodeUpdateResponseType, args: nodeTypeConfig.fields },
+      DeleteNode: {
+        type: nodeUpdateResponseType,
+        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+      },
+    },
+  };
 
-  const dataset = await csv().fromFile(csvFilePath);
+  const mutationType = new GraphQLObjectType(mutationTypeConfig);
 
-  // await db.setNodeConstraints();
-  await db.removeAllEdges();
-  await db.removeAllNodes();
+  let schema = new GraphQLSchema({
+    query: queryType,
+    mutation: mutationType,
+  });
 
+  return printSchema(schema);
+};
+
+/**
+ * saves each data element from dataset in DB - represented as edge connecting two nodes
+ * @param dataset
+ * @returns {Promise<void>}
+ */
+let storeDataOnDB = async (dataset, fieldsMapping) => {
   const nodes = [];
 
   for (const dataElement of dataset) {
@@ -110,6 +147,29 @@ db.init();
 
     await db.insertEdge(startNode, endNode, edgeInfo);
   }
+};
+
+(async () => {
+  // 1. create schema dynamically - specific for a given dataset
+  let schema = createGraphQLSchema(consts.fieldsMapping);
+
+  // 2. save schema on disk
+  const fs = require('fs');
+  fs.writeFileSync('schema.graphql', schema);
+
+  // 3. read dataset
+  const csv = require('csvtojson');
+  const dataset = await csv().fromFile(consts.csvFilePath);
+
+  // 4. clean database: uncomment following lines if you'd like to remove existing data on db
+  await db.removeAllEdges();
+  await db.removeAllNodes();
+
+  // 5. set constraints
+  await db.setNodeConstraints();
+
+  // 6. populate database with data
+  await storeDataOnDB(dataset, consts.fieldsMapping);
 })()
   .catch(error => {
     console.log(error);
