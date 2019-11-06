@@ -64,30 +64,56 @@ let resolvers = {
     CreateEdge: async (obj, params, ctx, resolveInfo) => {
       let db = ctx.db;
 
-      let startNodes = await db.getNodesByParams(params.startNode);
-      let stopNodes = await db.getNodesByParams(params.stopNode);
-      delete params.startNode;
-      delete params.stopNode;
+      // params.startNode.id, params.stopNode.id should be defined here
+      // todo validate
+
+      let startNode = (await db.getNodesByParams({ id: params.startNodeID }))[0];
+      let stopNode = (await db.getNodesByParams({ id: params.stopNodeID }))[0];
+
+      delete params.startNodeID;
+      delete params.stopNodeID;
 
       // everything else is edgeInfo
       let edgeInfo = params;
 
+      let result = {
+        startNode: startNode,
+        edgeInfo: await db.insertEdge(startNode, stopNode, edgeInfo), // todo try catch
+        stopNode: stopNode,
+      };
+
+      return {
+        success: true,
+        message: 'edge created',
+        edge: result,
+      };
+    },
+
+    UpdateEdge: async (obj, params, ctx, resolveInfo) => {
+      let db = ctx.db;
+
+      let oldEdges = await db.getEdgesByParams(params);
+
       let results = [];
 
-      for (const startNode of startNodes) {
-        for (const stopNode of stopNodes) {
-          let result = {
-            startNode: startNode,
-            edgeInfo: await db.insertEdge(startNode, stopNode, edgeInfo), // todo try catch
-            stopNode: stopNode,
-          };
-          results.push(result);
+      delete params.startNode;
+      delete params.stopNode;
+
+      // everything else is edgeInfo
+      let newEdgeInfo = params;
+
+      for (const oldEdge of oldEdges) {
+        let newEdge = oldEdge;
+        for (const edgeInfoPropertyKey of Object.keys(newEdgeInfo)) {
+          newEdge.edgeInfo[edgeInfoPropertyKey] = newEdgeInfo[edgeInfoPropertyKey];
         }
+
+        results.push(newEdge);
       }
 
       return {
         success: true,
-        message: 'edge(s) created',
+        message: 'edge(s) updated',
         edges: results,
       };
     },
@@ -128,7 +154,7 @@ let resolvers = {
   EdgeUpdateResponse: {
     success: (obj, params, ctx, resolveInfo) => obj.success,
     message: (obj, params, ctx, resolveInfo) => obj.message,
-    edges: (obj, params, ctx, resolveInfo) => (obj.edges ? obj.edges : null),
+    edge: (obj, params, ctx, resolveInfo) => (obj.edge ? obj.edge : null),
   },
 
   Node: {}, // fields resolvers - dynamic binding by fieldsMapping

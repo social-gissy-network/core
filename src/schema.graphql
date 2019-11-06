@@ -13,29 +13,31 @@ type Edge {
 type EdgeUpdateResponse {
   success: Boolean
   message: String
-  edges: [Edge]
+  edge: Edge
 }
 
 type Mutation {
   CreateEdge(
-    startNode: NodeInput
-    stopNode: NodeInput
+    startNodeID: ID!
+    stopNodeID: ID!
     startTime: String
     stopTime: String
     bikeID: String
     userType: String
     birthYear: String
     gender: String
+    id: ID
   ): EdgeUpdateResponse
   UpdateEdge(
-    startNode: NodeInput
-    stopNode: NodeInput
+    startNodeID: ID!
+    stopNodeID: ID!
     startTime: String
     stopTime: String
     bikeID: String
     userType: String
     birthYear: String
     gender: String
+    id: ID
   ): EdgeUpdateResponse
   DeleteEdge(id: ID!): EdgeUpdateResponse
   CreateNode(id: ID, latitude: String, longitude: String, name: String): NodeUpdateResponse
@@ -74,5 +76,6 @@ type Query {
     userType: String
     birthYear: String
     gender: String
+    id: ID
   ): [Edge]
 }

@@ -108,9 +108,15 @@ db.insertEdge = async (startNode, endNode, edgeInfo) => {
   `;
   let result = await session.run(query);
   let object = result.records[0].toObject().r.properties;
-  let edgeInternalID = result.records[0].toObject().edgeID;
+  let edgeInternalID = result.records[0]
+    .toObject()
+    .edgeID.toNumber()
+    .toString();
   if (!object.id) {
-    object.id = edgeInternalID.low.toString() + edgeInternalID.high.toString();
+    let resultWithID = await session.run(`MATCH (n1)-[r:EDGE]->(n2) where id(r) = ${edgeInternalID}
+                       SET r.id = toString(id(r))
+                       RETURN r`);
+    return resultWithID.records[0].toObject().r.properties;
   }
   return object;
 };
@@ -123,7 +129,7 @@ db.getEdgesByParams = async params => {
 
   let query = `MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) `;
   let counter = 0;
-  let totalAndConditions = 0;
+  let totalAndConditions = params ? Object.keys(params).length : 0;
 
   if (startNodeInput) {
     totalAndConditions += Object.keys(startNodeInput).length;
@@ -184,6 +190,21 @@ db.getEdgesByParams = async params => {
     });
 
   return results;
+};
+
+db.updateEdgeByID = async (edgeID, newEdgeProperties) => {
+  const query = `
+    MATCH (n1:Node {id: "${startNode.id}"}),(n2:Node {id: "${endNode.id}"})
+    CREATE (n1)-[r:EDGE ${_stringify(edgeInfo)}]->(n2)
+    RETURN r, id(r) as edgeID
+  `;
+  let result = await session.run(query);
+  let object = result.records[0].toObject().r.properties;
+  let edgeInternalID = result.records[0].toObject().edgeID;
+  if (!object.id) {
+    object.id = edgeInternalID.low.toString() + edgeInternalID.high.toString();
+  }
+  return object;
 };
 
 db.deleteAllEdges = async () => {

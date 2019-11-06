@@ -1,6 +1,5 @@
 const consts = require('./consts.js');
-
-const db = require('./neo4j.js');
+const { db } = require('./neo4j.js');
 db.init();
 
 /**
@@ -64,7 +63,7 @@ let createGraphQLSchema = fieldsMapping => {
     fields: {
       success: { type: GraphQLBoolean },
       message: { type: GraphQLString },
-      edges: { type: new GraphQLList(edgeType) },
+      edge: { type: edgeType },
     },
   });
 
@@ -77,18 +76,35 @@ let createGraphQLSchema = fieldsMapping => {
   }
 
   const edgeTypeMutationArgs = {
+    startNodeID: { type: new GraphQLNonNull(GraphQLID) },
+    stopNodeID: { type: new GraphQLNonNull(GraphQLID) },
+  };
+  for (const property of fieldsMapping.edgeInfo) {
+    edgeTypeMutationArgs[property.name] = { type: property.type };
+  }
+  // if id is not set by the data, we'll use internal db id
+  if (!edgeTypeMutationArgs.id) {
+    edgeTypeMutationArgs.id = { type: GraphQLID };
+  }
+
+  const edgeTypeQueryArgs = {
     startNode: { type: nodeInputType },
     stopNode: { type: nodeInputType },
   };
   for (const property of fieldsMapping.edgeInfo) {
-    edgeTypeMutationArgs[property.name] = { type: property.type };
+    edgeTypeQueryArgs[property.name] = { type: property.type };
+  }
+
+  // if id is not set by the data, we'll use internal db id
+  if (!edgeTypeQueryArgs.id) {
+    edgeTypeQueryArgs.id = { type: GraphQLID };
   }
 
   const queryTypeConfig = {
     name: 'Query',
     fields: {
       Node: { type: new GraphQLList(nodeType), args: nodeTypeConfig.fields },
-      Edge: { type: new GraphQLList(edgeType), args: edgeTypeMutationArgs },
+      Edge: { type: new GraphQLList(edgeType), args: edgeTypeQueryArgs },
     },
   };
 
