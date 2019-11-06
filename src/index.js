@@ -9,7 +9,7 @@ const app = express();
 
 const { typeDefs, resolvers } = require('./graphql.js');
 
-const db = require('./neo4j.js'); // for the Edge's manual generated Query fields
+const { db } = require('./neo4j.js'); // for the Edge's manual generated Query fields
 db.init();
 
 const server = new ApolloServer({

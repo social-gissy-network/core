@@ -17,7 +17,7 @@ let resolvers = {
       } catch (error) {
         return {
           success: false,
-          message: 'failed to create node. ' + error,
+          message: 'failed to create node: ' + error,
         };
       }
       return {
@@ -34,7 +34,7 @@ let resolvers = {
       } catch (error) {
         return {
           success: false,
-          message: 'failed to update node. ' + error,
+          message: 'failed to update node: ' + error,
         };
       }
       return {

@@ -6,10 +6,13 @@ const NEO4J_PASSWORD = process.env.NEO4J_PASSWORD || 'neo4j';
 
 const ERROR = {
   NODE_DOESNT_EXIST: "node doesn't exist",
+  NODE_ALREADY_EXIST: 'node already exist',
 };
 
 let driver;
 let session;
+
+let db = {};
 
 // remove quotes on properties
 function _stringify(object) {
@@ -18,7 +21,7 @@ function _stringify(object) {
 
 // general operations
 
-exports.init = () => {
+db.init = () => {
   // Create a driver instance, for the user neo4j with password neo4j.
   // It should be enough to have a single driver per database per application.
   driver = neo4j.driver(NEO4J_URL, neo4j.auth.basic(NEO4J_USER, NEO4J_PASSWORD));
@@ -28,23 +31,29 @@ exports.init = () => {
   session = driver.session();
 };
 
-exports.close = () => driver.close();
+db.close = () => driver.close();
 
-exports.setNodeConstraints = async () => {
+db.setNodeConstraints = async () => {
   return session.run('CREATE CONSTRAINT ON (p:Node) ASSERT p.id IS UNIQUE');
 };
 
 // node operations
 
-exports.insertNode = async node => {
-  let result = await session.run(`CREATE (n:Node ${_stringify(node)}) RETURN n`);
+db.insertNode = async node => {
+  let result;
+  try {
+    result = await session.run(`CREATE (n:Node ${_stringify(node)}) RETURN n`);
+  } catch (error) {
+    if (typeof error.message === 'string' && error.message.indexOf('already exists') > -1) {
+      throw ERROR.NODE_ALREADY_EXIST;
+    }
+  }
   return result.records[0].toObject().n.properties;
 };
 
-exports.getNodesByParams = async params => {
+db.getNodesByParams = async params => {
   let query = `MATCH (n:Node) `;
   let counter = 0;
-  let totalAndConditions = 0;
 
   for (const paramName of params ? Object.keys(params) : []) {
     query += counter === 0 ? `WHERE ` : ``;
@@ -52,24 +61,32 @@ exports.getNodesByParams = async params => {
     query += `n.${paramName} = "${params[paramName]}" `;
     counter++;
 
-    query += counter < totalAndConditions ? `AND ` : ``;
+    query += counter < Object.keys(params).length ? `AND ` : ``;
   }
   query += `RETURN n`;
   let result = await session.run(query);
   return result.records.map(record => record.toObject().n.properties);
 };
 
-exports.updateNodeByID = async (nodeID, newNode) => {
+db.updateNodeByID = async (nodeID, newNodeProperties) => {
+  let oldNodesArray = await db.getNodesByParams({ id: nodeID });
+  if (oldNodesArray.length < 1) {
+    throw ERROR.NODE_DOESNT_EXIST;
+  }
+
+  let newNode = oldNodesArray[0];
+  for (const newPropertyKey of Object.keys(newNodeProperties)) {
+    newNode[newPropertyKey] = newNodeProperties[newPropertyKey];
+  }
+
   let result = await session.run(
     `MATCH (n:Node) WHERE n.id = "${nodeID}" SET n = ${_stringify(newNode)} RETURN n`,
   );
-  if (result.records.length < 1) {
-    throw ERROR.NODE_DOESNT_EXIST;
-  }
+
   return result.records[0].toObject().n.properties;
 };
 
-exports.deleteNodeByID = async nodeID => {
+db.deleteNodeByID = async nodeID => {
   let result = await session.run(
     `MATCH (n:Node) WHERE n.id = "${nodeID}" DETACH DELETE (n) RETURN n`,
   );
@@ -79,11 +96,11 @@ exports.deleteNodeByID = async nodeID => {
   return result.records[0].toObject().n.properties;
 };
 
-exports.deleteAllNodes = async () => session.run(`MATCH (n:Node) DELETE n`);
+db.deleteAllNodes = async () => session.run(`MATCH (n:Node) DELETE n`);
 
 // edge operations
 
-exports.insertEdge = async (startNode, endNode, edgeInfo) => {
+db.insertEdge = async (startNode, endNode, edgeInfo) => {
   const query = `
     MATCH (n1:Node {id: "${startNode.id}"}),(n2:Node {id: "${endNode.id}"})
     CREATE (n1)-[r:EDGE ${_stringify(edgeInfo)}]->(n2)
@@ -98,7 +115,7 @@ exports.insertEdge = async (startNode, endNode, edgeInfo) => {
   return object;
 };
 
-exports.getEdgesByParams = async params => {
+db.getEdgesByParams = async params => {
   let startNodeInput = params.startNode;
   let stopNodeInput = params.stopNode;
   delete params.startNode;
@@ -169,11 +186,11 @@ exports.getEdgesByParams = async params => {
   return results;
 };
 
-exports.deleteAllEdges = async () => {
+db.deleteAllEdges = async () => {
   return session.run(`MATCH e=(s1)-[r:EDGE]->(s2) DELETE e`);
 };
 
-exports.deleteEdge = async (startNode, endNode, edgeInfo) => {
+db.deleteEdge = async (startNode, endNode, edgeInfo) => {
   const query = `
     MATCH (n1:Node {id: "${startNode.id}"}),(n2:Node {id: "${endNode.id}"})
     CREATE (n1)-[r:EDGE ${_stringify(edgeInfo)}]->(n2)
@@ -182,3 +199,5 @@ exports.deleteEdge = async (startNode, endNode, edgeInfo) => {
   let result = await session.run(query);
   return result.records[0].toObject().r.properties;
 };
+
+exports.db = db;
