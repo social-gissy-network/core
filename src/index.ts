@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 let db = new DBManager();
 const typeDefs = fs
-  .readFileSync('./schema.graphql')
+  .readFileSync('schema.graphql')
   .toString('utf-8');
 
 const server = new ApolloServer({

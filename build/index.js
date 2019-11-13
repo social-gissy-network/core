@@ -21,7 +21,7 @@ dotenv_1.default.config();
 var app = express_1.default();
 var db = new neo4j_1.DBManager();
 var typeDefs = fs
-    .readFileSync('./schema.graphql')
+    .readFileSync('schema.graphql')
     .toString('utf-8');
 var server = new apollo_server_express_1.ApolloServer({
     typeDefs: typeDefs,
