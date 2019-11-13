@@ -13,15 +13,14 @@
 ### Install Dependencies
 
    ```sh
-   yarn install
+   npm install
    ```
 
 ### Development
 
    ```sh
-   yarn develop
-   # Run for seeding the Neo4j DB
-   yarn seed
+   tsc
+   node build/index.js
    ```
 
 ### Deployment
