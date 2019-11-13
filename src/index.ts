@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { resolvers } from './graphql-resolvers';
 import { DBManager } from './neo4j';
 import * as fs from "fs";
+import * as PATH from 'path';
 
 // set environment variables from ../.env
 dotenv.config();
@@ -11,7 +12,7 @@ dotenv.config();
 const app = express();
 let db = new DBManager();
 const typeDefs = fs
-  .readFileSync('schema.graphql')
+  .readFileSync(process.env.GRAPHQL_SCHEMA || PATH.join(__dirname, 'schema.graphql'))
   .toString('utf-8');
 
 const server = new ApolloServer({
@@ -24,7 +25,7 @@ const server = new ApolloServer({
 
 // Specify port and path for GraphQL endpoint
 const port = process.env.GRAPHQL_LISTEN_PORT || 4001;
-const path = '/graphql';
+let path = '/graphql';
 
 /*
  * Optionally, apply Express middleware for authentication, etc

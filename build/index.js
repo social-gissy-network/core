@@ -16,12 +16,13 @@ var dotenv_1 = __importDefault(require("dotenv"));
 var graphql_resolvers_1 = require("./graphql-resolvers");
 var neo4j_1 = require("./neo4j");
 var fs = __importStar(require("fs"));
+var PATH = __importStar(require("path"));
 // set environment variables from ../.env
 dotenv_1.default.config();
 var app = express_1.default();
 var db = new neo4j_1.DBManager();
 var typeDefs = fs
-    .readFileSync('schema.graphql')
+    .readFileSync(process.env.GRAPHQL_SCHEMA || PATH.join(__dirname, 'schema.graphql'))
     .toString('utf-8');
 var server = new apollo_server_express_1.ApolloServer({
     typeDefs: typeDefs,
