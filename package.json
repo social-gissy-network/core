@@ -2,54 +2,20 @@
   "name": "core",
   "version": "0.0.1",
   "description": "API app",
-  "main": "src/index.js",
+  "main": "build/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "develop": "./node_modules/.bin/nodemon --watch src --ext js,graphql --exec babel-node  src/index.js",
-    "build": "babel src -d build; cp src/schema.graphql build",
-    "seed": "babel-node src/seed/seed-db.js",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\""
+    "tsc": "tsc"
   },
   "author": "Gissy",
   "license": "MIT",
   "dependencies": {
-    "apollo-boost": "^0.4.4",
-    "apollo-cache-inmemory": "^1.6.3",
-    "apollo-client": "^2.6.4",
-    "apollo-link-http": "^1.5.16",
-    "apollo-server": "^2.9.7",
-    "csvtojson": "^2.0.10",
-    "dotenv": "^8.2.0",
-    "graphql-tag": "^2.10.1",
-    "neo4j-driver": "^1.7.6",
-    "node-fetch": "^2.6.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "@babel/node": "^7.6.3",
-    "@babel/plugin-proposal-optional-chaining": "^7.6.0",
-    "@babel/preset-env": "^7.6.3",
-    "@dennisvash/eslint-config": "1.1.0",
-    "@dennisvash/prettier-config": "^1.0.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.6.0",
-    "eslint-config-prettier": "^6.5.0",
-    "husky": "^3.0.9",
-    "lint-staged": "^9.4.2",
-    "nodemon": "^1.19.4",
-    "prettier": "^1.18.2",
-    "pretty-quick": "^2.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ]
+    "apollo-server-express": "2.9.8",
+    "csvtojson": "2.0.10",
+    "dotenv": "8.2.0",
+    "graphql": "14.5.8",
+    "neo4j-driver": "1.7.6",
+    "ts-node": "8.5.0",
+    "typescript": "3.7.2"
   }
 }

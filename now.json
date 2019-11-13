@@ -3,14 +3,14 @@
   "name": "core",
   "builds": [
     {
-      "src": "src/index.js",
+      "src": "build/index.js",
       "use": "@now/node"
     }
   ],
   "routes": [
     {
       "src": "/graphql(.*)",
-      "dest": "src/index.js"
+      "dest": "build/index.js"
     }
   ],
   "env": {

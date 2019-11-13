@@ -1,13 +1,15 @@
-const consts = require('./consts.js');
-const { db } = require('./neo4j.js');
-db.init();
+import * as consts from './consts';
+import { DBManager } from './neo4j';
+import { Edge, Node } from './types';
+
+let db = new DBManager();
 
 /**
  * automatically generates GraphQLSchema object from fieldsMapping object
  * @param fieldsMapping
  * @returns {string}: SDL representation of the schema
  */
-let createGraphQLSchema = fieldsMapping => {
+let createGraphQLSchema = (fieldsMapping: consts.FieldsMapping) => {
   const {
     printSchema,
     GraphQLID,
@@ -20,19 +22,20 @@ let createGraphQLSchema = fieldsMapping => {
     GraphQLList,
   } = require('graphql');
 
-  const nodeTypeConfig = {
+  let nodeTypeConfig: any = {
     name: 'Node',
     fields: {},
   };
+
   for (const property of fieldsMapping.startNode) {
-    nodeTypeConfig.fields[property.name] = { type: property.type };
+    nodeTypeConfig.fields[property.fieldName] = { type: property.fieldType };
   }
   const nodeType = new GraphQLObjectType(nodeTypeConfig);
 
   nodeTypeConfig.name = 'NodeInput';
   const nodeInputType = new GraphQLInputObjectType(nodeTypeConfig);
 
-  const edgeTypeConfig = {
+  const edgeTypeConfig: any = {
     name: 'Edge',
     fields: {
       startNode: { type: nodeType },
@@ -40,7 +43,7 @@ let createGraphQLSchema = fieldsMapping => {
     },
   };
   for (const property of fieldsMapping.edgeInfo) {
-    edgeTypeConfig.fields[property.name] = { type: property.type };
+    edgeTypeConfig.fields[property.fieldName] = { type: property.fieldType };
   }
 
   // if id is not set by the data, we'll use internal db id
@@ -67,32 +70,32 @@ let createGraphQLSchema = fieldsMapping => {
     },
   });
 
-  const nodeTypeMutationArgs = {};
+  const nodeTypeMutationArgs: { [argName: string]: any } = {};
   for (const property of fieldsMapping.startNode) {
-    if (property.name === 'id') {
-      property.type = new GraphQLNonNull(property.type);
+    if (property.fieldName === 'id') {
+      property.fieldType = new GraphQLNonNull(property.fieldType);
     }
-    nodeTypeMutationArgs[property.name] = { type: property.type };
+    nodeTypeMutationArgs[property.fieldName] = { type: property.fieldType };
   }
 
-  const edgeTypeMutationArgs = {
+  const edgeTypeMutationArgs: { [argName: string]: any } = {
     startNodeID: { type: new GraphQLNonNull(GraphQLID) },
     stopNodeID: { type: new GraphQLNonNull(GraphQLID) },
   };
   for (const property of fieldsMapping.edgeInfo) {
-    edgeTypeMutationArgs[property.name] = { type: property.type };
+    edgeTypeMutationArgs[property.fieldName] = { type: property.fieldType };
   }
   // if id is not set by the data, we'll use internal db id
   if (!edgeTypeMutationArgs.id) {
     edgeTypeMutationArgs.id = { type: GraphQLID };
   }
 
-  const edgeTypeQueryArgs = {
+  const edgeTypeQueryArgs: { [argName: string]: any } = {
     startNode: { type: nodeInputType },
     stopNode: { type: nodeInputType },
   };
   for (const property of fieldsMapping.edgeInfo) {
-    edgeTypeQueryArgs[property.name] = { type: property.type };
+    edgeTypeQueryArgs[property.fieldName] = { type: property.fieldType };
   }
 
   // if id is not set by the data, we'll use internal db id
@@ -143,20 +146,29 @@ let createGraphQLSchema = fieldsMapping => {
  * @param dataset
  * @returns {Promise<void>}
  */
-let storeDataOnDB = async (dataset, fieldsMapping) => {
-  const nodes = [];
+let storeDataOnDB = async (dataset: any, fieldsMapping: consts.FieldsMapping) => {
+  const nodes: Array<Node> = [];
+
+  let counter = 0;
+  setInterval(() => {
+    let percentage = (counter/dataset.length) * 100;
+
+    let percentageStr = percentage.toString().split(".")[0] + "." + percentage.toString().split(".")[1].substring(0, 3);
+
+    console.log(`storeDataOnDB progress: ${counter}/${dataset.length}; percentage: ${percentageStr}%`)
+  }, 10000);
 
   for (const dataElement of dataset) {
     // construct nodes
-    let startNode = {},
-      endNode = {};
+    let startNode: any = {};
+    let endNode: any = {};
 
     for (const property of fieldsMapping.startNode) {
-      startNode[property.name] = dataElement[property.dataName];
+      startNode[property.fieldName] = dataElement[property.fieldDataName];
     }
 
     for (const property of fieldsMapping.endNode) {
-      endNode[property.name] = dataElement[property.dataName];
+      endNode[property.fieldName] = dataElement[property.fieldDataName];
     }
 
     // insert nodes if needed
@@ -170,21 +182,43 @@ let storeDataOnDB = async (dataset, fieldsMapping) => {
     }
 
     // construct edgeInfo
-    let edgeInfo = {};
+    let edgeInfo: any = {};
     for (const property of fieldsMapping.edgeInfo) {
-      edgeInfo[property.name] = dataElement[property.dataName];
+      edgeInfo[property.fieldName] = dataElement[property.fieldDataName];
     }
 
     await db.insertEdge(startNode, endNode, edgeInfo);
+    counter++;
   }
 };
 
 (async () => {
+  const fs = require('fs');
+
+  // 0. create types file dynamically - specific for a given dataset
+  let typesFile: string = ``;
+  typesFile += `export interface Node {\n`;
+  for (const property of consts.fieldsMapping.startNode) {
+    typesFile += `\t${[property.fieldName]}: string\n`;
+  }
+  typesFile += `}\n`;
+
+  typesFile += `\n`;
+
+  typesFile += `export interface Edge {\n`;
+  typesFile += `\tstartNode: Node,\n`;
+  typesFile += `\tstopNode: Node,\n`;
+  for (const property of consts.fieldsMapping.edgeInfo) {
+    typesFile += `\t${[property.fieldName]}: string\n`;
+  }
+  typesFile += `}`;
+
+  fs.writeFileSync('types.ts', typesFile);
+
   // 1. create schema dynamically - specific for a given dataset
   let schema = createGraphQLSchema(consts.fieldsMapping);
 
   // 2. save schema on disk
-  const fs = require('fs');
   fs.writeFileSync('schema.graphql', schema);
 
   // 3. read dataset
@@ -196,7 +230,7 @@ let storeDataOnDB = async (dataset, fieldsMapping) => {
   await db.deleteAllNodes();
 
   // 5. set constraints
-  await db.setNodeConstraints();
+  await db.setConstraints();
 
   // 6. populate database with data
   await storeDataOnDB(dataset, consts.fieldsMapping);

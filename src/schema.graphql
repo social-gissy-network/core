@@ -17,28 +17,8 @@ type EdgeUpdateResponse {
 }
 
 type Mutation {
-  CreateEdge(
-    startNodeID: ID!
-    stopNodeID: ID!
-    startTime: String
-    stopTime: String
-    bikeID: String
-    userType: String
-    birthYear: String
-    gender: String
-    id: ID
-  ): EdgeUpdateResponse
-  UpdateEdge(
-    startNodeID: ID!
-    stopNodeID: ID!
-    startTime: String
-    stopTime: String
-    bikeID: String
-    userType: String
-    birthYear: String
-    gender: String
-    id: ID
-  ): EdgeUpdateResponse
+  CreateEdge(startNodeID: ID!, stopNodeID: ID!, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String, id: ID): EdgeUpdateResponse
+  UpdateEdge(startNodeID: ID!, stopNodeID: ID!, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String, id: ID): EdgeUpdateResponse
   DeleteEdge(id: ID!): EdgeUpdateResponse
   CreateNode(id: ID, latitude: String, longitude: String, name: String): NodeUpdateResponse
   UpdateNode(id: ID!, latitude: String, longitude: String, name: String): NodeUpdateResponse
@@ -67,15 +47,5 @@ type NodeUpdateResponse {
 
 type Query {
   Node(id: ID, latitude: String, longitude: String, name: String): [Node]
-  Edge(
-    startNode: NodeInput
-    stopNode: NodeInput
-    startTime: String
-    stopTime: String
-    bikeID: String
-    userType: String
-    birthYear: String
-    gender: String
-    id: ID
-  ): [Edge]
+  Edge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String, id: ID): [Edge]
 }

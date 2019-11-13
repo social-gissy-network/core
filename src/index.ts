@@ -1,16 +1,14 @@
-const { ApolloServer } = require('apollo-server-express');
-const express = require('express');
-const dotenv = require('dotenv');
+import { ApolloServer } from 'apollo-server-express';
+import express from 'express';
+import dotenv from 'dotenv';
+import { typeDefs, resolvers } from './graphql';
+import { DBManager } from './neo4j';
 
 // set environment variables from ../.env
 dotenv.config();
 
 const app = express();
-
-const { typeDefs, resolvers } = require('./graphql.js');
-
-const { db } = require('./neo4j.js'); // for the Edge's manual generated Query fields
-db.init();
+let db = new DBManager();
 
 const server = new ApolloServer({
   typeDefs,
