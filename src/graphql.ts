@@ -199,7 +199,7 @@ let resolvers: IResolvers = {
 };
 
 const typeDefs = fs
-  .readFileSync(process.env.GRAPHQL_SCHEMA || path.join(__dirname, 'schema.graphql'))
+  .readFileSync(process.env.GRAPHQL_SCHEMA || path.join(__dirname, './schema.graphql'))
   .toString('utf-8');
 
 export { resolvers, typeDefs };

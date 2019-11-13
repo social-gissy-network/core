@@ -213,13 +213,13 @@ let storeDataOnDB = async (dataset: any, fieldsMapping: consts.FieldsMapping) =>
   }
   typesFile += `}`;
 
-  fs.writeFileSync('types.ts', typesFile);
+  fs.writeFileSync('./types.ts', typesFile);
 
   // 1. create schema dynamically - specific for a given dataset
   let schema = createGraphQLSchema(consts.fieldsMapping);
 
   // 2. save schema on disk
-  fs.writeFileSync('schema.graphql', schema);
+  fs.writeFileSync('./schema.graphql', schema);
 
   // 3. read dataset
   const csv = require('csvtojson');

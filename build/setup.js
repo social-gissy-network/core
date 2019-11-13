@@ -257,10 +257,10 @@ var storeDataOnDB = function (dataset, fieldsMapping) { return __awaiter(void 0,
                     typesFile += "\t" + [property.fieldName] + ": string\n";
                 }
                 typesFile += "}";
-                fs.writeFileSync('types.ts', typesFile);
+                fs.writeFileSync('./types.ts', typesFile);
                 schema = createGraphQLSchema(consts.fieldsMapping);
                 // 2. save schema on disk
-                fs.writeFileSync('schema.graphql', schema);
+                fs.writeFileSync('./schema.graphql', schema);
                 csv = require('csvtojson');
                 return [4 /*yield*/, csv().fromFile(consts.csvFilePath)];
             case 1:
