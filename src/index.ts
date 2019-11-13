@@ -1,14 +1,18 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import dotenv from 'dotenv';
-import { typeDefs, resolvers } from './graphql';
+import { resolvers } from './graphql-resolvers';
 import { DBManager } from './neo4j';
+import * as fs from "fs";
 
 // set environment variables from ../.env
 dotenv.config();
 
 const app = express();
 let db = new DBManager();
+const typeDefs = fs
+  .readFileSync('./schema.graphql')
+  .toString('utf-8');
 
 const server = new ApolloServer({
   typeDefs,

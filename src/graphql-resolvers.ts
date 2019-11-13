@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-import * as path from 'path';
 import { IResolverObject, IResolvers } from 'graphql-tools';
 import { fieldsMapping } from './consts';
 
@@ -198,8 +196,4 @@ let resolvers: IResolvers = {
   EdgeUpdateResponse: edgeUpdateResponseResolverObject,
 };
 
-const typeDefs = fs
-  .readFileSync(process.env.GRAPHQL_SCHEMA || path.join(__dirname, './schema.graphql'))
-  .toString('utf-8');
-
-export { resolvers, typeDefs };
+export { resolvers };
