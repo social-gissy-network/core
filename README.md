@@ -16,12 +16,14 @@
    npm install
    ```
 
-### Development
+### Setup
+1. edit setup/fieldsMapping.js according to provided dataset in "data" folder.
+2. ```node createTypes.js ``` - create "src/types.ts" and "src/fieldsMapping.ts" files.
+3. ```node createSchema.js ``` - create "build/schema.graphql" file.
 
-   ```sh
-   tsc
-   node build/index.js
-   ```
+### Development
+1. ```tsc``` - compile TypeScript to "build" folder.
+2. ```npm start``` - start GraphQL server.
 
 ### Deployment
 

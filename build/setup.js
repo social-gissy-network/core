@@ -236,53 +236,36 @@ var storeDataOnDB = function (dataset, fieldsMapping) { return __awaiter(void 0,
     });
 }); };
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var fs, typesFile, _i, _a, property, _b, _c, property, schema, csv, dataset;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
+    var fs, schema, csv, dataset;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
                 fs = require('fs');
-                typesFile = "";
-                typesFile += "export interface Node {\n";
-                for (_i = 0, _a = consts.fieldsMapping.startNode; _i < _a.length; _i++) {
-                    property = _a[_i];
-                    typesFile += "\t" + [property.fieldName] + ": string\n";
-                }
-                typesFile += "}\n";
-                typesFile += "\n";
-                typesFile += "export interface Edge {\n";
-                typesFile += "\tstartNode: Node,\n";
-                typesFile += "\tstopNode: Node,\n";
-                for (_b = 0, _c = consts.fieldsMapping.edgeInfo; _b < _c.length; _b++) {
-                    property = _c[_b];
-                    typesFile += "\t" + [property.fieldName] + ": string\n";
-                }
-                typesFile += "}";
-                fs.writeFileSync('./types.ts', typesFile);
                 schema = createGraphQLSchema(consts.fieldsMapping);
                 // 2. save schema on disk
                 fs.writeFileSync('./schema.graphql', schema);
                 csv = require('csvtojson');
                 return [4 /*yield*/, csv().fromFile(consts.csvFilePath)];
             case 1:
-                dataset = _d.sent();
+                dataset = _a.sent();
                 // 4. clean database: uncomment following lines if you'd like to remove existing data on db
                 return [4 /*yield*/, db.deleteAllEdges()];
             case 2:
                 // 4. clean database: uncomment following lines if you'd like to remove existing data on db
-                _d.sent();
+                _a.sent();
                 return [4 /*yield*/, db.deleteAllNodes()];
             case 3:
-                _d.sent();
+                _a.sent();
                 // 5. set constraints
                 return [4 /*yield*/, db.setConstraints()];
             case 4:
                 // 5. set constraints
-                _d.sent();
+                _a.sent();
                 // 6. populate database with data
                 return [4 /*yield*/, storeDataOnDB(dataset, consts.fieldsMapping)];
             case 5:
                 // 6. populate database with data
-                _d.sent();
+                _a.sent();
                 return [2 /*return*/];
         }
     });

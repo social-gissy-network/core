@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var consts_1 = require("./consts");
+var fieldsMapping = require('./fieldsMapping').fieldsMapping;
 var nodeResolverObject = {};
 var _loop_1 = function (nodeProperty) {
     nodeResolverObject[nodeProperty.fieldName] = function (obj, params, ctx, resolveInfo) {
@@ -47,7 +47,7 @@ var _loop_1 = function (nodeProperty) {
         return propertyValue;
     };
 };
-for (var _i = 0, _a = consts_1.fieldsMapping.startNode; _i < _a.length; _i++) {
+for (var _i = 0, _a = fieldsMapping.startNode; _i < _a.length; _i++) {
     var nodeProperty = _a[_i];
     _loop_1(nodeProperty);
 }
@@ -63,7 +63,7 @@ var _loop_2 = function (edgeProperty) {
         return propertyValue;
     };
 };
-for (var _b = 0, _c = consts_1.fieldsMapping.edgeInfo; _b < _c.length; _b++) {
+for (var _b = 0, _c = fieldsMapping.edgeInfo; _b < _c.length; _b++) {
     var edgeProperty = _c[_b];
     _loop_2(edgeProperty);
 }

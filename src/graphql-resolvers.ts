@@ -1,5 +1,5 @@
 import { IResolverObject, IResolvers } from 'graphql-tools';
-import { fieldsMapping } from './consts';
+const { fieldsMapping } = require('./fieldsMapping');
 
 let nodeResolverObject: IResolverObject = {};
 for (const nodeProperty of fieldsMapping.startNode) {

@@ -195,26 +195,6 @@ let storeDataOnDB = async (dataset: any, fieldsMapping: consts.FieldsMapping) =>
 (async () => {
   const fs = require('fs');
 
-  // 0. create types file dynamically - specific for a given dataset
-  let typesFile: string = ``;
-  typesFile += `export interface Node {\n`;
-  for (const property of consts.fieldsMapping.startNode) {
-    typesFile += `\t${[property.fieldName]}: string\n`;
-  }
-  typesFile += `}\n`;
-
-  typesFile += `\n`;
-
-  typesFile += `export interface Edge {\n`;
-  typesFile += `\tstartNode: Node,\n`;
-  typesFile += `\tstopNode: Node,\n`;
-  for (const property of consts.fieldsMapping.edgeInfo) {
-    typesFile += `\t${[property.fieldName]}: string\n`;
-  }
-  typesFile += `}`;
-
-  fs.writeFileSync('./types.ts', typesFile);
-
   // 1. create schema dynamically - specific for a given dataset
   let schema = createGraphQLSchema(consts.fieldsMapping);
 
