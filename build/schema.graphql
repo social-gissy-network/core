@@ -1,0 +1,51 @@
+type Edge {
+  startNode: Node
+  stopNode: Node
+  startTime: String
+  stopTime: String
+  bikeID: String
+  userType: String
+  birthYear: String
+  gender: String
+  id: ID
+}
+
+type EdgeUpdateResponse {
+  success: Boolean
+  message: String
+  edge: Edge
+}
+
+type Mutation {
+  CreateEdge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String): EdgeUpdateResponse
+  UpdateEdge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String): EdgeUpdateResponse
+  DeleteEdge(id: ID!): EdgeUpdateResponse
+  CreateNode(id: ID, latitude: String, longitude: String, name: String): NodeUpdateResponse
+  UpdateNode(id: ID!, latitude: String, longitude: String, name: String): NodeUpdateResponse
+  DeleteNode(id: ID!): NodeUpdateResponse
+}
+
+type Node {
+  id: ID
+  latitude: String
+  longitude: String
+  name: String
+}
+
+input NodeInput {
+  id: ID
+  latitude: String
+  longitude: String
+  name: String
+}
+
+type NodeUpdateResponse {
+  success: Boolean
+  message: String
+  node: Node
+}
+
+type Query {
+  Node(id: ID, latitude: String, longitude: String, name: String): [Node]
+  Edge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String): [Edge]
+}
