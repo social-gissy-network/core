@@ -1,3 +1,5 @@
+// automatically generates GraphQLSchema object from fieldsMapping object and write it as '../build/schema.graphql'
+
 const fs = require('fs');
 
 const {

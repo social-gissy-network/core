@@ -1,7 +1,8 @@
+// 0. create types file dynamically - specific for a given dataset
+
 const fs = require('fs');
 const { fieldsMapping } = require('./fieldsMapping');
 
-// 0. create types file dynamically - specific for a given dataset
 let typesFile = ``;
 typesFile += `export interface Node {\n`;
 for (const property of fieldsMapping.startNode) {

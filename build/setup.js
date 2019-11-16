@@ -47,120 +47,6 @@ var consts = __importStar(require("./consts"));
 var neo4j_1 = require("./neo4j");
 var db = new neo4j_1.DBManager();
 /**
- * automatically generates GraphQLSchema object from fieldsMapping object
- * @param fieldsMapping
- * @returns {string}: SDL representation of the schema
- */
-var createGraphQLSchema = function (fieldsMapping) {
-    var _a = require('graphql'), printSchema = _a.printSchema, GraphQLID = _a.GraphQLID, GraphQLObjectType = _a.GraphQLObjectType, GraphQLInputObjectType = _a.GraphQLInputObjectType, GraphQLSchema = _a.GraphQLSchema, GraphQLNonNull = _a.GraphQLNonNull, GraphQLString = _a.GraphQLString, GraphQLBoolean = _a.GraphQLBoolean, GraphQLList = _a.GraphQLList;
-    var nodeTypeConfig = {
-        name: 'Node',
-        fields: {},
-    };
-    for (var _i = 0, _b = fieldsMapping.startNode; _i < _b.length; _i++) {
-        var property = _b[_i];
-        nodeTypeConfig.fields[property.fieldName] = { type: property.fieldType };
-    }
-    var nodeType = new GraphQLObjectType(nodeTypeConfig);
-    nodeTypeConfig.name = 'NodeInput';
-    var nodeInputType = new GraphQLInputObjectType(nodeTypeConfig);
-    var edgeTypeConfig = {
-        name: 'Edge',
-        fields: {
-            startNode: { type: nodeType },
-            stopNode: { type: nodeType },
-        },
-    };
-    for (var _c = 0, _d = fieldsMapping.edgeInfo; _c < _d.length; _c++) {
-        var property = _d[_c];
-        edgeTypeConfig.fields[property.fieldName] = { type: property.fieldType };
-    }
-    // if id is not set by the data, we'll use internal db id
-    if (!edgeTypeConfig.fields.id) {
-        edgeTypeConfig.fields.id = { type: GraphQLID };
-    }
-    var edgeType = new GraphQLObjectType(edgeTypeConfig);
-    var nodeUpdateResponseType = new GraphQLObjectType({
-        name: 'NodeUpdateResponse',
-        fields: {
-            success: { type: GraphQLBoolean },
-            message: { type: GraphQLString },
-            node: { type: nodeType },
-        },
-    });
-    var edgeUpdateResponseType = new GraphQLObjectType({
-        name: 'EdgeUpdateResponse',
-        fields: {
-            success: { type: GraphQLBoolean },
-            message: { type: GraphQLString },
-            edge: { type: edgeType },
-        },
-    });
-    var nodeTypeMutationArgs = {};
-    for (var _e = 0, _f = fieldsMapping.startNode; _e < _f.length; _e++) {
-        var property = _f[_e];
-        if (property.fieldName === 'id') {
-            property.fieldType = new GraphQLNonNull(property.fieldType);
-        }
-        nodeTypeMutationArgs[property.fieldName] = { type: property.fieldType };
-    }
-    var edgeTypeMutationArgs = {
-        startNodeID: { type: new GraphQLNonNull(GraphQLID) },
-        stopNodeID: { type: new GraphQLNonNull(GraphQLID) },
-    };
-    for (var _g = 0, _h = fieldsMapping.edgeInfo; _g < _h.length; _g++) {
-        var property = _h[_g];
-        edgeTypeMutationArgs[property.fieldName] = { type: property.fieldType };
-    }
-    // if id is not set by the data, we'll use internal db id
-    if (!edgeTypeMutationArgs.id) {
-        edgeTypeMutationArgs.id = { type: GraphQLID };
-    }
-    var edgeTypeQueryArgs = {
-        startNode: { type: nodeInputType },
-        stopNode: { type: nodeInputType },
-    };
-    for (var _j = 0, _k = fieldsMapping.edgeInfo; _j < _k.length; _j++) {
-        var property = _k[_j];
-        edgeTypeQueryArgs[property.fieldName] = { type: property.fieldType };
-    }
-    // if id is not set by the data, we'll use internal db id
-    if (!edgeTypeQueryArgs.id) {
-        edgeTypeQueryArgs.id = { type: GraphQLID };
-    }
-    var queryTypeConfig = {
-        name: 'Query',
-        fields: {
-            Node: { type: new GraphQLList(nodeType), args: nodeTypeConfig.fields },
-            Edge: { type: new GraphQLList(edgeType), args: edgeTypeQueryArgs },
-        },
-    };
-    var queryType = new GraphQLObjectType(queryTypeConfig);
-    var mutationTypeConfig = {
-        name: 'Mutation',
-        fields: {
-            CreateEdge: { type: edgeUpdateResponseType, args: edgeTypeMutationArgs },
-            UpdateEdge: { type: edgeUpdateResponseType, args: edgeTypeMutationArgs },
-            DeleteEdge: {
-                type: edgeUpdateResponseType,
-                args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-            },
-            CreateNode: { type: nodeUpdateResponseType, args: nodeTypeConfig.fields },
-            UpdateNode: { type: nodeUpdateResponseType, args: nodeTypeMutationArgs },
-            DeleteNode: {
-                type: nodeUpdateResponseType,
-                args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-            },
-        },
-    };
-    var mutationType = new GraphQLObjectType(mutationTypeConfig);
-    var schema = new GraphQLSchema({
-        query: queryType,
-        mutation: mutationType,
-    });
-    return printSchema(schema);
-};
-/**
  * saves each data element from dataset in DB - represented as edge connecting two nodes
  * @param dataset
  * @returns {Promise<void>}
@@ -236,35 +122,32 @@ var storeDataOnDB = function (dataset, fieldsMapping) { return __awaiter(void 0,
     });
 }); };
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var fs, schema, csv, dataset;
+    var fs, csv, dataset;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 fs = require('fs');
-                schema = createGraphQLSchema(consts.fieldsMapping);
-                // 2. save schema on disk
-                fs.writeFileSync('./schema.graphql', schema);
                 csv = require('csvtojson');
                 return [4 /*yield*/, csv().fromFile(consts.csvFilePath)];
             case 1:
                 dataset = _a.sent();
-                // 4. clean database: uncomment following lines if you'd like to remove existing data on db
+                // 2. clean database: uncomment following lines if you'd like to remove existing data on db
                 return [4 /*yield*/, db.deleteAllEdges()];
             case 2:
-                // 4. clean database: uncomment following lines if you'd like to remove existing data on db
+                // 2. clean database: uncomment following lines if you'd like to remove existing data on db
                 _a.sent();
                 return [4 /*yield*/, db.deleteAllNodes()];
             case 3:
                 _a.sent();
-                // 5. set constraints
+                // 3. set constraints
                 return [4 /*yield*/, db.setConstraints()];
             case 4:
-                // 5. set constraints
+                // 3. set constraints
                 _a.sent();
-                // 6. populate database with data
+                // 4. populate database with data
                 return [4 /*yield*/, storeDataOnDB(dataset, consts.fieldsMapping)];
             case 5:
-                // 6. populate database with data
+                // 4. populate database with data
                 _a.sent();
                 return [2 /*return*/];
         }
