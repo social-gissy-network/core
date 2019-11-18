@@ -38,10 +38,29 @@ queryResolverObject.Edge = async (obj, params, ctx, resolveInfo) => {
 
   return await ctx.db.getEdgesByParams(startNode, stopNode, params);
 };
-queryResolverObject.Node = async (obj, params, ctx, resolveInfo) => await ctx.db.getNodesByParams(params);
-queryResolverObject.Nodes = async (obj, params, ctx, resolveInfo) => {
 
-  return await ctx.db.getNodesByParams({}, params.sort);
+queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
+  let startNode: Node = params.startNode;
+  let stopNode: Node = params.stopNode;
+  delete params.startNode;
+  delete params.stopNode;
+
+
+  if (params.sort) {
+    return await ctx.db.getEdgesByParams(startNode, stopNode, {}, params.sort);
+  }
+
+  return await ctx.db.getEdgesByParams(startNode, stopNode, {}, {});
+};
+
+
+queryResolverObject.Node = async (obj, params, ctx, resolveInfo) => await ctx.db.getNodesByParams(params, {});
+queryResolverObject.Nodes = async (obj, params, ctx, resolveInfo) => {
+  if (params.sort) {
+    return await ctx.db.getNodesByParams({}, params.sort);
+  }
+
+  return await ctx.db.getNodesByParams({}, {})
 };
 
 let mutationResolverObject: IResolverObject = {};

@@ -10,6 +10,17 @@ type Edge {
   id: ID
 }
 
+input EdgeSortParameter {
+  startNode: NodeSortParameter
+  stopNode: NodeSortParameter
+  startTime: SortOrder
+  stopTime: SortOrder
+  bikeID: SortOrder
+  userType: SortOrder
+  birthYear: SortOrder
+  gender: SortOrder
+}
+
 type EdgeUpdateResponse {
   success: Boolean
   message: String
@@ -56,6 +67,7 @@ type Query {
   Node(id: ID, latitude: String, longitude: String, name: String): [Node]
   Edge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String): [Edge]
   Nodes(sort: NodeSortParameter): [Node]
+  Edges(sort: EdgeSortParameter): [Edge]
 }
 
 enum SortOrder {

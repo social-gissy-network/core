@@ -74,22 +74,14 @@ export class DBManager {
     query += `RETURN n`;
 
 
-    let propertyIdx = 0;
-    for (const property of Object.keys(sort)) {
-      if (propertyIdx === 0) {
-        query += ` ORDER BY`
-      }
+    let sortingKeys: string[] = [];
 
-      query += ` n.${property} ${sort[property]}`;
-
-      if (propertyIdx < Object.keys(sort).length - 1) {
-        query += `,`
-      }
-
-
-      propertyIdx++;
+    for (const key of Object.keys(sort)) {
+      sortingKeys.push(`n.${key} ${sort[key]}`)
     }
-
+    if (sortingKeys.length > 0) {
+      query += ` ORDER BY ` + sortingKeys.join(", ");
+    }
 
     let result: StatementResult = await this.session.run(query);
     return result.records.map(record => record.get('n').properties);
@@ -168,6 +160,7 @@ export class DBManager {
     startNode: Node,
     stopNode: Node,
     params: { [paramName: string]: string },
+    sort: { [paramName: string]: any }
   ) => {
     let query = `MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) `;
     let counter = 0;
@@ -211,6 +204,27 @@ export class DBManager {
     }
 
     query += `RETURN p, id(e) as edgeID`;
+
+    let propertyIdx = 0;
+    let totalProperties = 0;
+
+
+    let sortingKeys: string[] = [];
+
+    for (const key of Object.keys(sort)) {
+      if (key === "startNode") {
+        sortingKeys = sortingKeys.concat(Object.keys(sort.startNode).map(key => `s1.${key} ${sort.startNode[key]}`));
+      }
+      else if (key === "stopNode") {
+        sortingKeys = sortingKeys.concat(Object.keys(sort.stopNode).map(key => `s2.${key} ${sort.stopNode[key]}`));
+      }
+      else {
+        sortingKeys.push(`e.${key} ${sort[key]}`)
+      }
+    }
+    if (sortingKeys.length > 0) {
+      query += ` ORDER BY ` + sortingKeys.join(", ");
+    }
 
     let result = await this.session.run(query);
     if (result.records.length < 1) {

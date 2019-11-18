@@ -84,7 +84,7 @@ var DBManager = /** @class */ (function () {
             });
         }); };
         this.getNodesByParams = function (params, sort) { return __awaiter(_this, void 0, void 0, function () {
-            var query, counter, _i, _a, paramName, propertyIdx, _b, _c, property, result;
+            var query, counter, _i, _a, paramName, sortingKeys, _b, _c, key, result;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
@@ -98,17 +98,13 @@ var DBManager = /** @class */ (function () {
                             query += counter < Object.keys(params).length ? "AND " : "";
                         }
                         query += "RETURN n";
-                        propertyIdx = 0;
+                        sortingKeys = [];
                         for (_b = 0, _c = Object.keys(sort); _b < _c.length; _b++) {
-                            property = _c[_b];
-                            if (propertyIdx === 0) {
-                                query += " ORDER BY";
-                            }
-                            query += " n." + property + " " + sort[property];
-                            if (propertyIdx < Object.keys(sort).length - 1) {
-                                query += ",";
-                            }
-                            propertyIdx++;
+                            key = _c[_b];
+                            sortingKeys.push("n." + key + " " + sort[key]);
+                        }
+                        if (sortingKeys.length > 0) {
+                            query += " ORDER BY " + sortingKeys.join(", ");
                         }
                         return [4 /*yield*/, this.session.run(query)];
                     case 1:
@@ -183,10 +179,10 @@ var DBManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.getEdgesByParams = function (startNode, stopNode, params) { return __awaiter(_this, void 0, void 0, function () {
-            var query, counter, totalAndConditions, _i, _a, paramName, _b, _c, paramName, _d, _e, paramName, result, results;
-            return __generator(this, function (_f) {
-                switch (_f.label) {
+        this.getEdgesByParams = function (startNode, stopNode, params, sort) { return __awaiter(_this, void 0, void 0, function () {
+            var query, counter, totalAndConditions, _i, _a, paramName, _b, _c, paramName, _d, _e, paramName, propertyIdx, totalProperties, sortingKeys, _f, _g, key, result, results;
+            return __generator(this, function (_h) {
+                switch (_h.label) {
                     case 0:
                         query = "MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) ";
                         counter = 0;
@@ -222,9 +218,27 @@ var DBManager = /** @class */ (function () {
                             query += counter < totalAndConditions ? "AND " : "";
                         }
                         query += "RETURN p, id(e) as edgeID";
+                        propertyIdx = 0;
+                        totalProperties = 0;
+                        sortingKeys = [];
+                        for (_f = 0, _g = Object.keys(sort); _f < _g.length; _f++) {
+                            key = _g[_f];
+                            if (key === "startNode") {
+                                sortingKeys = sortingKeys.concat(Object.keys(sort.startNode).map(function (key) { return "s1." + key + " " + sort.startNode[key]; }));
+                            }
+                            else if (key === "stopNode") {
+                                sortingKeys = sortingKeys.concat(Object.keys(sort.stopNode).map(function (key) { return "s2." + key + " " + sort.stopNode[key]; }));
+                            }
+                            else {
+                                sortingKeys.push("e." + key + " " + sort[key]);
+                            }
+                        }
+                        if (sortingKeys.length > 0) {
+                            query += " ORDER BY " + sortingKeys.join(", ");
+                        }
                         return [4 /*yield*/, this.session.run(query)];
                     case 1:
-                        result = _f.sent();
+                        result = _h.sent();
                         if (result.records.length < 1) {
                             return [2 /*return*/, []];
                         }

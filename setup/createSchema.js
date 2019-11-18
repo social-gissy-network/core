@@ -96,7 +96,17 @@ for (const property of fieldsMapping.startNode) {
 const nodeSortParameter = new GraphQLInputObjectType(nodeSortParameterConfig);
 
 
-
+let edgeSortParameterConfig = {
+  name: 'EdgeSortParameter',
+  fields: {
+    startNode: { type: nodeSortParameter },
+    stopNode: { type: nodeSortParameter },
+  },
+};
+for (const property of fieldsMapping.edgeInfo) {
+  edgeSortParameterConfig.fields[property.fieldName] = { type: sortOrderType };
+}
+const edgeSortParameter = new GraphQLInputObjectType(edgeSortParameterConfig);
 
 const queryTypeConfig = {
   name: 'Query',
@@ -105,6 +115,7 @@ const queryTypeConfig = {
     Edge: { type: new GraphQLList(edgeType), args: edgeTypeMutationArgs },
 
     Nodes: { type: new GraphQLList(nodeType), args: { sort: { type: nodeSortParameter }} },
+    Edges: { type: new GraphQLList(edgeType), args: { sort: { type: edgeSortParameter }} },
 
   },
 };

@@ -86,17 +86,38 @@ queryResolverObject.Edge = function (obj, params, ctx, resolveInfo) { return __a
         }
     });
 }); };
+queryResolverObject.Edges = function (obj, params, ctx, resolveInfo) { return __awaiter(void 0, void 0, void 0, function () {
+    var startNode, stopNode;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                startNode = params.startNode;
+                stopNode = params.stopNode;
+                delete params.startNode;
+                delete params.stopNode;
+                if (!params.sort) return [3 /*break*/, 2];
+                return [4 /*yield*/, ctx.db.getEdgesByParams(startNode, stopNode, {}, params.sort)];
+            case 1: return [2 /*return*/, _a.sent()];
+            case 2: return [4 /*yield*/, ctx.db.getEdgesByParams(startNode, stopNode, {}, {})];
+            case 3: return [2 /*return*/, _a.sent()];
+        }
+    });
+}); };
 queryResolverObject.Node = function (obj, params, ctx, resolveInfo) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
     switch (_a.label) {
-        case 0: return [4 /*yield*/, ctx.db.getNodesByParams(params)];
+        case 0: return [4 /*yield*/, ctx.db.getNodesByParams(params, {})];
         case 1: return [2 /*return*/, _a.sent()];
     }
 }); }); };
 queryResolverObject.Nodes = function (obj, params, ctx, resolveInfo) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, ctx.db.getNodesByParams({}, params.sort)];
+            case 0:
+                if (!params.sort) return [3 /*break*/, 2];
+                return [4 /*yield*/, ctx.db.getNodesByParams({}, params.sort)];
             case 1: return [2 /*return*/, _a.sent()];
+            case 2: return [4 /*yield*/, ctx.db.getNodesByParams({}, {})];
+            case 3: return [2 /*return*/, _a.sent()];
         }
     });
 }); };
