@@ -14,6 +14,7 @@ const ERROR = {
   NODE_DOESNT_EXIST: "node doesn't exist",
   NODE_ALREADY_EXIST: 'node already exist',
   GENERAL_ERROR: 'general error',
+  INVALID_OPERATOR: 'invalid operator',
 };
 
 export class DBManager {
@@ -36,6 +37,30 @@ export class DBManager {
   private firstRecordProperties(result: StatementResult, keyName: string) {
     return result.records[0].get(keyName).properties;
   }
+
+  private mapOperators(identifier: string, params: any, key:string) {
+    let operators = [];
+    for (const operatorName of Object.keys(params[key])) {
+      let op;
+      switch (operatorName) {
+        case "eq":        op = "="; break;
+        case "contains":  op = "CONTAINS"; break;
+        case "gt":        op = ">"; break;
+        case "gte":       op = ">="; break;
+        case "lt":        op = "<"; break;
+        case "lte":       op = "<="; break;
+      }
+      operators.push({op: op, name: operatorName});
+    }
+
+    if (operators.length < 1) {
+      throw ERROR.INVALID_OPERATOR;
+    }
+
+
+    return operators.map(operator => `${identifier}.${key} ${operator.op} "${params[key][operator.name]}"`);
+
+  };
 
   public close = () => this.driver.close();
 
@@ -62,14 +87,7 @@ export class DBManager {
   public getNodesByParams = async (params: { [paramName: string]: any }, sort: { [paramName: string]: string }) => {
     let query = `MATCH (n:Node) `;
 
-    let filteringKeys = Object.keys(params).map(key => {
-      if (params[key].eq) {
-        return `n.${key} = "${params[key].eq}"`
-      }
-      else if (params[key].contains) {
-        return `n.${key} CONTAINS "${params[key].contains}"`
-      }
-    });
+    let filteringKeys = Object.keys(params).map(key => this.mapOperators("n", params, key));
 
     if (filteringKeys.length > 0) {
       query += `WHERE ` + filteringKeys.reverse().join(", ");
@@ -160,48 +178,18 @@ export class DBManager {
     return object;
   };
 
-  public getEdgesByParams = async (
-    params: { [paramName: string]: any },
-    sort: { [paramName: string]: any }
-  ) => {
+  public getEdgesByParams = async ( params: { [paramName: string]: any }, sort: { [paramName: string]: any }) => {
     let query = `MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) `;
-
 
     let filteringKeys: string[] = [];
     for (const key of Object.keys(params)) {
-      if (key === "startNode") {
-        filteringKeys = filteringKeys.concat(Object.keys(params[key]).map(key => {
-          if (params[key].eq) {
-            return `s1.${key} = "${params[key].eq}"`
-          }
-          else if (params[key].contains) {
-            return `s1.${key} CONTAINS "${params[key].contains}"`
-          }
-          // todo
-          return `s1.${key} CONTAINS "${params[key].contains}"`
-
-        }));
-      }
-      else if (key === "stopNode") {
-        filteringKeys = filteringKeys.concat(Object.keys(params[key]).map(key => {
-          if (params[key].eq) {
-            return `s2.${key} = "${params[key].eq}"`
-          }
-          else if (params[key].contains) {
-            return `s2.${key} CONTAINS "${params[key].contains}"`
-          }
-          // todo
-          return `s2.${key} CONTAINS "${params[key].contains}"`
-
-        }));
+      if (key === "startNode" || key === "stopNode") {
+        for (const subKey of Object.keys(params[key])) {
+          filteringKeys = filteringKeys.concat(this.mapOperators(key === "startNode" ? "s1" : "s2", params[key], subKey));
+        }
       }
       else {
-        if (params[key].eq) {
-          filteringKeys.push(`e.${key} = "${params[key].eq}"`);
-        }
-        else if (params[key].contains) {
-          filteringKeys.push(`e.${key} CONTAINS "${params[key].contains}"`)
-        }
+        filteringKeys = filteringKeys.concat(this.mapOperators("e", params, key));
       }
     }
 

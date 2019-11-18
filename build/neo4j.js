@@ -50,6 +50,7 @@ var ERROR = {
     NODE_DOESNT_EXIST: "node doesn't exist",
     NODE_ALREADY_EXIST: 'node already exist',
     GENERAL_ERROR: 'general error',
+    INVALID_OPERATOR: 'invalid operator',
 };
 var DBManager = /** @class */ (function () {
     function DBManager() {
@@ -85,18 +86,12 @@ var DBManager = /** @class */ (function () {
         }); };
         this.getNodesByParams = function (params, sort) { return __awaiter(_this, void 0, void 0, function () {
             var query, filteringKeys, sortingKeys, _i, _a, key, result;
+            var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         query = "MATCH (n:Node) ";
-                        filteringKeys = Object.keys(params).map(function (key) {
-                            if (params[key].eq) {
-                                return "n." + key + " = \"" + params[key].eq + "\"";
-                            }
-                            else if (params[key].contains) {
-                                return "n." + key + " CONTAINS \"" + params[key].contains + "\"";
-                            }
-                        });
+                        filteringKeys = Object.keys(params).map(function (key) { return _this.mapOperators("n", params, key); });
                         if (filteringKeys.length > 0) {
                             query += "WHERE " + filteringKeys.reverse().join(", ");
                         }
@@ -183,45 +178,22 @@ var DBManager = /** @class */ (function () {
             });
         }); };
         this.getEdgesByParams = function (params, sort) { return __awaiter(_this, void 0, void 0, function () {
-            var query, filteringKeys, _i, _a, key, sortingKeys, _b, _c, key, result, results;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
+            var query, filteringKeys, _i, _a, key, _b, _c, subKey, sortingKeys, _d, _e, key, result, results;
+            return __generator(this, function (_f) {
+                switch (_f.label) {
                     case 0:
                         query = "MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) ";
                         filteringKeys = [];
                         for (_i = 0, _a = Object.keys(params); _i < _a.length; _i++) {
                             key = _a[_i];
-                            if (key === "startNode") {
-                                filteringKeys = filteringKeys.concat(Object.keys(params[key]).map(function (key) {
-                                    if (params[key].eq) {
-                                        return "s1." + key + " = \"" + params[key].eq + "\"";
-                                    }
-                                    else if (params[key].contains) {
-                                        return "s1." + key + " CONTAINS \"" + params[key].contains + "\"";
-                                    }
-                                    // todo
-                                    return "s1." + key + " CONTAINS \"" + params[key].contains + "\"";
-                                }));
-                            }
-                            else if (key === "stopNode") {
-                                filteringKeys = filteringKeys.concat(Object.keys(params[key]).map(function (key) {
-                                    if (params[key].eq) {
-                                        return "s2." + key + " = \"" + params[key].eq + "\"";
-                                    }
-                                    else if (params[key].contains) {
-                                        return "s2." + key + " CONTAINS \"" + params[key].contains + "\"";
-                                    }
-                                    // todo
-                                    return "s2." + key + " CONTAINS \"" + params[key].contains + "\"";
-                                }));
+                            if (key === "startNode" || key === "stopNode") {
+                                for (_b = 0, _c = Object.keys(params[key]); _b < _c.length; _b++) {
+                                    subKey = _c[_b];
+                                    filteringKeys = filteringKeys.concat(this.mapOperators(key === "startNode" ? "s1" : "s2", params[key], subKey));
+                                }
                             }
                             else {
-                                if (params[key].eq) {
-                                    filteringKeys.push("e." + key + " = \"" + params[key].eq + "\"");
-                                }
-                                else if (params[key].contains) {
-                                    filteringKeys.push("e." + key + " CONTAINS \"" + params[key].contains + "\"");
-                                }
+                                filteringKeys = filteringKeys.concat(this.mapOperators("e", params, key));
                             }
                         }
                         if (filteringKeys.length > 0) {
@@ -229,8 +201,8 @@ var DBManager = /** @class */ (function () {
                         }
                         query += "RETURN p, id(e) as edgeID";
                         sortingKeys = [];
-                        for (_b = 0, _c = Object.keys(sort); _b < _c.length; _b++) {
-                            key = _c[_b];
+                        for (_d = 0, _e = Object.keys(sort); _d < _e.length; _d++) {
+                            key = _e[_d];
                             if (key === "startNode") {
                                 sortingKeys = sortingKeys.concat(Object.keys(sort.startNode).map(function (key) { return "s1." + key + " " + sort.startNode[key]; }));
                             }
@@ -246,7 +218,7 @@ var DBManager = /** @class */ (function () {
                         }
                         return [4 /*yield*/, this.session.run(query)];
                     case 1:
-                        result = _d.sent();
+                        result = _f.sent();
                         if (result.records.length < 1) {
                             return [2 /*return*/, []];
                         }
@@ -308,6 +280,39 @@ var DBManager = /** @class */ (function () {
     DBManager.prototype.firstRecordProperties = function (result, keyName) {
         return result.records[0].get(keyName).properties;
     };
+    DBManager.prototype.mapOperators = function (identifier, params, key) {
+        var operators = [];
+        for (var _i = 0, _a = Object.keys(params[key]); _i < _a.length; _i++) {
+            var operatorName = _a[_i];
+            var op = void 0;
+            switch (operatorName) {
+                case "eq":
+                    op = "=";
+                    break;
+                case "contains":
+                    op = "CONTAINS";
+                    break;
+                case "gt":
+                    op = ">";
+                    break;
+                case "gte":
+                    op = ">=";
+                    break;
+                case "lt":
+                    op = "<";
+                    break;
+                case "lte":
+                    op = "<=";
+                    break;
+            }
+            operators.push({ op: op, name: operatorName });
+        }
+        if (operators.length < 1) {
+            throw ERROR.INVALID_OPERATOR;
+        }
+        return operators.map(function (operator) { return identifier + "." + key + " " + operator.op + " \"" + params[key][operator.name] + "\""; });
+    };
+    ;
     return DBManager;
 }());
 exports.DBManager = DBManager;

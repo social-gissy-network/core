@@ -96,4 +96,6 @@ enum SortOrder {
 input StringOperators {
   eq: String
   contains: String
+  gt: String
+  lt: String
 }

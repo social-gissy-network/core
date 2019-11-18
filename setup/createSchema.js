@@ -118,6 +118,8 @@ const stringOperators = new GraphQLInputObjectType({
   fields: {
     eq: { type: GraphQLString},
     contains: { type: GraphQLString},
+    gt: { type: GraphQLString},
+    lt: { type: GraphQLString}
   },
 });
 
