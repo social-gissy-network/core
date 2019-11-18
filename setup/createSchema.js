@@ -12,6 +12,7 @@ const {
   GraphQLString,
   GraphQLBoolean,
   GraphQLList,
+  GraphQLEnumType
 } = require('graphql');
 
 const { fieldsMapping } = require('./fieldsMapping');
@@ -79,11 +80,81 @@ for (const property of fieldsMapping.edgeInfo) {
   edgeTypeMutationArgs[property.fieldName] = { type: property.fieldType };
 }
 
+
+// sorting
+const sortOrderType = new GraphQLEnumType({
+  name: 'SortOrder',
+  values: {ASC: {value: "ASC"}, DESC: {value: "DESC"}},
+});
+
+
+let nodeSortParameterConfig = {
+  name: 'NodeSortParameter',
+  fields: {},
+};
+for (const property of fieldsMapping.startNode) {
+  nodeSortParameterConfig.fields[property.fieldName] = { type: sortOrderType };
+}
+const nodeSortParameter = new GraphQLInputObjectType(nodeSortParameterConfig);
+
+let edgeSortParameterConfig = {
+  name: 'EdgeSortParameter',
+  fields: {
+    startNode: { type: nodeSortParameter },
+    stopNode: { type: nodeSortParameter },
+  },
+};
+for (const property of fieldsMapping.edgeInfo) {
+  edgeSortParameterConfig.fields[property.fieldName] = { type: sortOrderType };
+}
+const edgeSortParameter = new GraphQLInputObjectType(edgeSortParameterConfig);
+
+
+
+
+// filtering
+const stringOperators = new GraphQLInputObjectType({
+  name: 'StringOperators',
+  fields: {
+    eq: { type: GraphQLString},
+    contains: { type: GraphQLString},
+  },
+});
+
+
+let nodeFilterParameterConfig  = {
+  name: 'NodeFilterParameter',
+  fields: {},
+};
+for (const property of fieldsMapping.startNode) {
+  nodeFilterParameterConfig.fields[property.fieldName] = { type: stringOperators };
+}
+const nodeFilterParameter = new GraphQLInputObjectType(nodeFilterParameterConfig);
+
+
+
+let edgeFilterParameterConfig  = {
+  name: 'EdgeFilterParameter',
+  fields: {
+    startNode: { type: nodeFilterParameter },
+    stopNode: { type: nodeFilterParameter },
+  },
+};
+for (const property of fieldsMapping.edgeInfo) {
+  edgeFilterParameterConfig.fields[property.fieldName] = { type: stringOperators };
+}
+const edgeFilterParameter = new GraphQLInputObjectType(edgeFilterParameterConfig);
+
+
 const queryTypeConfig = {
   name: 'Query',
   fields: {
     Node: { type: new GraphQLList(nodeType), args: nodeTypeConfig.fields },
     Edge: { type: new GraphQLList(edgeType), args: edgeTypeMutationArgs },
+
+    Nodes: { type: new GraphQLList(nodeType), args: { sort: { type: nodeSortParameter }, filter: { type: nodeFilterParameter}} },
+    Edges: { type: new GraphQLList(edgeType), args: { sort: { type: edgeSortParameter }, filter: { type: edgeFilterParameter}} },
+
   },
 };
 

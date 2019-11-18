@@ -10,6 +10,28 @@ type Edge {
   id: ID
 }
 
+input EdgeFilterParameter {
+  startNode: NodeFilterParameter
+  stopNode: NodeFilterParameter
+  startTime: StringOperators
+  stopTime: StringOperators
+  bikeID: StringOperators
+  userType: StringOperators
+  birthYear: StringOperators
+  gender: StringOperators
+}
+
+input EdgeSortParameter {
+  startNode: NodeSortParameter
+  stopNode: NodeSortParameter
+  startTime: SortOrder
+  stopTime: SortOrder
+  bikeID: SortOrder
+  userType: SortOrder
+  birthYear: SortOrder
+  gender: SortOrder
+}
+
 type EdgeUpdateResponse {
   success: Boolean
   message: String
@@ -32,11 +54,25 @@ type Node {
   name: String
 }
 
+input NodeFilterParameter {
+  id: StringOperators
+  latitude: StringOperators
+  longitude: StringOperators
+  name: StringOperators
+}
+
 input NodeInput {
   id: ID
   latitude: String
   longitude: String
   name: String
+}
+
+input NodeSortParameter {
+  id: SortOrder
+  latitude: SortOrder
+  longitude: SortOrder
+  name: SortOrder
 }
 
 type NodeUpdateResponse {
@@ -48,4 +84,16 @@ type NodeUpdateResponse {
 type Query {
   Node(id: ID, latitude: String, longitude: String, name: String): [Node]
   Edge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String): [Edge]
+  Nodes(sort: NodeSortParameter, filter: NodeFilterParameter): [Node]
+  Edges(sort: EdgeSortParameter, filter: EdgeFilterParameter): [Edge]
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+input StringOperators {
+  eq: String
+  contains: String
 }

@@ -1,3 +1,5 @@
+export {};
+
 import { ApolloServer, ServerRegistration } from 'apollo-server-express';
 import express from 'express';
 import dotenv from 'dotenv';
