@@ -132,6 +132,20 @@ for (const property of fieldsMapping.startNode) {
 const nodeFilterParameter = new GraphQLInputObjectType(nodeFilterParameterConfig);
 
 
+
+let edgeFilterParameterConfig  = {
+  name: 'EdgeFilterParameter',
+  fields: {
+    startNode: { type: nodeFilterParameter },
+    stopNode: { type: nodeFilterParameter },
+  },
+};
+for (const property of fieldsMapping.edgeInfo) {
+  edgeFilterParameterConfig.fields[property.fieldName] = { type: stringOperators };
+}
+const edgeFilterParameter = new GraphQLInputObjectType(edgeFilterParameterConfig);
+
+
 const queryTypeConfig = {
   name: 'Query',
   fields: {
@@ -139,7 +153,7 @@ const queryTypeConfig = {
     Edge: { type: new GraphQLList(edgeType), args: edgeTypeMutationArgs },
 
     Nodes: { type: new GraphQLList(nodeType), args: { sort: { type: nodeSortParameter }, filter: { type: nodeFilterParameter}} },
-    Edges: { type: new GraphQLList(edgeType), args: { sort: { type: edgeSortParameter }} },
+    Edges: { type: new GraphQLList(edgeType), args: { sort: { type: edgeSortParameter }, filter: { type: edgeFilterParameter}} },
 
   },
 };

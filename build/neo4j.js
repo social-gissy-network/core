@@ -182,50 +182,57 @@ var DBManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.getEdgesByParams = function (startNode, stopNode, params, sort) { return __awaiter(_this, void 0, void 0, function () {
-            var query, counter, totalAndConditions, _i, _a, paramName, _b, _c, paramName, _d, _e, paramName, propertyIdx, totalProperties, sortingKeys, _f, _g, key, result, results;
-            return __generator(this, function (_h) {
-                switch (_h.label) {
+        this.getEdgesByParams = function (params, sort) { return __awaiter(_this, void 0, void 0, function () {
+            var query, filteringKeys, _i, _a, key, propertyIdx, totalProperties, sortingKeys, _b, _c, key, result, results;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
                     case 0:
                         query = "MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) ";
-                        counter = 0;
-                        totalAndConditions = params ? Object.keys(params).length : 0;
-                        if (startNode) {
-                            totalAndConditions += Object.keys(startNode).length;
+                        filteringKeys = [];
+                        for (_i = 0, _a = Object.keys(params); _i < _a.length; _i++) {
+                            key = _a[_i];
+                            if (key === "startNode") {
+                                filteringKeys = filteringKeys.concat(Object.keys(params[key]).map(function (key) {
+                                    if (params[key].eq) {
+                                        return "s1." + key + " = \"" + params[key].eq + "\"";
+                                    }
+                                    else if (params[key].contains) {
+                                        return "s1." + key + " CONTAINS \"" + params[key].contains + "\"";
+                                    }
+                                    // todo
+                                    return "s1." + key + " CONTAINS \"" + params[key].contains + "\"";
+                                }));
+                            }
+                            else if (key === "stopNode") {
+                                filteringKeys = filteringKeys.concat(Object.keys(params[key]).map(function (key) {
+                                    if (params[key].eq) {
+                                        return "s2." + key + " = \"" + params[key].eq + "\"";
+                                    }
+                                    else if (params[key].contains) {
+                                        return "s2." + key + " CONTAINS \"" + params[key].contains + "\"";
+                                    }
+                                    // todo
+                                    return "s2." + key + " CONTAINS \"" + params[key].contains + "\"";
+                                }));
+                            }
+                            else {
+                                if (params[key].eq) {
+                                    filteringKeys.push("e." + key + " = \"" + params[key].eq + "\"");
+                                }
+                                else if (params[key].contains) {
+                                    filteringKeys.push("e." + key + " CONTAINS \"" + params[key].contains + "\"");
+                                }
+                            }
                         }
-                        if (stopNode) {
-                            totalAndConditions += Object.keys(stopNode).length;
-                        }
-                        // add the edgeInfo params
-                        for (_i = 0, _a = params ? Object.keys(params) : []; _i < _a.length; _i++) {
-                            paramName = _a[_i];
-                            query += counter === 0 ? "WHERE " : "";
-                            query += "e." + paramName + " = \"" + params[paramName] + "\" ";
-                            counter++;
-                            query += counter < totalAndConditions ? "AND " : "";
-                        }
-                        // add the startNode params
-                        for (_b = 0, _c = startNode ? Object.keys(startNode) : []; _b < _c.length; _b++) {
-                            paramName = _c[_b];
-                            query += counter === 0 ? "WHERE " : "";
-                            query += "s1." + paramName + " = \"" + startNode[paramName] + "\" ";
-                            counter++;
-                            query += counter < totalAndConditions ? "AND " : "";
-                        }
-                        // add the stopNode params
-                        for (_d = 0, _e = stopNode ? Object.keys(stopNode) : []; _d < _e.length; _d++) {
-                            paramName = _e[_d];
-                            query += counter === 0 ? "WHERE " : "";
-                            query += "s2." + paramName + " = \"" + stopNode[paramName] + "\" ";
-                            counter++;
-                            query += counter < totalAndConditions ? "AND " : "";
+                        if (filteringKeys.length > 0) {
+                            query += "WHERE " + filteringKeys.join(", ");
                         }
                         query += "RETURN p, id(e) as edgeID";
                         propertyIdx = 0;
                         totalProperties = 0;
                         sortingKeys = [];
-                        for (_f = 0, _g = Object.keys(sort); _f < _g.length; _f++) {
-                            key = _g[_f];
+                        for (_b = 0, _c = Object.keys(sort); _b < _c.length; _b++) {
+                            key = _c[_b];
                             if (key === "startNode") {
                                 sortingKeys = sortingKeys.concat(Object.keys(sort.startNode).map(function (key) { return "s1." + key + " " + sort.startNode[key]; }));
                             }
@@ -241,7 +248,7 @@ var DBManager = /** @class */ (function () {
                         }
                         return [4 /*yield*/, this.session.run(query)];
                     case 1:
-                        result = _h.sent();
+                        result = _d.sent();
                         if (result.records.length < 1) {
                             return [2 /*return*/, []];
                         }

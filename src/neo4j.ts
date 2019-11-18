@@ -75,8 +75,6 @@ export class DBManager {
       query += `WHERE ` + filteringKeys.join(", ");
     }
 
-
-
     query += ` RETURN n`;
 
 
@@ -163,57 +161,55 @@ export class DBManager {
   };
 
   public getEdgesByParams = async (
-    startNode: Node,
-    stopNode: Node,
-    params: { [paramName: string]: string },
+    params: { [paramName: string]: any },
     sort: { [paramName: string]: any }
   ) => {
     let query = `MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) `;
-    let counter = 0;
-    let totalAndConditions = params ? Object.keys(params).length : 0;
 
-    if (startNode) {
-      totalAndConditions += Object.keys(startNode).length;
+
+    let filteringKeys: string[] = [];
+    for (const key of Object.keys(params)) {
+      if (key === "startNode") {
+        filteringKeys = filteringKeys.concat(Object.keys(params[key]).map(key => {
+          if (params[key].eq) {
+            return `s1.${key} = "${params[key].eq}"`
+          }
+          else if (params[key].contains) {
+            return `s1.${key} CONTAINS "${params[key].contains}"`
+          }
+          // todo
+          return `s1.${key} CONTAINS "${params[key].contains}"`
+
+        }));
+      }
+      else if (key === "stopNode") {
+        filteringKeys = filteringKeys.concat(Object.keys(params[key]).map(key => {
+          if (params[key].eq) {
+            return `s2.${key} = "${params[key].eq}"`
+          }
+          else if (params[key].contains) {
+            return `s2.${key} CONTAINS "${params[key].contains}"`
+          }
+          // todo
+          return `s2.${key} CONTAINS "${params[key].contains}"`
+
+        }));
+      }
+      else {
+        if (params[key].eq) {
+          filteringKeys.push(`e.${key} = "${params[key].eq}"`);
+        }
+        else if (params[key].contains) {
+          filteringKeys.push(`e.${key} CONTAINS "${params[key].contains}"`)
+        }
+      }
     }
-    if (stopNode) {
-      totalAndConditions += Object.keys(stopNode).length;
-    }
 
-    // add the edgeInfo params
-    for (const paramName of params ? Object.keys(params) : []) {
-      query += counter === 0 ? `WHERE ` : ``;
-
-      query += `e.${paramName} = "${params[paramName]}" `;
-      counter++;
-
-      query += counter < totalAndConditions ? `AND ` : ``;
-    }
-
-    // add the startNode params
-    for (const paramName of startNode ? Object.keys(startNode) : []) {
-      query += counter === 0 ? `WHERE ` : ``;
-
-      query += `s1.${paramName} = "${startNode[paramName as keyof Node]}" `;
-      counter++;
-
-      query += counter < totalAndConditions ? `AND ` : ``;
-    }
-
-    // add the stopNode params
-    for (const paramName of stopNode ? Object.keys(stopNode) : []) {
-      query += counter === 0 ? `WHERE ` : ``;
-
-      query += `s2.${paramName} = "${stopNode[paramName as keyof Node]}" `;
-      counter++;
-
-      query += counter < totalAndConditions ? `AND ` : ``;
+    if (filteringKeys.length > 0) {
+      query += `WHERE ` + filteringKeys.join(", ");
     }
 
     query += `RETURN p, id(e) as edgeID`;
-
-    let propertyIdx = 0;
-    let totalProperties = 0;
-
 
     let sortingKeys: string[] = [];
 
