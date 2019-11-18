@@ -159,4 +159,4 @@ var storeDataOnDB = function (dataset, fieldsMapping) { return __awaiter(void 0,
     .then(function () {
     db.close();
 });
-//# sourceMappingURL=setup.js.map
+//# sourceMappingURL=seed.js.map
