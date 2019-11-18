@@ -12,7 +12,8 @@ const {
   GraphQLString,
   GraphQLBoolean,
   GraphQLList,
-  GraphQLEnumType
+  GraphQLEnumType,
+  GraphQLInt,
 } = require('graphql');
 
 const { fieldsMapping } = require('./fieldsMapping');
@@ -157,6 +158,10 @@ const queryTypeConfig = {
     Nodes: { type: new GraphQLList(nodeType), args: { sort: { type: nodeSortParameter }, filter: { type: nodeFilterParameter}} },
     Edges: { type: new GraphQLList(edgeType), args: { sort: { type: edgeSortParameter }, filter: { type: edgeFilterParameter}} },
 
+    // Relationship identifiers of a variable length path contain
+    // a collection of relationships.
+
+    pathsOfLengthN: { type: new GraphQLList(edgeType), args: { n: { type: GraphQLInt } } },
   },
 };
 

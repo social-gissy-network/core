@@ -5,13 +5,18 @@ export interface Node {
 	name: string
 }
 
-export interface Edge {
-	startNode: Node,
-	stopNode: Node,
-	startTime: string
-	stopTime: string
-	bikeID: string
-	userType: string
-	birthYear: string
-	gender: string
+export class Edge {
+	startNode: Node;
+	// stopNode: Node,
+	// startTime: string
+	// stopTime: string
+	// bikeID: string
+	// userType: string
+	// birthYear: string
+	// gender: string
+
+
+	constructor(object: any) {
+		this.startNode = object.startNode;
+	}
 }

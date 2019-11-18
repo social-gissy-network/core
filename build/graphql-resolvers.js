@@ -101,6 +101,24 @@ queryResolverObject.Edges = function (obj, params, ctx, resolveInfo) { return __
         }
     });
 }); };
+// functions
+/*
+  example query:
+  pathsOfLengthN(n: 1) {
+    id bikeID startNode { id } stopNode { id }
+  }
+ */
+queryResolverObject.pathsOfLengthN = function (obj, params, ctx, resolveInfo) { return __awaiter(void 0, void 0, void 0, function () {
+    var result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, ctx.db.getPathsOfLengthN(1)];
+            case 1:
+                result = _a.sent();
+                return [2 /*return*/, result];
+        }
+    });
+}); };
 queryResolverObject.Node = function (obj, params, ctx, resolveInfo) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
     switch (_a.label) {
         case 0: return [4 /*yield*/, ctx.db.getNodesByParams(params, {})];

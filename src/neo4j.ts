@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { Driver, Session, Result, StatementResult } from 'neo4j-driver/types/v1';
+import {Driver, Session, Result, StatementResult, PathSegment} from 'neo4j-driver/types/v1';
 import { Edge, Node } from './types';
 import v1 from 'neo4j-driver';
 
@@ -61,6 +61,30 @@ export class DBManager {
     return operators.map(operator => `${identifier}.${key} ${operator.op} "${params[key][operator.name]}"`);
 
   };
+
+  private convertToNativeEdge(result: { [paramName: string]: any }) {
+    let edgeRecords : Array<any> = result.records;
+    edgeRecords = edgeRecords
+        .map(record => record.get('p').segments[0])
+        .filter(record => {
+          if (record != undefined) {
+            return true
+          }
+        })
+        .map(record => {
+          if (!record.relationship.properties.id) {
+            let identity = record.relationship.identity;
+            record.relationship.properties.id = identity.low.toString() + identity.high.toString();
+          }
+          return {
+            startNode: record.start.properties,
+            stopNode: record.end.properties,
+            edgeInfo: record.relationship.properties,
+          };
+        });
+
+    return edgeRecords;
+  }
 
   public close = () => this.driver.close();
 
@@ -221,21 +245,7 @@ export class DBManager {
       return [];
     }
 
-    let results = result.records
-      .map(record => record.get('p').segments[0])
-      .map(record => {
-        if (!record.relationship.properties.id) {
-          let identity = record.relationship.identity;
-          record.relationship.properties.id = identity.low.toString() + identity.high.toString();
-        }
-        return {
-          startNode: record.start.properties,
-          stopNode: record.end.properties,
-          edgeInfo: record.relationship.properties,
-        };
-      });
-
-    return results;
+    return await this.convertToNativeEdge(result);
   };
 
   public updateEdgeByID = async (
@@ -259,5 +269,16 @@ export class DBManager {
   public deleteEdge = async (edgeID: string) => {
     let result = await this.session.run(`MATCH p=()-[r:EDGE]->() WHERE r.id="${edgeID}" DELETE r`);
     return this.firstRecordProperties(result, 'r');
+  };
+
+  public getPathsOfLengthN = async (k: bigint ) => {
+    let result = await this.session.run(`MATCH p = (s1:Node)-[e:EDGE*0..${k}]->(s2:Node) WITH * RETURN p`);
+
+    if (result.records.length < 1) {
+      return [];
+    }
+
+
+    return await this.convertToNativeEdge(result);
   };
 }

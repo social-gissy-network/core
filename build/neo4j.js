@@ -178,7 +178,7 @@ var DBManager = /** @class */ (function () {
             });
         }); };
         this.getEdgesByParams = function (params, sort) { return __awaiter(_this, void 0, void 0, function () {
-            var query, filteringKeys, _i, _a, key, _b, _c, subKey, sortingKeys, _d, _e, key, result, results;
+            var query, filteringKeys, _i, _a, key, _b, _c, subKey, sortingKeys, _d, _e, key, result;
             return __generator(this, function (_f) {
                 switch (_f.label) {
                     case 0:
@@ -222,20 +222,8 @@ var DBManager = /** @class */ (function () {
                         if (result.records.length < 1) {
                             return [2 /*return*/, []];
                         }
-                        results = result.records
-                            .map(function (record) { return record.get('p').segments[0]; })
-                            .map(function (record) {
-                            if (!record.relationship.properties.id) {
-                                var identity = record.relationship.identity;
-                                record.relationship.properties.id = identity.low.toString() + identity.high.toString();
-                            }
-                            return {
-                                startNode: record.start.properties,
-                                stopNode: record.end.properties,
-                                edgeInfo: record.relationship.properties,
-                            };
-                        });
-                        return [2 /*return*/, results];
+                        return [4 /*yield*/, this.convertToNativeEdge(result)];
+                    case 2: return [2 /*return*/, _f.sent()];
                 }
             });
         }); };
@@ -265,6 +253,21 @@ var DBManager = /** @class */ (function () {
                     case 1:
                         result = _a.sent();
                         return [2 /*return*/, this.firstRecordProperties(result, 'r')];
+                }
+            });
+        }); };
+        this.getPathsOfLengthN = function (k) { return __awaiter(_this, void 0, void 0, function () {
+            var result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.session.run("MATCH p = (s1:Node)-[e:EDGE*0.." + k + "]->(s2:Node) WITH * RETURN p")];
+                    case 1:
+                        result = _a.sent();
+                        if (result.records.length < 1) {
+                            return [2 /*return*/, []];
+                        }
+                        return [4 /*yield*/, this.convertToNativeEdge(result)];
+                    case 2: return [2 /*return*/, _a.sent()];
                 }
             });
         }); };
@@ -313,6 +316,42 @@ var DBManager = /** @class */ (function () {
         return operators.map(function (operator) { return identifier + "." + key + " " + operator.op + " \"" + params[key][operator.name] + "\""; });
     };
     ;
+    DBManager.prototype.convertToNativeEdge = function (result) {
+        var edgeRecords = result.records;
+        edgeRecords = edgeRecords
+            .map(function (record) { return record.get('p').segments[0]; })
+            .filter(function (record) {
+            if (record != undefined) {
+                return true;
+            }
+        })
+            //
+            .map(function (record) {
+            if (!record.relationship.properties.id) {
+                var identity = record.relationship.identity;
+                record.relationship.properties.id = identity.low.toString() + identity.high.toString();
+            }
+            return {
+                startNode: record.start.properties,
+                stopNode: record.end.properties,
+                edgeInfo: record.relationship.properties,
+            };
+        });
+        return edgeRecords;
+        // let edge : Edge = new Edge({
+        //   startNode: record.start.properties,
+        //   stopNode: record.end.properties,
+        // });
+        // edge.edgeInfo = record.relationship.properties
+        // edge.startNode = record.start.properties;
+        // edge.stopNode = record.end.properties;
+        // edge.edgeInfo = record.relationship.propertieS;
+        // return {
+        //   startNode: record.start.properties,
+        //   stopNode: record.end.properties,
+        //   edgeInfo: record.relationship.properties
+        // }
+    };
     return DBManager;
 }());
 exports.DBManager = DBManager;
