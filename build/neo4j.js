@@ -183,7 +183,7 @@ var DBManager = /** @class */ (function () {
             });
         }); };
         this.getEdgesByParams = function (params, sort) { return __awaiter(_this, void 0, void 0, function () {
-            var query, filteringKeys, _i, _a, key, propertyIdx, totalProperties, sortingKeys, _b, _c, key, result, results;
+            var query, filteringKeys, _i, _a, key, sortingKeys, _b, _c, key, result, results;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
@@ -225,11 +225,9 @@ var DBManager = /** @class */ (function () {
                             }
                         }
                         if (filteringKeys.length > 0) {
-                            query += "WHERE " + filteringKeys.join(", ");
+                            query += "WHERE " + filteringKeys.join(" AND ");
                         }
                         query += "RETURN p, id(e) as edgeID";
-                        propertyIdx = 0;
-                        totalProperties = 0;
                         sortingKeys = [];
                         for (_b = 0, _c = Object.keys(sort); _b < _c.length; _b++) {
                             key = _c[_b];

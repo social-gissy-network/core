@@ -206,7 +206,7 @@ export class DBManager {
     }
 
     if (filteringKeys.length > 0) {
-      query += `WHERE ` + filteringKeys.join(", ");
+      query += `WHERE ` + filteringKeys.join(" AND ");
     }
 
     query += `RETURN p, id(e) as edgeID`;
