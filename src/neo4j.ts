@@ -59,19 +59,25 @@ export class DBManager {
     }
   };
 
-  public getNodesByParams = async (params: { [paramName: string]: string }, sort: { [paramName: string]: string }) => {
+  public getNodesByParams = async (params: { [paramName: string]: any }, sort: { [paramName: string]: string }) => {
     let query = `MATCH (n:Node) `;
-    let counter = 0;
 
-    for (const paramName of params ? Object.keys(params) : []) {
-      query += counter === 0 ? `WHERE ` : ``;
+    let filteringKeys = Object.keys(params).map(key => {
+      if (params[key].eq) {
+        return `n.${key} = "${params[key].eq}"`
+      }
+      else if (params[key].contains) {
+        return `n.${key} CONTAINS "${params[key].contains}"`
+      }
+    });
 
-      query += `n.${paramName} = "${params[paramName]}" `;
-      counter++;
-
-      query += counter < Object.keys(params).length ? `AND ` : ``;
+    if (filteringKeys.length > 0) {
+      query += `WHERE ` + filteringKeys.join(", ");
     }
-    query += `RETURN n`;
+
+
+
+    query += ` RETURN n`;
 
 
     let sortingKeys: string[] = [];

@@ -56,11 +56,14 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
 
 queryResolverObject.Node = async (obj, params, ctx, resolveInfo) => await ctx.db.getNodesByParams(params, {});
 queryResolverObject.Nodes = async (obj, params, ctx, resolveInfo) => {
-  if (params.sort) {
-    return await ctx.db.getNodesByParams({}, params.sort);
+  if (!params.sort) {
+    params.sort = {};
+  }
+  if (!params.filter) {
+    params.filter = {};
   }
 
-  return await ctx.db.getNodesByParams({}, {})
+  return await ctx.db.getNodesByParams(params.filter, params.sort)
 };
 
 let mutationResolverObject: IResolverObject = {};
@@ -209,22 +212,6 @@ let edgeUpdateResponseResolverObject: IResolverObject = {};
 edgeUpdateResponseResolverObject.success = (obj, params, ctx, resolveInfo) => obj.success;
 edgeUpdateResponseResolverObject.message = (obj, params, ctx, resolveInfo) => obj.message;
 edgeUpdateResponseResolverObject.edge = (obj, params, ctx, resolveInfo) => (obj.edge ? obj.edge : null);
-
-let nodeSortParameterResolverObject: IResolverObject = {};
-
-nodeSortParameterResolverObject.id = async (obj, params, ctx, resolveInfo) => {
-  let db = ctx.db;
-  let startNode = params.startNode;
-  let stopNode = params.stopNode;
-  delete params.startNode;
-  delete params.stopNode;
-
-}
-edgeUpdateResponseResolverObject.success = (obj, params, ctx, resolveInfo) => obj.success;
-edgeUpdateResponseResolverObject.message = (obj, params, ctx, resolveInfo) => obj.message;
-edgeUpdateResponseResolverObject.edge = (obj, params, ctx, resolveInfo) => (obj.edge ? obj.edge : null);
-
-
 
 
 let resolvers: IResolvers = {

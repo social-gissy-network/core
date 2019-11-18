@@ -80,6 +80,8 @@ for (const property of fieldsMapping.edgeInfo) {
   edgeTypeMutationArgs[property.fieldName] = { type: property.fieldType };
 }
 
+
+// sorting
 const sortOrderType = new GraphQLEnumType({
   name: 'SortOrder',
   values: {ASC: {value: "ASC"}, DESC: {value: "DESC"}},
@@ -95,7 +97,6 @@ for (const property of fieldsMapping.startNode) {
 }
 const nodeSortParameter = new GraphQLInputObjectType(nodeSortParameterConfig);
 
-
 let edgeSortParameterConfig = {
   name: 'EdgeSortParameter',
   fields: {
@@ -108,13 +109,36 @@ for (const property of fieldsMapping.edgeInfo) {
 }
 const edgeSortParameter = new GraphQLInputObjectType(edgeSortParameterConfig);
 
+
+
+
+// filtering
+const stringOperators = new GraphQLInputObjectType({
+  name: 'StringOperators',
+  fields: {
+    eq: { type: GraphQLString},
+    contains: { type: GraphQLString},
+  },
+});
+
+
+let nodeFilterParameterConfig  = {
+  name: 'NodeFilterParameter',
+  fields: {},
+};
+for (const property of fieldsMapping.startNode) {
+  nodeFilterParameterConfig.fields[property.fieldName] = { type: stringOperators };
+}
+const nodeFilterParameter = new GraphQLInputObjectType(nodeFilterParameterConfig);
+
+
 const queryTypeConfig = {
   name: 'Query',
   fields: {
     Node: { type: new GraphQLList(nodeType), args: nodeTypeConfig.fields },
     Edge: { type: new GraphQLList(edgeType), args: edgeTypeMutationArgs },
 
-    Nodes: { type: new GraphQLList(nodeType), args: { sort: { type: nodeSortParameter }} },
+    Nodes: { type: new GraphQLList(nodeType), args: { sort: { type: nodeSortParameter }, filter: { type: nodeFilterParameter}} },
     Edges: { type: new GraphQLList(edgeType), args: { sort: { type: edgeSortParameter }} },
 
   },

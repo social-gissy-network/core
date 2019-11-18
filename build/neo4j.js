@@ -84,23 +84,26 @@ var DBManager = /** @class */ (function () {
             });
         }); };
         this.getNodesByParams = function (params, sort) { return __awaiter(_this, void 0, void 0, function () {
-            var query, counter, _i, _a, paramName, sortingKeys, _b, _c, key, result;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
+            var query, filteringKeys, sortingKeys, _i, _a, key, result;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         query = "MATCH (n:Node) ";
-                        counter = 0;
-                        for (_i = 0, _a = params ? Object.keys(params) : []; _i < _a.length; _i++) {
-                            paramName = _a[_i];
-                            query += counter === 0 ? "WHERE " : "";
-                            query += "n." + paramName + " = \"" + params[paramName] + "\" ";
-                            counter++;
-                            query += counter < Object.keys(params).length ? "AND " : "";
+                        filteringKeys = Object.keys(params).map(function (key) {
+                            if (params[key].eq) {
+                                return "n." + key + " = \"" + params[key].eq + "\"";
+                            }
+                            else if (params[key].contains) {
+                                return "n." + key + " CONTAINS \"" + params[key].contains + "\"";
+                            }
+                        });
+                        if (filteringKeys.length > 0) {
+                            query += "WHERE " + filteringKeys.join(", ");
                         }
-                        query += "RETURN n";
+                        query += " RETURN n";
                         sortingKeys = [];
-                        for (_b = 0, _c = Object.keys(sort); _b < _c.length; _b++) {
-                            key = _c[_b];
+                        for (_i = 0, _a = Object.keys(sort); _i < _a.length; _i++) {
+                            key = _a[_i];
                             sortingKeys.push("n." + key + " " + sort[key]);
                         }
                         if (sortingKeys.length > 0) {
@@ -108,7 +111,7 @@ var DBManager = /** @class */ (function () {
                         }
                         return [4 /*yield*/, this.session.run(query)];
                     case 1:
-                        result = _d.sent();
+                        result = _b.sent();
                         return [2 /*return*/, result.records.map(function (record) { return record.get('n').properties; })];
                 }
             });
