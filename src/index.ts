@@ -1,4 +1,4 @@
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, ServerRegistration } from 'apollo-server-express';
 import express from 'express';
 import dotenv from 'dotenv';
 import { resolvers } from './graphql-resolvers';
@@ -28,7 +28,20 @@ let path = '/';
  * Optionally, apply Express middleware for authentication, etc
  * This also also allows us to specify a path for the GraphQL endpoint
  */
-server.applyMiddleware({ app, path });
+
+let serverRegistration: ServerRegistration = { app, path };
+serverRegistration.onHealthCheck = () => {
+  return new Promise((resolve, reject) => {
+    // Replace the `true` in this conditional with more specific checks!
+    if (true) {
+      resolve();
+    } else {
+      reject();
+    }
+  });
+};
+
+server.applyMiddleware(serverRegistration);
 
 app.listen({ port, path }, () => {
   // eslint-disable-next-line

@@ -29,13 +29,25 @@ var server = new apollo_server_express_1.ApolloServer({
     playground: true,
 });
 // Specify port and path for GraphQL endpoint
-var port = process.env.GRAPHQL_LISTEN_PORT || 4001;
-var path = '/graphql';
+var port = process.env.PORT || 4001;
+var path = '/';
 /*
  * Optionally, apply Express middleware for authentication, etc
  * This also also allows us to specify a path for the GraphQL endpoint
  */
-server.applyMiddleware({ app: app, path: path });
+var serverRegistration = { app: app, path: path };
+serverRegistration.onHealthCheck = function () {
+    return new Promise(function (resolve, reject) {
+        // Replace the `true` in this conditional with more specific checks!
+        if (true) {
+            resolve();
+        }
+        else {
+            reject();
+        }
+    });
+};
+server.applyMiddleware(serverRegistration);
 app.listen({ port: port, path: path }, function () {
     // eslint-disable-next-line
     console.log("GraphQL server ready at http://localhost:" + port + path);
