@@ -39,6 +39,13 @@ input NodeInput {
   name: String
 }
 
+input NodeSortParameter {
+  id: SortOrder
+  latitude: SortOrder
+  longitude: SortOrder
+  name: SortOrder
+}
+
 type NodeUpdateResponse {
   success: Boolean
   message: String
@@ -48,4 +55,10 @@ type NodeUpdateResponse {
 type Query {
   Node(id: ID, latitude: String, longitude: String, name: String): [Node]
   Edge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String): [Edge]
+  Nodes(sort: NodeSortParameter): [Node]
+}
+
+enum SortOrder {
+  ASC
+  DESC
 }

@@ -83,10 +83,10 @@ var DBManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.getNodesByParams = function (params) { return __awaiter(_this, void 0, void 0, function () {
-            var query, counter, _i, _a, paramName, result;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+        this.getNodesByParams = function (params, sort) { return __awaiter(_this, void 0, void 0, function () {
+            var query, counter, _i, _a, paramName, propertyIdx, _b, _c, property, result;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
                     case 0:
                         query = "MATCH (n:Node) ";
                         counter = 0;
@@ -98,9 +98,21 @@ var DBManager = /** @class */ (function () {
                             query += counter < Object.keys(params).length ? "AND " : "";
                         }
                         query += "RETURN n";
+                        propertyIdx = 0;
+                        for (_b = 0, _c = Object.keys(sort); _b < _c.length; _b++) {
+                            property = _c[_b];
+                            if (propertyIdx === 0) {
+                                query += " ORDER BY";
+                            }
+                            query += " n." + property + " " + sort[property];
+                            if (propertyIdx < Object.keys(sort).length - 1) {
+                                query += ",";
+                            }
+                            propertyIdx++;
+                        }
                         return [4 /*yield*/, this.session.run(query)];
                     case 1:
-                        result = _b.sent();
+                        result = _d.sent();
                         return [2 /*return*/, result.records.map(function (record) { return record.get('n').properties; })];
                 }
             });
@@ -109,7 +121,7 @@ var DBManager = /** @class */ (function () {
             var oldNodesArray, newNode, _i, _a, newPropertyKey, result;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.getNodesByParams({ id: nodeID })];
+                    case 0: return [4 /*yield*/, this.getNodesByParams({ id: nodeID }, {})];
                     case 1:
                         oldNodesArray = _b.sent();
                         if (oldNodesArray.length < 1) {

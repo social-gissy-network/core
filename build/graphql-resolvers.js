@@ -92,6 +92,14 @@ queryResolverObject.Node = function (obj, params, ctx, resolveInfo) { return __a
         case 1: return [2 /*return*/, _a.sent()];
     }
 }); }); };
+queryResolverObject.Nodes = function (obj, params, ctx, resolveInfo) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, ctx.db.getNodesByParams({}, params.sort)];
+            case 1: return [2 /*return*/, _a.sent()];
+        }
+    });
+}); };
 var mutationResolverObject = {};
 mutationResolverObject.CreateNode = function (obj, params, ctx, resolveInfo) { return __awaiter(void 0, void 0, void 0, function () {
     var db, result, error_1;
@@ -276,6 +284,21 @@ nodeUpdateResponseResolverObject.success = function (obj, params, ctx, resolveIn
 nodeUpdateResponseResolverObject.message = function (obj, params, ctx, resolveInfo) { return obj.message; };
 nodeUpdateResponseResolverObject.node = function (obj, params, ctx, resolveInfo) { return (obj.node ? obj.node : null); };
 var edgeUpdateResponseResolverObject = {};
+edgeUpdateResponseResolverObject.success = function (obj, params, ctx, resolveInfo) { return obj.success; };
+edgeUpdateResponseResolverObject.message = function (obj, params, ctx, resolveInfo) { return obj.message; };
+edgeUpdateResponseResolverObject.edge = function (obj, params, ctx, resolveInfo) { return (obj.edge ? obj.edge : null); };
+var nodeSortParameterResolverObject = {};
+nodeSortParameterResolverObject.id = function (obj, params, ctx, resolveInfo) { return __awaiter(void 0, void 0, void 0, function () {
+    var db, startNode, stopNode;
+    return __generator(this, function (_a) {
+        db = ctx.db;
+        startNode = params.startNode;
+        stopNode = params.stopNode;
+        delete params.startNode;
+        delete params.stopNode;
+        return [2 /*return*/];
+    });
+}); };
 edgeUpdateResponseResolverObject.success = function (obj, params, ctx, resolveInfo) { return obj.success; };
 edgeUpdateResponseResolverObject.message = function (obj, params, ctx, resolveInfo) { return obj.message; };
 edgeUpdateResponseResolverObject.edge = function (obj, params, ctx, resolveInfo) { return (obj.edge ? obj.edge : null); };

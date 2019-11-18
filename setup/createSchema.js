@@ -12,6 +12,7 @@ const {
   GraphQLString,
   GraphQLBoolean,
   GraphQLList,
+  GraphQLEnumType
 } = require('graphql');
 
 const { fieldsMapping } = require('./fieldsMapping');
@@ -79,11 +80,32 @@ for (const property of fieldsMapping.edgeInfo) {
   edgeTypeMutationArgs[property.fieldName] = { type: property.fieldType };
 }
 
+const sortOrderType = new GraphQLEnumType({
+  name: 'SortOrder',
+  values: {ASC: {value: "ASC"}, DESC: {value: "DESC"}},
+});
+
+
+let nodeSortParameterConfig = {
+  name: 'NodeSortParameter',
+  fields: {},
+};
+for (const property of fieldsMapping.startNode) {
+  nodeSortParameterConfig.fields[property.fieldName] = { type: sortOrderType };
+}
+const nodeSortParameter = new GraphQLInputObjectType(nodeSortParameterConfig);
+
+
+
+
 const queryTypeConfig = {
   name: 'Query',
   fields: {
     Node: { type: new GraphQLList(nodeType), args: nodeTypeConfig.fields },
     Edge: { type: new GraphQLList(edgeType), args: edgeTypeMutationArgs },
+
+    Nodes: { type: new GraphQLList(nodeType), args: { sort: { type: nodeSortParameter }} },
+
   },
 };
 

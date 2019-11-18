@@ -59,7 +59,7 @@ export class DBManager {
     }
   };
 
-  public getNodesByParams = async (params: { [paramName: string]: string }) => {
+  public getNodesByParams = async (params: { [paramName: string]: string }, sort: { [paramName: string]: string }) => {
     let query = `MATCH (n:Node) `;
     let counter = 0;
 
@@ -73,6 +73,24 @@ export class DBManager {
     }
     query += `RETURN n`;
 
+
+    let propertyIdx = 0;
+    for (const property of Object.keys(sort)) {
+      if (propertyIdx === 0) {
+        query += ` ORDER BY`
+      }
+
+      query += ` n.${property} ${sort[property]}`;
+
+      if (propertyIdx < Object.keys(sort).length - 1) {
+        query += `,`
+      }
+
+
+      propertyIdx++;
+    }
+
+
     let result: StatementResult = await this.session.run(query);
     return result.records.map(record => record.get('n').properties);
   };
@@ -81,7 +99,7 @@ export class DBManager {
     nodeID: string,
     newNodeProperties: { [paramName: string]: { paramValue: string } },
   ) => {
-    let oldNodesArray = await this.getNodesByParams({ id: nodeID });
+    let oldNodesArray = await this.getNodesByParams({ id: nodeID }, {});
     if (oldNodesArray.length < 1) {
       throw ERROR.NODE_DOESNT_EXIST;
     }
