@@ -11,6 +11,20 @@ import * as fs from "fs";
 dotenv.config();
 
 const app = express();
+
+const compression = require('compression');
+app.use(compression({ filter: shouldCompress }));
+
+function shouldCompress (req:any, res:any) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false
+  }
+
+  // fallback to standard filter function
+  return compression.filter(req, res)
+}
+
 let db = new DBManager();
 const typeDefs = fs.readFileSync(__dirname + '/schema.graphql').toString('utf-8');
 

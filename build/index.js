@@ -19,6 +19,16 @@ var fs = __importStar(require("fs"));
 // set environment variables from ../.env
 dotenv_1.default.config();
 var app = express_1.default();
+var compression = require('compression');
+app.use(compression({ filter: shouldCompress }));
+function shouldCompress(req, res) {
+    if (req.headers['x-no-compression']) {
+        // don't compress responses with this request header
+        return false;
+    }
+    // fallback to standard filter function
+    return compression.filter(req, res);
+}
 var db = new neo4j_1.DBManager();
 var typeDefs = fs.readFileSync(__dirname + '/schema.graphql').toString('utf-8');
 var server = new apollo_server_express_1.ApolloServer({
