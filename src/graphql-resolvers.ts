@@ -30,14 +30,7 @@ if (!edgeResolverObject.id) {
 }
 
 let queryResolverObject: IResolverObject = {};
-queryResolverObject.Edge = async (obj, params, ctx, resolveInfo) => {
-  let startNode: Node = params.startNode;
-  let stopNode: Node = params.stopNode;
-  delete params.startNode;
-  delete params.stopNode;
-
-  return await ctx.db.getEdgesByParams(startNode, stopNode, params);
-};
+queryResolverObject.Edge = async (obj, params, ctx, resolveInfo) => await ctx.db.getEdgeByID(params.id);
 
 queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
   if (!params.sort) {
@@ -65,7 +58,7 @@ queryResolverObject.Paths = async (obj, params, ctx, resolveInfo) => {
 
 
 
-queryResolverObject.Node = async (obj, params, ctx, resolveInfo) => await ctx.db.getNodesByParams(params, {});
+queryResolverObject.Node = async (obj, params, ctx, resolveInfo) => await ctx.db.getNodeByID(params.id);
 queryResolverObject.Nodes = async (obj, params, ctx, resolveInfo) => {
   if (!params.sort) {
     params.sort = {};

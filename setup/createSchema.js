@@ -152,8 +152,8 @@ const edgeFilterParameter = new GraphQLInputObjectType(edgeFilterParameterConfig
 const queryTypeConfig = {
   name: 'Query',
   fields: {
-    Node: { type: new GraphQLList(nodeType), args: nodeTypeConfig.fields },
-    Edge: { type: new GraphQLList(edgeType), args: edgeTypeMutationArgs },
+    Node: { type: nodeType, args: { id: { type: new GraphQLNonNull(GraphQLString) } } },
+    Edge: { type: edgeType, args: { id: { type: new GraphQLNonNull(GraphQLString) } } },
 
     Nodes: { type: new GraphQLList(nodeType), args: { sort: { type: nodeSortParameter }, filter: { type: nodeFilterParameter}} },
     Edges: { type: new GraphQLList(edgeType), args: { sort: { type: edgeSortParameter }, filter: { type: edgeFilterParameter}} },

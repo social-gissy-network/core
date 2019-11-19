@@ -82,8 +82,8 @@ type NodeUpdateResponse {
 }
 
 type Query {
-  Node(id: ID, latitude: String, longitude: String, name: String): [Node]
-  Edge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String): [Edge]
+  Node(id: String!): Node
+  Edge(id: String!): Edge
   Nodes(sort: NodeSortParameter, filter: NodeFilterParameter): [Node]
   Edges(sort: EdgeSortParameter, filter: EdgeFilterParameter): [Edge]
   Paths(length: Int!, startNodeID: String, stopNodeID: String): [[Edge]]

@@ -133,6 +133,12 @@ export class DBManager {
     return result.records.map(record => record.get('n').properties);
   };
 
+  public getNodeByID = async (id: string) => {
+    let query = `MATCH (n:Node) WHERE n.id = "${id}" RETURN n`;
+    let result: StatementResult = await this.session.run(query);
+    return result.records.map(record => record.get('n').properties)[0];
+  };
+
   public updateNodeByID = async (
     nodeID: string,
     newNodeProperties: { [paramName: string]: { paramValue: string } },
@@ -246,6 +252,18 @@ export class DBManager {
     }
 
     return await this.convertToNativeEdge(result);
+  };
+
+  public getEdgeByID = async (id: string) => {
+    let query = `MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) WHERE e.id = "${id}" RETURN p`;
+    let result: StatementResult = await this.session.run(query);
+    let record = result.records.map(record => record.get('p'))[0];
+
+    let startNode = record.start.properties;
+    let stopNode = record.end.properties;
+    let edgeInfo = record.segments[0].relationship.properties;
+
+    return {startNode: startNode, stopNode: stopNode, edgeInfo: edgeInfo};
   };
 
   public updateEdgeByID = async (

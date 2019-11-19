@@ -111,6 +111,19 @@ var DBManager = /** @class */ (function () {
                 }
             });
         }); };
+        this.getNodeByID = function (id) { return __awaiter(_this, void 0, void 0, function () {
+            var query, result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        query = "MATCH (n:Node) WHERE n.id = \"" + id + "\" RETURN n";
+                        return [4 /*yield*/, this.session.run(query)];
+                    case 1:
+                        result = _a.sent();
+                        return [2 /*return*/, result.records.map(function (record) { return record.get('n').properties; })[0]];
+                }
+            });
+        }); };
         this.updateNodeByID = function (nodeID, newNodeProperties) { return __awaiter(_this, void 0, void 0, function () {
             var oldNodesArray, newNode, _i, _a, newPropertyKey, result;
             return __generator(this, function (_b) {
@@ -224,6 +237,23 @@ var DBManager = /** @class */ (function () {
                         }
                         return [4 /*yield*/, this.convertToNativeEdge(result)];
                     case 2: return [2 /*return*/, _f.sent()];
+                }
+            });
+        }); };
+        this.getEdgeByID = function (id) { return __awaiter(_this, void 0, void 0, function () {
+            var query, result, record, startNode, stopNode, edgeInfo;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        query = "MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) WHERE e.id = \"" + id + "\" RETURN p";
+                        return [4 /*yield*/, this.session.run(query)];
+                    case 1:
+                        result = _a.sent();
+                        record = result.records.map(function (record) { return record.get('p'); })[0];
+                        startNode = record.start.properties;
+                        stopNode = record.end.properties;
+                        edgeInfo = record.segments[0].relationship.properties;
+                        return [2 /*return*/, { startNode: startNode, stopNode: stopNode, edgeInfo: edgeInfo }];
                 }
             });
         }); };
