@@ -316,25 +316,21 @@ export class DBManager {
 
     let edgeRecords : Array<any> = result.records;
     edgeRecords = edgeRecords
-        .map(record => record.get('p'));
+        .map(record => record.get('p'))
+        .map(edgeRecord => {
+          let path = [];
 
-    let paths = [];
+          for (const segments of edgeRecord.segments) {
+            let startNode = segments.start.properties;
+            let stopNode = segments.end.properties;
+            let edgeInfo = segments.relationship.properties;
 
-    for (const edgeRecord of edgeRecords) {
-      let path = [];
-      for (const segments of edgeRecord.segments) {
-        let startNode = segments.start.properties;
-        let stopNode = segments.end.properties;
-        let edgeInfo = segments.relationship.properties;
+            path.push({startNode: startNode, stopNode: stopNode, edgeInfo: edgeInfo})
+          }
 
-        path.push({startNode: startNode, stopNode: stopNode, edgeInfo: edgeInfo})
-      }
+          return path;
+        });
 
-      paths.push(path);
-    }
-
-
-
-    return paths;
+    return edgeRecords;
   };
 }
