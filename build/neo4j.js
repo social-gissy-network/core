@@ -325,7 +325,6 @@ var DBManager = /** @class */ (function () {
                 return true;
             }
         })
-            //
             .map(function (record) {
             if (!record.relationship.properties.id) {
                 var identity = record.relationship.identity;
@@ -338,19 +337,6 @@ var DBManager = /** @class */ (function () {
             };
         });
         return edgeRecords;
-        // let edge : Edge = new Edge({
-        //   startNode: record.start.properties,
-        //   stopNode: record.end.properties,
-        // });
-        // edge.edgeInfo = record.relationship.properties
-        // edge.startNode = record.start.properties;
-        // edge.stopNode = record.end.properties;
-        // edge.edgeInfo = record.relationship.propertieS;
-        // return {
-        //   startNode: record.start.properties,
-        //   stopNode: record.end.properties,
-        //   edgeInfo: record.relationship.properties
-        // }
     };
     return DBManager;
 }());

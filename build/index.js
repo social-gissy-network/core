@@ -19,6 +19,10 @@ var fs = __importStar(require("fs"));
 // set environment variables from ../.env
 dotenv_1.default.config();
 var app = express_1.default();
+app.use(function (req, res, next) {
+    res.append('Content-Encoding', "gzip");
+    next();
+});
 var db = new neo4j_1.DBManager();
 var typeDefs = fs.readFileSync(__dirname + '/schema.graphql').toString('utf-8');
 var server = new apollo_server_express_1.ApolloServer({

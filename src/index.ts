@@ -1,3 +1,6 @@
+import * as zlib from "zlib";
+import { WriteStream } from "fs"
+
 export {};
 
 import { ApolloServer, ServerRegistration } from 'apollo-server-express';
@@ -11,6 +14,28 @@ import * as fs from "fs";
 dotenv.config();
 
 const app = express();
+app.use((req, res, next) => {
+  const gzip = zlib.createGzip();
+  const raw = fs.createReadStream("test");
+
+  const compressed = new WriteStream();
+
+
+  raw.pipe(gzip)
+      .on('error', () => {
+        // handle error
+      })
+      .pipe(compressed)
+      .on('error', () => {
+        // handle error
+      });
+
+
+  res.append('Content-Encoding', "gzip");
+  next();
+});
+
+
 let db = new DBManager();
 const typeDefs = fs.readFileSync(__dirname + '/schema.graphql').toString('utf-8');
 
