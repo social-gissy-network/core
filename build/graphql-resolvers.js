@@ -112,7 +112,7 @@ queryResolverObject.pathsOfLengthN = function (obj, params, ctx, resolveInfo) { 
     var result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, ctx.db.getPathsOfLengthN(1)];
+            case 0: return [4 /*yield*/, ctx.db.getPathsOfLengthN(params.n)];
             case 1:
                 result = _a.sent();
                 return [2 /*return*/, result];

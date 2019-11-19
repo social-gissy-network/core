@@ -161,7 +161,7 @@ const queryTypeConfig = {
     // Relationship identifiers of a variable length path contain
     // a collection of relationships.
 
-    pathsOfLengthN: { type: new GraphQLList(edgeType), args: { n: { type: GraphQLInt } } },
+    pathsOfLengthN: { type: new GraphQLList(edgeType), args: { n: { type: new GraphQLNonNull(GraphQLInt) } } },
   },
 };
 
