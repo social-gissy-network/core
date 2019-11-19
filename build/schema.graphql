@@ -86,7 +86,7 @@ type Query {
   Edge(startNode: NodeInput, stopNode: NodeInput, startTime: String, stopTime: String, bikeID: String, userType: String, birthYear: String, gender: String): [Edge]
   Nodes(sort: NodeSortParameter, filter: NodeFilterParameter): [Node]
   Edges(sort: EdgeSortParameter, filter: EdgeFilterParameter): [Edge]
-  pathsOfLengthN(n: Int!): [Edge]
+  Paths(length: Int!, startNodeID: String, stopNodeID: String): [[Edge]]
 }
 
 enum SortOrder {

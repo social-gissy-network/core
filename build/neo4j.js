@@ -256,18 +256,46 @@ var DBManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.getPathsOfLengthN = function (k) { return __awaiter(_this, void 0, void 0, function () {
-            var result;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.session.run("MATCH p = (s1:Node)-[e:EDGE*0.." + k + "]->(s2:Node) WITH * RETURN p")];
+        this.getPathsOfLengthN = function (k, startNodeID, stopNodeID) { return __awaiter(_this, void 0, void 0, function () {
+            var query, whereArgs, result, edgeRecords, paths, _i, edgeRecords_1, edgeRecord, path, _a, _b, segments, startNode, stopNode, edgeInfo;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        query = "MATCH p = (s1:Node)-[e:EDGE*" + k + ".." + k + "]->(s2:Node)";
+                        whereArgs = [];
+                        if (startNodeID) {
+                            whereArgs.push("s1.id =\"" + startNodeID + "\"");
+                        }
+                        if (stopNodeID) {
+                            whereArgs.push("s2.id =\"" + stopNodeID + "\"");
+                        }
+                        if (whereArgs.length > 0) {
+                            query += " WHERE " + whereArgs.reverse().join(" AND ");
+                        }
+                        query += " RETURN p";
+                        return [4 /*yield*/, this.session.run(query)];
                     case 1:
-                        result = _a.sent();
+                        result = _c.sent();
                         if (result.records.length < 1) {
                             return [2 /*return*/, []];
                         }
-                        return [4 /*yield*/, this.convertToNativeEdge(result)];
-                    case 2: return [2 /*return*/, _a.sent()];
+                        edgeRecords = result.records;
+                        edgeRecords = edgeRecords
+                            .map(function (record) { return record.get('p'); });
+                        paths = [];
+                        for (_i = 0, edgeRecords_1 = edgeRecords; _i < edgeRecords_1.length; _i++) {
+                            edgeRecord = edgeRecords_1[_i];
+                            path = [];
+                            for (_a = 0, _b = edgeRecord.segments; _a < _b.length; _a++) {
+                                segments = _b[_a];
+                                startNode = segments.start.properties;
+                                stopNode = segments.end.properties;
+                                edgeInfo = segments.relationship.properties;
+                                path.push({ startNode: startNode, stopNode: stopNode, edgeInfo: edgeInfo });
+                            }
+                            paths.push(path);
+                        }
+                        return [2 /*return*/, paths];
                 }
             });
         }); };
@@ -325,7 +353,6 @@ var DBManager = /** @class */ (function () {
                 return true;
             }
         })
-            //
             .map(function (record) {
             if (!record.relationship.properties.id) {
                 var identity = record.relationship.identity;
@@ -338,19 +365,6 @@ var DBManager = /** @class */ (function () {
             };
         });
         return edgeRecords;
-        // let edge : Edge = new Edge({
-        //   startNode: record.start.properties,
-        //   stopNode: record.end.properties,
-        // });
-        // edge.edgeInfo = record.relationship.properties
-        // edge.startNode = record.start.properties;
-        // edge.stopNode = record.end.properties;
-        // edge.edgeInfo = record.relationship.propertieS;
-        // return {
-        //   startNode: record.start.properties,
-        //   stopNode: record.end.properties,
-        //   edgeInfo: record.relationship.properties
-        // }
     };
     return DBManager;
 }());

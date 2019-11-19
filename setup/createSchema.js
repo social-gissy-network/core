@@ -158,10 +158,17 @@ const queryTypeConfig = {
     Nodes: { type: new GraphQLList(nodeType), args: { sort: { type: nodeSortParameter }, filter: { type: nodeFilterParameter}} },
     Edges: { type: new GraphQLList(edgeType), args: { sort: { type: edgeSortParameter }, filter: { type: edgeFilterParameter}} },
 
+
+    Paths: { type: new GraphQLList(new GraphQLList(edgeType)), args: {
+      length: { type: new GraphQLNonNull(GraphQLInt) },
+      startNodeID: { type: GraphQLString },
+      stopNodeID: { type: GraphQLString },
+    } },
+
     // Relationship identifiers of a variable length path contain
     // a collection of relationships.
 
-    pathsOfLengthN: { type: new GraphQLList(edgeType), args: { n: { type: new GraphQLNonNull(GraphQLInt) } } },
+    // pathsOfLengthN: { type: new GraphQLList(edgeType), args: { startNodeID: { type: new GraphQLNonNull(GraphQLString) }, n: { type: new GraphQLNonNull(GraphQLInt) } } },
   },
 };
 

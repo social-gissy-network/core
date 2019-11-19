@@ -271,14 +271,52 @@ export class DBManager {
     return this.firstRecordProperties(result, 'r');
   };
 
-  public getPathsOfLengthN = async (k: bigint ) => {
-    let result = await this.session.run(`MATCH p = (s1:Node)-[e:EDGE*0..${k}]->(s2:Node) WITH * RETURN p`);
+  public getPathsOfLengthN = async (k: bigint, startNodeID: string, stopNodeID: string) => {
+    let query = `MATCH p = (s1:Node)-[e:EDGE*${k}..${k}]->(s2:Node)`;
+
+    let whereArgs = [];
+    if (startNodeID) {
+      whereArgs.push(`s1.id ="${startNodeID}"`);
+    }
+    if (stopNodeID) {
+      whereArgs.push(`s2.id ="${stopNodeID}"`);
+    }
+    if (whereArgs.length > 0) {
+      query += ` WHERE ` + whereArgs.reverse().join(" AND ");
+    }
+
+    query += ` RETURN p`;
+
+
+    let result = await this.session.run(query);
 
     if (result.records.length < 1) {
       return [];
     }
 
 
-    return await this.convertToNativeEdge(result);
+
+    let edgeRecords : Array<any> = result.records;
+    edgeRecords = edgeRecords
+        .map(record => record.get('p'));
+
+    let paths = [];
+
+    for (const edgeRecord of edgeRecords) {
+      let path = [];
+      for (const segments of edgeRecord.segments) {
+        let startNode = segments.start.properties;
+        let stopNode = segments.end.properties;
+        let edgeInfo = segments.relationship.properties;
+
+        path.push({startNode: startNode, stopNode: stopNode, edgeInfo: edgeInfo})
+      }
+
+      paths.push(path);
+    }
+
+
+
+    return paths;
   };
 }

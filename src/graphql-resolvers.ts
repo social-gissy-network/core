@@ -52,16 +52,11 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
 
 
 
-// functions
+// Paths
 
-/*
-  example query:
-  pathsOfLengthN(n: 1) {
-    id bikeID startNode { id } stopNode { id }
-  }
- */
-queryResolverObject.pathsOfLengthN = async (obj, params, ctx, resolveInfo) => {
-  let result = await ctx.db.getPathsOfLengthN(params.n);
+
+queryResolverObject.Paths = async (obj, params, ctx, resolveInfo) => {
+  let result = await ctx.db.getPathsOfLengthN(params.length, params.startNodeID, params.stopNodeID);
   return result;
 };
 
