@@ -40,7 +40,7 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
     params.filter = {};
   }
 
-  return await ctx.db.getEdgesByParams(params.filter, params.sort);
+  return await ctx.db.getEdgesByParams(params.filter, params.sort, params.limit);
 };
 
 
@@ -49,7 +49,7 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
 
 
 queryResolverObject.Paths = async (obj, params, ctx, resolveInfo) => {
-  let result = await ctx.db.getPathsOfLengthN(params.length, params.startNodeID, params.stopNodeID);
+  let result = await ctx.db.getPathsOfLengthN(params.length, params.startNodeID, params.stopNodeID, params.limit);
   return result;
 };
 
@@ -67,7 +67,7 @@ queryResolverObject.Nodes = async (obj, params, ctx, resolveInfo) => {
     params.filter = {};
   }
 
-  return await ctx.db.getNodesByParams(params.filter, params.sort)
+  return await ctx.db.getNodesByParams(params.filter, params.sort, params.limit)
 };
 
 let mutationResolverObject: IResolverObject = {};
@@ -157,7 +157,7 @@ mutationResolverObject.UpdateEdge = async (obj, params, ctx, resolveInfo) => {
   delete params.startNode;
   delete params.stopNode;
 
-  let oldEdges = await db.getEdgesByParams(startNode, stopNode, params);
+  let oldEdges = await db.getEdgesByParams(startNode, stopNode, params); // todo
 
   let results = [];
 

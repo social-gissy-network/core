@@ -108,7 +108,7 @@ export class DBManager {
     }
   };
 
-  public getNodesByParams = async (params: { [paramName: string]: any }, sort: { [paramName: string]: string }) => {
+  public getNodesByParams = async (params: { [paramName: string]: any }, sort: { [paramName: string]: string }, limit?: string) => {
     let query = `MATCH (n:Node) `;
 
     let filteringKeys = Object.keys(params).map(key => this.mapOperators("n", params, key));
@@ -119,6 +119,9 @@ export class DBManager {
 
     query += ` RETURN n`;
 
+    if (limit) {
+      query += ` LIMIT ${limit}`;
+    }
 
     let sortingKeys: string[] = [];
 
@@ -208,7 +211,7 @@ export class DBManager {
     return object;
   };
 
-  public getEdgesByParams = async ( params: { [paramName: string]: any }, sort: { [paramName: string]: any }) => {
+  public getEdgesByParams = async ( params: { [paramName: string]: any }, sort: { [paramName: string]: any }, limit: number) => {
     let query = `MATCH p=(s1:Node)-[e:EDGE]->(s2:Node) `;
 
     let filteringKeys: string[] = [];
@@ -228,6 +231,10 @@ export class DBManager {
     }
 
     query += `RETURN p, id(e) as edgeID`;
+
+    if (limit) {
+      query += ` LIMIT ${limit}`;
+    }
 
     let sortingKeys: string[] = [];
 
@@ -289,7 +296,7 @@ export class DBManager {
     return this.firstRecordProperties(result, 'r');
   };
 
-  public getPathsOfLengthN = async (k: bigint, startNodeID: string, stopNodeID: string) => {
+  public getPathsOfLengthN = async (k: bigint, startNodeID: string, stopNodeID: string, limit: number) => {
     let query = `MATCH p = (s1:Node)-[e:EDGE*${k}..${k}]->(s2:Node)`;
 
     let whereArgs = [];
@@ -304,7 +311,9 @@ export class DBManager {
     }
 
     query += ` RETURN p`;
-
+    if (limit) {
+      query += " LIMIT " + limit;
+    }
 
     let result = await this.session.run(query);
 

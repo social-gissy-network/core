@@ -84,7 +84,7 @@ var DBManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.getNodesByParams = function (params, sort) { return __awaiter(_this, void 0, void 0, function () {
+        this.getNodesByParams = function (params, sort, limit) { return __awaiter(_this, void 0, void 0, function () {
             var query, filteringKeys, sortingKeys, _i, _a, key, result;
             var _this = this;
             return __generator(this, function (_b) {
@@ -96,6 +96,9 @@ var DBManager = /** @class */ (function () {
                             query += "WHERE " + filteringKeys.reverse().join(", ");
                         }
                         query += " RETURN n";
+                        if (limit) {
+                            query += " LIMIT " + limit;
+                        }
                         sortingKeys = [];
                         for (_i = 0, _a = Object.keys(sort); _i < _a.length; _i++) {
                             key = _a[_i];
@@ -190,7 +193,7 @@ var DBManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.getEdgesByParams = function (params, sort) { return __awaiter(_this, void 0, void 0, function () {
+        this.getEdgesByParams = function (params, sort, limit) { return __awaiter(_this, void 0, void 0, function () {
             var query, filteringKeys, _i, _a, key, _b, _c, subKey, sortingKeys, _d, _e, key, result;
             return __generator(this, function (_f) {
                 switch (_f.label) {
@@ -213,6 +216,9 @@ var DBManager = /** @class */ (function () {
                             query += "WHERE " + filteringKeys.reverse().join(" AND ");
                         }
                         query += "RETURN p, id(e) as edgeID";
+                        if (limit) {
+                            query += " LIMIT " + limit;
+                        }
                         sortingKeys = [];
                         for (_d = 0, _e = Object.keys(sort); _d < _e.length; _d++) {
                             key = _e[_d];
@@ -286,7 +292,7 @@ var DBManager = /** @class */ (function () {
                 }
             });
         }); };
-        this.getPathsOfLengthN = function (k, startNodeID, stopNodeID) { return __awaiter(_this, void 0, void 0, function () {
+        this.getPathsOfLengthN = function (k, startNodeID, stopNodeID, limit) { return __awaiter(_this, void 0, void 0, function () {
             var query, whereArgs, result, edgeRecords;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -303,6 +309,9 @@ var DBManager = /** @class */ (function () {
                             query += " WHERE " + whereArgs.reverse().join(" AND ");
                         }
                         query += " RETURN p";
+                        if (limit) {
+                            query += " LIMIT " + limit;
+                        }
                         return [4 /*yield*/, this.session.run(query)];
                     case 1:
                         result = _a.sent();

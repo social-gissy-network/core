@@ -88,7 +88,7 @@ queryResolverObject.Edges = function (obj, params, ctx, resolveInfo) { return __
                 if (!params.filter) {
                     params.filter = {};
                 }
-                return [4 /*yield*/, ctx.db.getEdgesByParams(params.filter, params.sort)];
+                return [4 /*yield*/, ctx.db.getEdgesByParams(params.filter, params.sort, params.limit)];
             case 1: return [2 /*return*/, _a.sent()];
         }
     });
@@ -98,7 +98,7 @@ queryResolverObject.Paths = function (obj, params, ctx, resolveInfo) { return __
     var result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, ctx.db.getPathsOfLengthN(params.length, params.startNodeID, params.stopNodeID)];
+            case 0: return [4 /*yield*/, ctx.db.getPathsOfLengthN(params.length, params.startNodeID, params.stopNodeID, params.limit)];
             case 1:
                 result = _a.sent();
                 return [2 /*return*/, result];
@@ -121,7 +121,7 @@ queryResolverObject.Nodes = function (obj, params, ctx, resolveInfo) { return __
                 if (!params.filter) {
                     params.filter = {};
                 }
-                return [4 /*yield*/, ctx.db.getNodesByParams(params.filter, params.sort)];
+                return [4 /*yield*/, ctx.db.getNodesByParams(params.filter, params.sort, params.limit)];
             case 1: return [2 /*return*/, _a.sent()];
         }
     });

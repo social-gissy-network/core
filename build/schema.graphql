@@ -84,9 +84,9 @@ type NodeUpdateResponse {
 type Query {
   Node(id: String!): Node
   Edge(id: String!): Edge
-  Nodes(sort: NodeSortParameter, filter: NodeFilterParameter): [Node]
-  Edges(sort: EdgeSortParameter, filter: EdgeFilterParameter): [Edge]
-  Paths(length: Int!, startNodeID: String, stopNodeID: String): [[Edge]]
+  Nodes(sort: NodeSortParameter, filter: NodeFilterParameter, limit: Int): [Node]
+  Edges(sort: EdgeSortParameter, filter: EdgeFilterParameter, limit: Int): [Edge]
+  Paths(length: Int!, startNodeID: String, stopNodeID: String, limit: Int): [[Edge]]
 }
 
 enum SortOrder {
