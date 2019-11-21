@@ -44,9 +44,11 @@ else {
   app.all('/', function (req, res, next) {
     setInterval(() => {
       const used = process.memoryUsage().heapUsed / 1024 / 1024;
+      const total = process.memoryUsage().heapTotal / 1024 / 1024;
       const usedMB = Math.round(used * 100) / 100;
+      const totalMB = Math.round(total * 100) / 100;
 
-      if (usedMB > consts.MAX_HEAP_SIZE) {
+      if ((totalMB - usedMB) < consts.HEAP_SIZE_LEFT_THRESHOLD(totalMB)) { // todo decide about a threshold
         res.status(500);
         res.json({
           "message": "Failed to fetch. Max heap size exceeded"

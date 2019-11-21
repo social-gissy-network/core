@@ -313,7 +313,7 @@ export class DBManager {
       query += ` WHERE ` + whereArgs.reverse().join(" AND ");
     }
 
-    query += ` RETURN p`;
+    query += ` RETURN extract(e in relationships(p) | e) as e,s1,s2`;
     if (limit) {
       query += " LIMIT " + limit;
     }
@@ -324,25 +324,20 @@ export class DBManager {
       return [];
     }
 
+    let paths = [];
 
+    for (const record of result.records) {
+      // edges in a specific path
+      let edges = record.get("e").map((e: { properties: object; }) => e.properties);
 
-    let edgeRecords : Array<any> = result.records;
-    edgeRecords = edgeRecords
-        .map(record => record.get('p'))
-        .map(edgeRecord => {
-          let path = [];
+      let path = [];
+      for (const edge of edges) {
+        path.push({startNode: record.get("s1"), stopNode: record.get("s2"), edgeInfo: edge});
+      }
 
-          for (const segments of edgeRecord.segments) {
-            let startNode = segments.start.properties;
-            let stopNode = segments.end.properties;
-            let edgeInfo = segments.relationship.properties;
+      paths.push(path);
+    }
 
-            path.push({startNode: startNode, stopNode: stopNode, edgeInfo: edgeInfo})
-          }
-
-          return path;
-        });
-
-    return edgeRecords;
+    return paths;
   };
 }
