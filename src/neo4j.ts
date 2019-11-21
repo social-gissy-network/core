@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import {Driver, Session, Result, StatementResult, PathSegment} from 'neo4j-driver/types/v1';
 import { Edge, Node } from './types';
 import v1 from 'neo4j-driver';
+import assert from 'assert'
 
 // set environment variables from ../.env
 dotenv.config();
@@ -86,6 +87,55 @@ export class DBManager {
     return edgeRecords;
   }
 
+  private queryNodes(filter?: object, sort?: { [paramName: string]: string }, limit?: number,
+                     options?: {newNode?: object, updateNode?: object, deleteNode?: boolean}) {
+    // CREATE
+    if (options && options.newNode) {
+      return `CREATE (n:Node ${this.stringify(options.newNode)}) RETURN n`;
+    }
+
+    //MATCH
+    let query = `MATCH (n:Node) `;
+
+    //WHERE
+    if(filter) {
+      let filteringKeys = Object.keys(filter).map(key => this.mapOperators("n", filter, key));
+      if (filteringKeys.length > 0) {
+        query += `WHERE ${filteringKeys.reverse().join(", ")} `;
+      }
+    }
+
+    //SET
+    if(options && options.updateNode) {
+      query += `SET n += ${this.stringify(options.updateNode)} `
+    }
+    //DELETE
+    else if(options && options.deleteNode) {
+      query += `DETACH DELETE (n)`
+    }
+
+    //RETURN
+    query += `RETURN properties(n) as n `;
+
+    // ORDER BY
+    if (sort) {
+      let sortingKeys: string[] = [];
+      for (const key of Object.keys(sort)) {
+        sortingKeys.push(`n.${key} ${sort[key]}`)
+      }
+      if (sortingKeys.length > 0) {
+        query += `ORDER BY ${sortingKeys.reverse().join(", ")} `;
+      }
+    }
+
+    //LIMIT
+    if (limit) {
+      query += `LIMIT ${limit} `;
+    }
+
+    return query;
+  }
+
   public close = () => this.driver.close();
 
   public setConstraints = async () => {
@@ -97,10 +147,11 @@ export class DBManager {
 
   public insertNode = async (node: Node) => {
     try {
-      let result: StatementResult = await this.session.run(
-        `CREATE (n:Node ${this.stringify(node)}) RETURN n`,
-      );
-      return result.records[0].get('n').properties;
+      let query = this.queryNodes(undefined, undefined, undefined, {newNode: node});
+      let result: StatementResult = await this.session.run(query);
+      assert(Array.isArray(result.records) && result.records.length === 1);
+
+      return result.records.map(record => record.get('n'))[0];
     } catch (error) {
       if (typeof error.message === 'string' && error.message.indexOf('already exists') > -1) {
         throw ERROR.NODE_ALREADY_EXIST;
@@ -108,76 +159,51 @@ export class DBManager {
     }
   };
 
-  public getNodesByParams = async (params: { [paramName: string]: any }, sort: { [paramName: string]: string }, limit?: string) => {
-    let query = `MATCH (n:Node) `;
-
-    let filteringKeys = Object.keys(params).map(key => this.mapOperators("n", params, key));
-
-    if (filteringKeys.length > 0) {
-      query += `WHERE ` + filteringKeys.reverse().join(", ");
-    }
-
-    query += ` RETURN n`;
-
-
-
-    let sortingKeys: string[] = [];
-
-    for (const key of Object.keys(sort)) {
-      sortingKeys.push(`n.${key} ${sort[key]}`)
-    }
-    if (sortingKeys.length > 0) {
-      query += ` ORDER BY ` + sortingKeys.reverse().join(", ");
-    }
-
-    if (limit) {
-      query += ` LIMIT ${limit}`;
-    }
-
+  public getNodesByParams = async (filter: { [paramName: string]: any }, sort: { [paramName: string]: string }, limit?: number) => {
+    let query = this.queryNodes(filter, sort, limit);
     let result: StatementResult = await this.session.run(query);
-    return result.records.map(record => record.get('n').properties);
+    assert(Array.isArray(result.records));
+
+    return result.records.map(record => record.get('n'));
   };
 
   public getNodeByID = async (id: string) => {
-    let query = `MATCH (n:Node) WHERE n.id = "${id}" RETURN n`;
+    let query = this.queryNodes({ 'id': { 'eq': id, } });
     let result: StatementResult = await this.session.run(query);
-    return result.records.map(record => record.get('n').properties)[0];
-  };
+    assert(Array.isArray(result.records) && result.records.length <= 1);
 
-  public updateNodeByID = async (
-    nodeID: string,
-    newNodeProperties: { [paramName: string]: { paramValue: string } },
-  ) => {
-    let oldNodesArray = await this.getNodesByParams({ id: nodeID }, {});
-    if (oldNodesArray.length < 1) {
+    if (result.records.length !== 1) {
       throw ERROR.NODE_DOESNT_EXIST;
     }
-
-    let newNode = oldNodesArray[0];
-    for (const newPropertyKey of Object.keys(newNodeProperties)) {
-      newNode[newPropertyKey] = newNodeProperties[newPropertyKey];
-    }
-
-    let result = await this.session.run(
-      `MATCH (n:Node) WHERE n.id = "${nodeID}" SET n = ${this.stringify(newNode)} RETURN n`,
-    );
-
-    return this.firstRecordProperties(result, 'n');
+    return result.records.map(record => record.get('n'))[0];
   };
 
-  public deleteNodeByID = async (nodeID: string) => {
-    let result = await this.session.run(
-      `MATCH (n:Node) WHERE n.id = "${nodeID}" DETACH DELETE (n) RETURN n`,
-    );
+  public updateNodeByID = async (id: string, newNodeProperties: { [paramName: string]: { paramValue: string } }) => {
+    let query = this.queryNodes({ 'id': { 'eq': id, } }, undefined, undefined, {updateNode: newNodeProperties});
+    let result = await this.session.run(query);
+    assert(Array.isArray(result.records) && result.records.length <= 1);
+
+    if (result.records.length !== 1) {
+      throw ERROR.NODE_DOESNT_EXIST;
+    }
+    return result.records.map(record => record.get('n'))[0];
+  };
+
+  public deleteNodeByID = async (id: string) => {
+    let query = this.queryNodes({ 'id': { 'eq': id, } }, undefined, undefined, {deleteNode: true});
+    let result = await this.session.run(query);
+    assert(Array.isArray(result.records) && result.records.length <= 1);
+
     if (result.records.length < 1) {
       throw ERROR.NODE_DOESNT_EXIST;
     }
 
-    return this.firstRecordProperties(result, 'n');
+    return result.records.map(record => record.get('n'))[0];
   };
 
   public deleteAllNodes = async () => {
-    this.session.run(`MATCH (n:Node) DELETE n`);
+    let query = this.queryNodes(undefined, undefined, undefined, {deleteNode: true});
+    await this.session.run(query);
   };
 
   // edge operations
