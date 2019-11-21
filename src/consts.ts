@@ -1,59 +1,10 @@
-export enum GraphQLType {
-  ID = "GraphQLID",
-  String = "GraphQLString"
-}
+const projectStage = "production";
+// const projectStage = "development";
 
-export class FieldMapping {
-  constructor(
-      public fieldName: string,
-      public fieldDataName: string,
-      public fieldType: GraphQLType
-  ) {
-    const GRAPHQL = require('graphql');
-    this.fieldType = GRAPHQL[fieldType]
-  }
-}
+// we'll use 250MB limit for the heroku server we currently use, as it have a total of 512 RAM
+let MAX_HEAP_SIZE = projectStage === "production" ? 250 : 1000; // MB
 
-export interface FieldsMapping {
-    startNode: Array<FieldMapping>,
-    endNode: Array<FieldMapping>,
-    edgeInfo: Array<FieldMapping>
-}
+// interval of which each worker will check his memory in use
+let CHECK_HEAP_INTERVAL = projectStage === "production" ? 1000 : 1000; // milliseconds
 
-let fieldsMapping: FieldsMapping = {
-    startNode: [
-        // required:
-        new FieldMapping("id", "start station id", GraphQLType.ID),
-        new FieldMapping("latitude", "start station latitude", GraphQLType.String),
-        new FieldMapping("longitude", "start station longitude", GraphQLType.String),
-
-        // optional:
-        new FieldMapping("name", "start station name", GraphQLType.String),
-    ],
-
-    endNode: [
-        // required:
-        new FieldMapping("id", "end station id", GraphQLType.ID),
-        new FieldMapping("latitude", "end station latitude", GraphQLType.String),
-        new FieldMapping("longitude", "end station longitude", GraphQLType.String),
-
-        // optional:
-        new FieldMapping("name", "end station name", GraphQLType.String),
-    ],
-
-    edgeInfo: [
-        // required:
-        new FieldMapping("startTime", "starttime", GraphQLType.String),
-        new FieldMapping("stopTime", "stoptime", GraphQLType.String),
-
-        // optional:
-        new FieldMapping("bikeID", "bikeid", GraphQLType.String),
-        new FieldMapping("userType", "usertype", GraphQLType.String),
-        new FieldMapping("birthYear", "birth year", GraphQLType.String),
-        new FieldMapping("gender", "gender", GraphQLType.String),
-    ],
-};
-
-let csvFilePath = '../data/201910-bluebikes-tripdata.csv';
-
-export { fieldsMapping, csvFilePath };
+export { MAX_HEAP_SIZE, CHECK_HEAP_INTERVAL };

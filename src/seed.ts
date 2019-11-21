@@ -1,6 +1,6 @@
-import * as consts from './consts';
 import { DBManager } from './neo4j';
 import { Edge, Node } from './types';
+const csvFilePath = "../data/201910-bluebikes-tripdata.csv";
 
 let db = new DBManager();
 
@@ -9,7 +9,7 @@ let db = new DBManager();
  * @param dataset
  * @returns {Promise<void>}
  */
-let storeDataOnDB = async (dataset: any, fieldsMapping: consts.FieldsMapping) => {
+let storeDataOnDB = async (dataset: any, fieldsMapping: any) => {
   const nodes: Array<Node> = [];
 
   let counter = 0;
@@ -60,7 +60,7 @@ let storeDataOnDB = async (dataset: any, fieldsMapping: consts.FieldsMapping) =>
 
   // 1. read dataset
   const csv = require('csvtojson');
-  const dataset = await csv().fromFile(consts.csvFilePath);
+  const dataset = await csv().fromFile(csvFilePath);
 
   // 2. clean database: uncomment following lines if you'd like to remove existing data on db
   await db.deleteAllEdges();
@@ -70,7 +70,8 @@ let storeDataOnDB = async (dataset: any, fieldsMapping: consts.FieldsMapping) =>
   await db.setConstraints();
 
   // 4. populate database with data
-  await storeDataOnDB(dataset, consts.fieldsMapping);
+  let fieldsMapping = require("./fieldsMapping");
+  await storeDataOnDB(dataset, fieldsMapping);
 })()
   .catch(error => {
     console.log(error);
