@@ -119,9 +119,7 @@ export class DBManager {
 
     query += ` RETURN n`;
 
-    if (limit) {
-      query += ` LIMIT ${limit}`;
-    }
+
 
     let sortingKeys: string[] = [];
 
@@ -130,6 +128,10 @@ export class DBManager {
     }
     if (sortingKeys.length > 0) {
       query += ` ORDER BY ` + sortingKeys.reverse().join(", ");
+    }
+
+    if (limit) {
+      query += ` LIMIT ${limit}`;
     }
 
     let result: StatementResult = await this.session.run(query);
@@ -232,10 +234,6 @@ export class DBManager {
 
     query += `RETURN p, id(e) as edgeID`;
 
-    if (limit) {
-      query += ` LIMIT ${limit}`;
-    }
-
     let sortingKeys: string[] = [];
 
     for (const key of Object.keys(sort)) {
@@ -251,6 +249,10 @@ export class DBManager {
     }
     if (sortingKeys.length > 0) {
       query += ` ORDER BY ` + sortingKeys.reverse().join(", ");
+    }
+
+    if (limit) {
+      query += ` LIMIT ${limit}`;
     }
 
     let result = await this.session.run(query);
