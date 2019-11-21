@@ -215,9 +215,10 @@ let schema = new GraphQLSchema({
   mutation: mutationType,
 });
 
-console.log("create schema");
 
-if (!fs.existsSync("../build/")){
-  fs.mkdirSync("../build/");
+if (!fs.existsSync("build/")){
+  fs.mkdirSync("build/");
 }
-fs.writeFileSync('../build/schema.graphql', printSchema(schema));
+fs.writeFileSync('build/schema.graphql', printSchema(schema));
+
+console.log("build/schema.graphql created");

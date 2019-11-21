@@ -20,8 +20,10 @@ for (const property of fieldsMapping.edgeInfo) {
 }
 typesFile += `}`;
 
-fs.writeFileSync('../src/types.ts', typesFile);
+fs.writeFileSync('src/types.ts', typesFile);
+console.log("src/types.ts created");
 
-let fielsMapping = fs.readFileSync('./fieldsMapping.js');
+let fielsMapping = fs.readFileSync('setup/fieldsMapping.js');
 
-fs.writeFileSync('../src/fieldsMapping.ts', fielsMapping);
+fs.writeFileSync('src/fieldsMapping.ts', fielsMapping);
+console.log("src/fieldsMapping.ts created");

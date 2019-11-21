@@ -26,7 +26,7 @@ function shouldCompress (req:any, res:any) {
 }
 
 let db = new DBManager();
-const typeDefs = fs.readFileSync(__dirname + '/schema.graphql').toString('utf-8');
+const typeDefs = fs.readFileSync('build/schema.graphql').toString('utf-8');
 
 const server = new ApolloServer({
   typeDefs,
