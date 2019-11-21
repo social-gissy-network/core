@@ -59,6 +59,10 @@ serverRegistration.onHealthCheck = () => {
 
 server.applyMiddleware(serverRegistration);
 
+process.on('uncaughtException', function (err) {
+  console.log("uncaughtException: " + err);
+});
+
 app.listen({ port, path }, () => {
   // eslint-disable-next-line
   console.log(`GraphQL server ready at http://localhost:${port}${path}`);
