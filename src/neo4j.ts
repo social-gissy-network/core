@@ -318,14 +318,22 @@ export class DBManager {
       query += " LIMIT " + limit;
     }
 
-    let result = await this.session.run(query);
+    let result;
+    try {
+      result = await this.session.run(query);
+    }
+    catch (error) {
+      console.log(error);
+    }
 
+    // @ts-ignore
     if (result.records.length < 1) {
       return [];
     }
 
 
 
+    // @ts-ignore
     let edgeRecords : Array<any> = result.records;
     edgeRecords = edgeRecords
         .map(record => record.get('p'))
@@ -344,5 +352,46 @@ export class DBManager {
         });
 
     return edgeRecords;
+  };
+
+  public getEdgeProperty = async (edgeID: string, propertyName: string) =>{
+    let result = await this.session.run(`MATCH ()-[e:EDGE]->() WHERE e.id = "${edgeID}" RETURN e.${propertyName}`);
+    result = result.records[0].get(`e.${propertyName}`)
+    return result;
+  };
+
+  public getPathsOfLengthNTest = async (k: bigint, startNodeID: string, stopNodeID: string, limit: number) => {
+
+    let query = `MATCH p = (s1:Node)-[e:EDGE*${k}..${k}]->(s2:Node)`;
+
+    let whereArgs = [];
+    if (startNodeID) {
+      whereArgs.push(`s1.id ="${startNodeID}"`);
+    }
+    if (stopNodeID) {
+      whereArgs.push(`s2.id ="${stopNodeID}"`);
+    }
+    if (whereArgs.length > 0) {
+      query += ` WHERE ` + whereArgs.reverse().join(" AND ");
+    }
+
+    query += ` RETURN extract(e in relationships(p) | e.id)`;
+    if (limit) {
+      query += " LIMIT " + limit;
+    }
+
+    let result;
+    try {
+      result = await this.session.run(query);
+    }
+    catch (error) {
+      console.log(error);
+    }
+
+    // return an array paths where a path is array of edge id's:
+    // [["2595","25501"], ["2195","23501"]]
+
+    // @ts-ignore
+    return result.records.map(record => record.get(0));
   };
 }

@@ -16,12 +16,8 @@ let edgeResolverObject: IResolverObject = {};
 edgeResolverObject.startNode = (obj, params, ctx, resolveInfo) => obj.startNode;
 edgeResolverObject.stopNode = (obj, params, ctx, resolveInfo) => obj.stopNode;
 for (const edgeProperty of fieldsMapping.edgeInfo) {
-  edgeResolverObject[edgeProperty.fieldName] = (obj, params, ctx, resolveInfo) => {
-    let propertyValue = obj.edgeInfo[edgeProperty.fieldName];
-    if (!propertyValue) {
-      return null;
-    }
-    return propertyValue;
+  edgeResolverObject[edgeProperty.fieldName] = async (edgeID, params, ctx, resolveInfo) => {
+    return ctx.db.getEdgeProperty(edgeID, edgeProperty.fieldName);
   };
 }
 // if id is not set by the data, we'll use internal db id
@@ -30,7 +26,9 @@ if (!edgeResolverObject.id) {
 }
 
 let queryResolverObject: IResolverObject = {};
-queryResolverObject.Edge = async (obj, params, ctx, resolveInfo) => await ctx.db.getEdgeByID(params.id);
+queryResolverObject.Edge = async (obj, params, ctx, resolveInfo) => {
+  return await ctx.db.getEdgeByID(params.id);
+};
 
 queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
   if (!params.sort) {
@@ -49,8 +47,8 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
 
 
 queryResolverObject.Paths = async (obj, params, ctx, resolveInfo) => {
-  let result = await ctx.db.getPathsOfLengthN(params.length, params.startNodeID, params.stopNodeID, params.limit);
-  return result;
+  let paths = await ctx.db.getPathsOfLengthNTest(params.length, params.startNodeID, params.stopNodeID, params.limit);
+  return paths;
 };
 
 

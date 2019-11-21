@@ -42,19 +42,24 @@ else {
   const app = express();
 
   app.all('/', function (req, res, next) {
-    setInterval(() => {
-      const used = process.memoryUsage().heapUsed / 1024 / 1024;
-      const usedMB = Math.round(used * 100) / 100;
-
-      if (usedMB > consts.MAX_HEAP_SIZE) {
-        res.status(500);
-        res.json({
-          "message": "Failed to fetch. Max heap size exceeded"
-        });
-
-        process.exit();
-      }
-    }, consts.CHECK_HEAP_INTERVAL);
+    // setInterval(() => {
+    //   const used = process.memoryUsage().heapUsed / 1024 / 1024;
+    //   const total = process.memoryUsage().heapTotal / 1024 / 1024;
+    //
+    //   const totalMB = Math.round(total * 100) / 100;
+    //   const usedMB = Math.round(used * 100) / 100;
+    //
+    //   const leftMB = totalMB - usedMB;
+    //
+    //   if (leftMB < 15) {
+    //     res.status(500);
+    //     res.json({
+    //       "message": "Failed to fetch. Max heap size exceeded"
+    //     });
+    //
+    //     process.exit();
+    //   }
+    // }, consts.CHECK_HEAP_INTERVAL);
 
     next();
   });

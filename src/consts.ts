@@ -1,5 +1,5 @@
-const projectStage = "production";
-// const projectStage = "development";
+// const projectStage = "production";
+let projectStage = "development";
 
 // we'll use 250MB limit for the heroku server we currently use, as it have a total of 512 RAM
 let MAX_HEAP_SIZE = projectStage === "production" ? 250 : 1000; // MB
