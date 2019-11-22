@@ -56,10 +56,12 @@ else {
       const totalMB = Math.round(total * 100) / 100;
 
       if ((totalMB - usedMB) < consts.HEAP_SIZE_LEFT_THRESHOLD(totalMB)) { // todo decide about a threshold
-        res.status(500);
-        res.json({
-          "message": "Failed to fetch. Max heap size exceeded"
-        });
+        if (!res.finished) { // avoid "headers already sent" error
+          res.status(500);
+          res.json({
+            "message": "Failed to fetch. Max heap size exceeded"
+          });
+        }
 
         process.exit();
       }
