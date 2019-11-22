@@ -17,13 +17,11 @@
    ```
 
 ### Setup
-1. edit setup/fieldsMapping.js according to provided dataset in "data" folder.
-2. ```node createTypes.js ``` - create "src/types.ts" and "src/fieldsMapping.ts" files.
-3. ```node createSchema.js ``` - create "build/schema.graphql" file.
+Edit ```setup/fieldsMapping.js``` according to the provided dataset in "data" folder.
 
 ### Development
-1. ```tsc``` - compile TypeScript to "build" folder.
-2. ```npm start``` - start GraphQL server.
+1. ```npm run build``` - compile TypeScript and create additional files.
+2. ```npm run dev``` - start GraphQL server.
 
 ### Deployment
 
