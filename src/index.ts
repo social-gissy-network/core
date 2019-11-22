@@ -10,14 +10,15 @@ import * as consts from "./consts"
 export {};
 
 const cluster = require('cluster');
-let numCPUs = require('os').cpus().length;
 
-// for debugging purposes
-if (consts.PROJECT_STAGE === "development") {
-  numCPUs = 1;
-}
-
+// master dispatching workersand respawn in case of worker dies
 if (cluster.isMaster) {
+  let numCPUs = require('os').cpus().length;
+  // for debugging purposes
+  if (consts.PROJECT_STAGE === "development") {
+    numCPUs = 2;
+  }
+
   console.log(`Master ${process.pid} is running`);
 
   // Fork workers.
@@ -38,10 +39,11 @@ if (cluster.isMaster) {
     console.log('worker '+newPID+' born.');
   });
 }
+
+// Workers can share any TCP connection
+// In this case it is an HTTP server
+// set environment variables from ../.env
 else {
-  // Workers can share any TCP connection
-  // In this case it is an HTTP server
-  // set environment variables from ../.env
   dotenv.config();
 
   const app = express();
@@ -63,7 +65,9 @@ else {
       }
     }, consts.CHECK_HEAP_INTERVAL);
 
-    next();
+    if (!res.finished) { // avoid "headers already sent" error
+      next();
+    }
   });
 
   const compression = require('compression');
