@@ -1,13 +1,13 @@
-const projectStage = "production";
-// const projectStage = "development";
+let PROJECT_STAGE = "production"; // todo debug
+// let PROJECT_STAGE = "development"; // todo debug
 
 // when worker will be left less RAM than this threshold he'll commit suicide
 let HEAP_SIZE_LEFT_THRESHOLD = (totalHeap: number) => {
-  let percentage = projectStage === "production" ? 3 / 100 : 3 / 100;
+  let percentage = PROJECT_STAGE === "production" ? 10 / 100 : 10 / 100;
   return totalHeap * percentage;
 }; // percentages
 
 // interval of which each worker will check his memory in use
-let CHECK_HEAP_INTERVAL = projectStage === "production" ? 1000 : 1000; // milliseconds
+let CHECK_HEAP_INTERVAL = PROJECT_STAGE === "production" ? 1000 : 1000; // milliseconds
 
-export { HEAP_SIZE_LEFT_THRESHOLD, CHECK_HEAP_INTERVAL };
+export { PROJECT_STAGE, HEAP_SIZE_LEFT_THRESHOLD, CHECK_HEAP_INTERVAL };
