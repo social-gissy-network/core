@@ -16,7 +16,7 @@ if (cluster.isMaster) {
   let numCPUs = require('os').cpus().length;
   // for debugging purposes
   if (consts.PROJECT_STAGE === "development") {
-    numCPUs = 2;
+    numCPUs = 1;
   }
 
   console.log(`Master ${process.pid} is running`);

@@ -1,6 +1,8 @@
 import { DBManager } from './neo4j';
 import { Edge, Node } from './types';
-const csvFilePath = "../data/201910-bluebikes-tripdata.csv";
+const { fieldsMapping } = require ('./fieldsMapping');
+
+const csvFilePath = "data/201910-bluebikes-tripdata.csv";
 
 let db = new DBManager();
 
@@ -70,7 +72,6 @@ let storeDataOnDB = async (dataset: any, fieldsMapping: any) => {
   await db.setConstraints();
 
   // 4. populate database with data
-  let fieldsMapping = require("./fieldsMapping");
   await storeDataOnDB(dataset, fieldsMapping);
 })()
   .catch(error => {

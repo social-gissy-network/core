@@ -85,7 +85,7 @@ for (const property of fieldsMapping.edgeInfo) {
 // sorting
 const sortOrderType = new GraphQLEnumType({
   name: 'SortOrder',
-  values: {ASC: {value: "ASC"}, DESC: {value: "DESC"}},
+  values: { ASC: { value: 'ASC' }, DESC: { value: 'DESC' } },
 });
 
 
@@ -111,21 +111,19 @@ for (const property of fieldsMapping.edgeInfo) {
 const edgeSortParameter = new GraphQLInputObjectType(edgeSortParameterConfig);
 
 
-
-
 // filtering
 const stringOperators = new GraphQLInputObjectType({
   name: 'StringOperators',
   fields: {
-    eq: { type: GraphQLString},
-    contains: { type: GraphQLString},
-    gt: { type: GraphQLString},
-    lt: { type: GraphQLString}
+    eq: { type: GraphQLString },
+    contains: { type: GraphQLString },
+    gt: { type: GraphQLString },
+    lt: { type: GraphQLString },
   },
 });
 
 
-let nodeFilterParameterConfig  = {
+let nodeFilterParameterConfig = {
   name: 'NodeFilterParameter',
   fields: {},
 };
@@ -135,8 +133,7 @@ for (const property of fieldsMapping.startNode) {
 const nodeFilterParameter = new GraphQLInputObjectType(nodeFilterParameterConfig);
 
 
-
-let edgeFilterParameterConfig  = {
+let edgeFilterParameterConfig = {
   name: 'EdgeFilterParameter',
   fields: {
     startNode: { type: nodeFilterParameter },
@@ -160,7 +157,7 @@ const queryTypeConfig = {
       args: {
         sort: { type: nodeSortParameter },
         filter: { type: nodeFilterParameter },
-        limit: { type: GraphQLInt }
+        limit: { type: GraphQLInt },
       },
     },
 
@@ -169,17 +166,19 @@ const queryTypeConfig = {
       args: {
         sort: { type: edgeSortParameter },
         filter: { type: edgeFilterParameter },
-        limit: { type: GraphQLInt }
+        limit: { type: GraphQLInt },
       },
     },
 
 
-    Paths: { type: new GraphQLList(new GraphQLList(edgeType)), args: {
-      length: { type: new GraphQLNonNull(GraphQLInt) },
-      startNodeID: { type: GraphQLString },
-      stopNodeID: { type: GraphQLString },
-      limit: { type: GraphQLInt },
-    } },
+    Paths: {
+      type: new GraphQLList(new GraphQLList(edgeType)), args: {
+        startNodeIDs: { type: new GraphQLList(GraphQLString) },
+        stopNodeIDs: { type: new GraphQLList(GraphQLString) },
+        length: { type: GraphQLInt },
+        limit: { type: GraphQLInt },
+      },
+    },
 
     // Relationship identifiers of a variable length path contain
     // a collection of relationships.
@@ -216,9 +215,9 @@ let schema = new GraphQLSchema({
 });
 
 
-if (!fs.existsSync("build/")){
-  fs.mkdirSync("build/");
+if (!fs.existsSync('build/')) {
+  fs.mkdirSync('build/');
 }
 fs.writeFileSync('build/schema.graphql', printSchema(schema));
 
-console.log("build/schema.graphql created");
+console.log('build/schema.graphql created');

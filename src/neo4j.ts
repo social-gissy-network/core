@@ -326,19 +326,65 @@ export class DBManager {
 
   // paths operations
 
-  public getPathsOfLengthN = async (k: bigint, startNodeID: string, stopNodeID: string, limit: number) => {
-    console.log(`getPathsOfLengthN handled by worker.pid = ${process.pid}`);
-    let query = `MATCH p = (s1:Node)-[e:EDGE*${k}..${k}]->(s2:Node)`;
+  // public getPathsOfLengthN = async (k: bigint, startNodeID: string, stopNodeID: string, limit: number) => {
+  //   console.log(`getPathsOfLengthN handled by worker.pid = ${process.pid}`);
+  //   let query = `MATCH p = (s1:Node)-[e:EDGE*${k}..${k}]->(s2:Node)`;
+  //
+  //   let whereArgs = [];
+  //   if (startNodeID) {
+  //     whereArgs.push(`s1.id ="${startNodeID}"`);
+  //   }
+  //   if (stopNodeID) {
+  //     whereArgs.push(`s2.id ="${stopNodeID}"`);
+  //   }
+  //   if (whereArgs.length > 0) {
+  //     query += ` WHERE ` + whereArgs.reverse().join(" AND ");
+  //   }
+  //
+  //   query += ` RETURN extract(e in relationships(p) | properties(e)) as e,properties(s1) as s1,properties(s2) as s2`;
+  //   if (limit) {
+  //     query += " LIMIT " + limit;
+  //   }
+  //
+  //   let result = await this.session.run(query);
+  //
+  //   if (result.records.length < 1) {
+  //     return [];
+  //   }
+  //
+  //   let paths = [];
+  //
+  //   for (const record of result.records) {
+  //     // edges in a specific path
+  //     let edges = record.get("e");
+  //
+  //     let path = [];
+  //     for (const edge of edges) {
+  //       path.push({startNode: record.get("s1"), stopNode: record.get("s2"), edgeInfo: edge});
+  //     }
+  //
+  //     paths.push(path);
+  //   }
+  //
+  //   return paths;
+  // };
 
-    let whereArgs = [];
-    if (startNodeID) {
-      whereArgs.push(`s1.id ="${startNodeID}"`);
+  public getPaths = async (startNodeIDs: string[], stopNodeIDs: string[], length: number, limit: number) => {
+    console.log(`cgetPaths handled by worker.pid = ${process.pid}`);
+
+    let pathsLength = length ? `${length}..${length}` : ``;
+
+    let query = `MATCH p = (s1:Node)-[e:EDGE*${pathsLength}]->(s2:Node)`;
+
+    let whereArgs: string[] = [];
+    if (startNodeIDs) {
+      whereArgs = whereArgs.concat(startNodeIDs.map(id => `s1.id ="${id}"`));
     }
-    if (stopNodeID) {
-      whereArgs.push(`s2.id ="${stopNodeID}"`);
+    if (stopNodeIDs) {
+      whereArgs = whereArgs.concat(stopNodeIDs.map(id => `s2.id ="${id}"`));
     }
     if (whereArgs.length > 0) {
-      query += ` WHERE ` + whereArgs.reverse().join(" AND ");
+      query += ` WHERE ` + whereArgs.reverse().join(" OR ");
     }
 
     query += ` RETURN extract(e in relationships(p) | properties(e)) as e,properties(s1) as s1,properties(s2) as s2`;

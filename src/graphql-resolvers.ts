@@ -49,7 +49,7 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
 
 
 queryResolverObject.Paths = async (obj, params, ctx, resolveInfo) => {
-  let result = await ctx.db.getPathsOfLengthN(params.length, params.startNodeID, params.stopNodeID, params.limit);
+  let result = await ctx.db.getPaths(params.startNodeIDs, params.stopNodeIDs, params.length, params.limit);
   return result;
 };
 

@@ -5,7 +5,7 @@ let USE_GZIP_COMPRESSION = true;
 
 // when worker will be left less RAM than this threshold he'll commit suicide
 let HEAP_SIZE_LEFT_THRESHOLD = (totalHeap: number) => {
-  let percentage = PROJECT_STAGE === "production" ? 10 / 100 : 10 / 100;
+  let percentage = PROJECT_STAGE === "production" ? 3 / 100 : 3 / 100;
   return totalHeap * percentage;
 }; // percentages
 
