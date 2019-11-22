@@ -5,6 +5,7 @@
   "main": "build/index.ts",
   "scripts": {
     "start": "node build/index.js",
+    "dev": "nodemon --inspect src/index.ts",
     "build": "node setup/createSchema.js && node setup/createTypes.js && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc"
@@ -20,5 +21,8 @@
     "neo4j-driver": "1.7.6",
     "ts-node": "8.5.0",
     "typescript": "3.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.0"
   }
 }
