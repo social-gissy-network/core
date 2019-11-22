@@ -111,7 +111,7 @@ export class DBManager {
     }
     //DELETE
     else if(options && options.deleteNode) {
-      query += `DETACH DELETE (n)`
+      query += `DETACH DELETE (n) `
     }
 
     //RETURN
@@ -140,7 +140,7 @@ export class DBManager {
 
   public setConstraints = async () => {
     this.session.run('CREATE CONSTRAINT ON (n:Node) ASSERT n.id IS UNIQUE');
-    this.session.run('CREATE CONSTRAINT ON (r:Edge) ASSERT r.id IS UNIQUE');
+    this.session.run('CREATE CONSTRAINT ON (r:EDGE) ASSERT r.id IS UNIQUE');
   };
 
   // node operations
