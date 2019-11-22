@@ -324,6 +324,8 @@ export class DBManager {
     return this.firstRecordProperties(result, 'r');
   };
 
+  // paths operations
+
   public getPathsOfLengthN = async (k: bigint, startNodeID: string, stopNodeID: string, limit: number) => {
     console.log(`getPathsOfLengthN handled by worker.pid = ${process.pid}`);
     let query = `MATCH p = (s1:Node)-[e:EDGE*${k}..${k}]->(s2:Node)`;
