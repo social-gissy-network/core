@@ -6,7 +6,7 @@ const {fieldsMapping} = require('./fieldsMapping');
 const csvFilePath = process.argv[2];
 const startIdx = process.argv[3];
 const endIdx = process.argv[4];
-const deleteFlag = process.argv[4] === "delete";
+const deleteFlag = process.argv[5] === "delete";
 
 
 let db = new DBManager();
