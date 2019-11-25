@@ -3,6 +3,7 @@ import {Driver, Session, Result, StatementResult, PathSegment} from 'neo4j-drive
 import { Edge, Node } from './types';
 import v1 from 'neo4j-driver';
 import assert from 'assert'
+import * as consts from './consts';
 
 // set environment variables from ../.env
 dotenv.config();
@@ -23,7 +24,12 @@ export class DBManager {
   session: Session;
 
   constructor() {
-    this.driver = v1.driver(NEO4J_URL, v1.auth.basic(NEO4J_USER, NEO4J_PASSWORD));
+    if (consts.PROJECT_STAGE === "production") {
+      this.driver = v1.driver(NEO4J_URL, v1.auth.basic(NEO4J_USER, NEO4J_PASSWORD));
+    }
+    else {
+      this.driver = v1.driver('bolt://localhost:7687', v1.auth.basic(NEO4J_USER, NEO4J_PASSWORD));
+    }
 
     // Create a session to run Cypher statements in.
     // Note: Always make sure to close sessions when you are done using them!
