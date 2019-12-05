@@ -4,10 +4,7 @@ let PROJECT_STAGE = "production"; // todo debug
 let USE_GZIP_COMPRESSION = true;
 
 // when worker will be left less RAM than this threshold he'll commit suicide
-let HEAP_SIZE_LEFT_THRESHOLD = (totalHeap: number) => {
-  let percentage = PROJECT_STAGE === "production" ? 3 / 100 : 3 / 100;
-  return totalHeap * percentage;
-}; // percentages
+let MAX_HEAP_CAPACITY = 0.7; // percentages
 
 // interval of which each worker will check his memory in use
 let CHECK_HEAP_INTERVAL = PROJECT_STAGE === "production" ? 1000 : 1000; // milliseconds
@@ -15,6 +12,6 @@ let CHECK_HEAP_INTERVAL = PROJECT_STAGE === "production" ? 1000 : 1000; // milli
 export {
   PROJECT_STAGE,
   USE_GZIP_COMPRESSION,
-  HEAP_SIZE_LEFT_THRESHOLD,
+  MAX_HEAP_CAPACITY,
   CHECK_HEAP_INTERVAL
 };

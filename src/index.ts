@@ -2,11 +2,12 @@ import { Worker } from "cluster";
 import { ApolloServer, ServerRegistration } from 'apollo-server-express';
 import express from 'express';
 import dotenv from 'dotenv';
+import * as v8 from "v8";
 import { resolvers } from './graphql-resolvers';
 import { DBManager } from './neo4j';
 import * as fs from "fs";
 import * as consts from "./consts"
-
+import { HeapInfo } from "v8";
 export {};
 
 const cluster = require('cluster');
@@ -49,13 +50,12 @@ else {
   const app = express();
 
   app.all('/', function (req, res, next) {
-    setInterval(() => {
-      const used = process.memoryUsage().heapUsed / 1024 / 1024;
-      const total = process.memoryUsage().heapTotal / 1024 / 1024;
-      const usedMB = Math.round(used * 100) / 100;
-      const totalMB = Math.round(total * 100) / 100;
+    const initialStats: HeapInfo = v8.getHeapStatistics();
+    const totalHeapSizeThreshold = initialStats.heap_size_limit * consts.MAX_HEAP_CAPACITY;
 
-      if ((totalMB - usedMB) < consts.HEAP_SIZE_LEFT_THRESHOLD(totalMB)) { // todo decide about a threshold
+    setInterval(() => {
+      let stats = v8.getHeapStatistics();
+      if ((stats.total_heap_size) > totalHeapSizeThreshold) {
         if (!res.finished) { // avoid "headers already sent" error
           res.status(500);
           res.json({
