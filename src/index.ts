@@ -10,43 +10,8 @@ import * as consts from "./consts"
 import { HeapInfo } from "v8";
 export {};
 const cluster = require('cluster');
-const winston = require('winston'); // for transports.Console
 
-/**
- * Logger
- */
-
-const { createLogger, format, transports } = require('winston');
-const { combine, timestamp, label, prettyPrint } = format;
-
-const logger = createLogger({
-  format: combine(
-      timestamp(),
-      prettyPrint()
-  ),
-  transports: [
-    new transports.Console(),
-    new winston.transports.File({filename: `logs/${(new Date()).toISOString().split("T")[0]}.log`})
-  ]
-});
-
-let log = (level: string, message: string, location: string, additionalData?: object) => {
-  let logObject = {
-    level: level,
-    message: message,
-    location: location,
-    additionalData
-  };
-
-  if (additionalData) {
-    logObject.additionalData = additionalData;
-  }
-  else {
-    delete logObject.additionalData;
-  }
-
-  logger.log(logObject);
-};
+const log = consts.LOG;
 
 
 

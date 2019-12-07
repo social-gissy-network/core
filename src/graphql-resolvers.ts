@@ -6,6 +6,8 @@ const { fieldsMapping } = require('./fieldsMapping');
 const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
 
+const log = consts.LOG;
+
 let nodeResolverObject: IResolverObject = {};
 for (const nodeProperty of fieldsMapping.startNode) {
   nodeResolverObject[nodeProperty.fieldName] = (obj, params, ctx, resolveInfo) => {
@@ -49,6 +51,7 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
   if (consts.USE_CACHE) {
     let edges = cache.get(cacheKey);
     if (!edges) { // handle miss
+      log("info", "cache miss", "Edges.resolver", params);
       edges = await ctx.db.getEdgesByParams(params.filter, params.sort, params.limit);
     }
     return edges;
