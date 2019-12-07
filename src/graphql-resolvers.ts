@@ -1,5 +1,10 @@
+import * as consts from './consts';
 import { IResolverObject, IResolvers } from 'graphql-tools';
 const { fieldsMapping } = require('./fieldsMapping');
+
+// cache
+const NodeCache = require( "node-cache" );
+const cache = new NodeCache();
 
 let nodeResolverObject: IResolverObject = {};
 for (const nodeProperty of fieldsMapping.startNode) {
@@ -40,7 +45,17 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
     params.filter = {};
   }
 
-  return await ctx.db.getEdgesByParams(params.filter, params.sort, params.limit);
+  let cacheKey = "Edges_" + JSON.stringify(params);
+  if (consts.USE_CACHE) {
+    let edges = cache.get(cacheKey);
+    if (!edges) { // handle miss
+      edges = await ctx.db.getEdgesByParams(params.filter, params.sort, params.limit);
+    }
+    return edges;
+  }
+  else {
+    return await ctx.db.getEdgesByParams(params.filter, params.sort, params.limit);
+  }
 };
 
 

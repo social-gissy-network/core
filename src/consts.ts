@@ -9,9 +9,13 @@ let MAX_HEAP_CAPACITY = 0.7; // percentages
 // interval of which each worker will check his memory in use
 let CHECK_HEAP_INTERVAL = PROJECT_STAGE === "production" ? 1000 : 1000; // milliseconds
 
+// whether to use cache
+let USE_CACHE = true;
+
 export {
   PROJECT_STAGE,
   USE_GZIP_COMPRESSION,
   MAX_HEAP_CAPACITY,
-  CHECK_HEAP_INTERVAL
+  CHECK_HEAP_INTERVAL,
+  USE_CACHE
 };
