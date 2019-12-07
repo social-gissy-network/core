@@ -9,8 +9,48 @@ import * as fs from "fs";
 import * as consts from "./consts"
 import { HeapInfo } from "v8";
 export {};
-
 const cluster = require('cluster');
+const winston = require('winston'); // for transports.Console
+
+/**
+ * Logger
+ */
+
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, label, prettyPrint } = format;
+
+const logger = createLogger({
+  format: combine(
+      timestamp(),
+      prettyPrint()
+  ),
+  transports: [
+    new transports.Console(),
+    new winston.transports.File({filename: `logs/${(new Date()).toISOString().split("T")[0]}.log`})
+  ]
+});
+
+let log = (level: string, message: string, location: string, additionalData?: object) => {
+  let logObject = {
+    level: level,
+    message: message,
+    location: location,
+    additionalData
+  };
+
+  if (additionalData) {
+    logObject.additionalData = additionalData;
+  }
+  else {
+    delete logObject.additionalData;
+  }
+
+  logger.log(logObject);
+};
+
+
+
+
 
 // master dispatching workersand respawn in case of worker dies
 if (cluster.isMaster) {
@@ -20,7 +60,7 @@ if (cluster.isMaster) {
     numCPUs = 1;
   }
 
-  console.log(`Master ${process.pid} is running`);
+  log("info", `Master ${process.pid} is running`, "init");
 
   // Fork workers.
   for (let i = 0; i < numCPUs; i++) {
@@ -36,8 +76,8 @@ if (cluster.isMaster) {
     let oldPID = deadWorker.process.pid;
 
     // Log the event
-    console.log('worker '+oldPID+' died.');
-    console.log('worker '+newPID+' born.');
+    log("info", 'worker ' + oldPID + ' died.', "init");
+    log("info", 'worker ' + newPID + ' died.', "init");
   });
 }
 
@@ -48,6 +88,13 @@ else {
   dotenv.config();
 
   const app = express();
+
+  app.use(function (req, res, next) {
+    log('info', 'express middleware', 'app.use', {
+        url: req.url, method: req.method
+    });
+    next();
+  });
 
   app.all('/', function (req, res, next) {
     const initialStats: HeapInfo = v8.getHeapStatistics();
@@ -73,20 +120,31 @@ else {
   });
 
   const compression = require('compression');
-  let shouldCompress = (req:any, res:any) => {
+
+
+  /**
+   * app.use
+   */
+
+  app.use(compression({ filter: (req:any, res:any) => {
       // don't compress responses with this request header
       if (req.headers['x-no-compression']) {
-          return false;
+        return false;
       }
 
       if (!consts.USE_GZIP_COMPRESSION) {
-          return false;
+        return false;
       }
 
-    // fallback to standard filter function
-    return compression.filter(req, res);
-  };
-  app.use(compression({ filter: shouldCompress }));
+      // fallback to standard filter function
+      return compression.filter(req, res);
+    }
+  }));
+
+
+  /**
+   * server config
+   */
 
   let db = new DBManager();
   const typeDefs = fs.readFileSync('build/schema.graphql').toString('utf-8');
@@ -125,6 +183,6 @@ else {
 
   app.listen({ port, path }, () => {
     // eslint-disable-next-line
-    console.log(`Worker ${process.pid} started GraphQL server at http://localhost:${port}${path}`);
+    log('info',`Worker ${process.pid} started GraphQL server at http://localhost:${port}${path}`, 'app.listen');
   });
 }
