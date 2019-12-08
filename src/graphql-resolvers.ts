@@ -55,6 +55,9 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
       cache.set(cacheKey, edges);
       edges = await ctx.db.getEdgesByParams(params.filter, params.sort, params.limit);
     }
+    else {
+      log("info", "cache hit", "Edges.resolver", params)
+    }
     return edges;
   }
   else {
