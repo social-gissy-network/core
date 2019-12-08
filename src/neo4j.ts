@@ -28,7 +28,7 @@ export class DBManager {
       this.driver = v1.driver(NEO4J_URL, v1.auth.basic(NEO4J_USER, NEO4J_PASSWORD));
     }
     else {
-      this.driver = v1.driver('bolt://localhost:7687', v1.auth.basic(NEO4J_USER, NEO4J_PASSWORD));
+      this.driver = v1.driver(NEO4J_URL, v1.auth.basic(NEO4J_USER, NEO4J_PASSWORD));
     }
 
     // Create a session to run Cypher statements in.

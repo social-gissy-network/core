@@ -52,8 +52,8 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
     let edges = cache.get(cacheKey);
     if (!edges) { // handle miss
       log("info", "cache miss", "Edges.resolver", params);
-      cache.set(cacheKey, edges);
       edges = await ctx.db.getEdgesByParams(params.filter, params.sort, params.limit);
+      cache.set(cacheKey, edges, 10000);
     }
     else {
       log("info", "cache hit", "Edges.resolver", params)

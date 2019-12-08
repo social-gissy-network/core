@@ -54,12 +54,12 @@ else {
 
   const app = express();
 
-  app.use(function (req, res, next) {
-    log('info', 'express middleware', 'app.use', {
-        url: req.url, method: req.method
-    });
-    next();
-  });
+  // app.use(function (req, res, next) {
+  //   log('info', 'express middleware', 'app.use', {
+  //       url: req.url, method: req.method
+  //   });
+  //   next();
+  // });
 
   app.all('/', function (req, res, next) {
     const initialStats: HeapInfo = v8.getHeapStatistics();
