@@ -12,7 +12,7 @@ const useCacheIfAllowed = async (fallback: { (): Promise<any>; (): any; }, param
     if (!edges) { // handle miss
       log("info", "cache miss", "Edges.resolver", params);
       edges = await fallback();
-      cache.set(cacheKey, edges, 10000);
+      cache.set(cacheKey, edges, 0);
     }
     else {
       log("info", "cache hit", "Edges.resolver", params)
