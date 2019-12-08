@@ -5,6 +5,24 @@ const { fieldsMapping } = require('./fieldsMapping');
 // cache
 const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
+const useCacheIfAllowed = async (fallback: { (): Promise<any>; (): any; }, params: object | undefined) => {
+  let cacheKey = "Edges_" + JSON.stringify(params);
+  if (consts.USE_CACHE) {
+    let edges = cache.get(cacheKey);
+    if (!edges) { // handle miss
+      log("info", "cache miss", "Edges.resolver", params);
+      edges = await fallback();
+      cache.set(cacheKey, edges, 10000);
+    }
+    else {
+      log("info", "cache hit", "Edges.resolver", params)
+    }
+    return edges;
+  }
+  else {
+    return await fallback();
+  }
+};
 
 const log = consts.LOG;
 
@@ -47,22 +65,7 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
     params.filter = {};
   }
 
-  let cacheKey = "Edges_" + JSON.stringify(params);
-  if (consts.USE_CACHE) {
-    let edges = cache.get(cacheKey);
-    if (!edges) { // handle miss
-      log("info", "cache miss", "Edges.resolver", params);
-      edges = await ctx.db.getEdgesByParams(params.filter, params.sort, params.limit);
-      cache.set(cacheKey, edges, 10000);
-    }
-    else {
-      log("info", "cache hit", "Edges.resolver", params)
-    }
-    return edges;
-  }
-  else {
-    return await ctx.db.getEdgesByParams(params.filter, params.sort, params.limit);
-  }
+  return await useCacheIfAllowed(async () => await ctx.db.getEdgesByParams(params.filter, params.sort, params.limit), params);
 };
 
 
