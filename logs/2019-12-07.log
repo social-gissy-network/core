@@ -1,0 +1,2565 @@
+{ level: 'info',
+  message: 'Master 4660 is running',
+  additionalData: undefined,
+  location: undefined,
+  time: '2019-12-07T22:39:57.615Z',
+  timestamp: '2019-12-07T22:39:57.616Z' }
+{ level: 'info',
+  message:
+   'Worker 9516 started GraphQL server at http://localhost:4001/',
+  additionalData: undefined,
+  location: undefined,
+  time: '2019-12-07T22:40:04.469Z',
+  timestamp: '2019-12-07T22:40:04.470Z' }
+{ level: 'info',
+  message: 'Master 9992 is running',
+  additionalData: undefined,
+  location: undefined,
+  timestamp: '2019-12-07T22:43:21.361Z' }
+{ level: 'info',
+  message:
+   'Worker 3144 started GraphQL server at http://localhost:4001/',
+  additionalData: undefined,
+  location: undefined,
+  timestamp: '2019-12-07T22:43:24.968Z' }
+{ level: 'info',
+  message: 'Master 1884 is running',
+  additionalData: undefined,
+  location: undefined,
+  timestamp: '2019-12-07T22:45:25.278Z' }
+{ level: 'info',
+  message: 'Master 12416 is running',
+  location: undefined,
+  timestamp: '2019-12-07T22:45:38.581Z' }
+{ level: 'info',
+  message:
+   'Worker 15044 started GraphQL server at http://localhost:4001/',
+  location: undefined,
+  timestamp: '2019-12-07T22:45:42.179Z' }
+{ level: 'info',
+  message: 'Master 9156 is running',
+  location: undefined,
+  timestamp: '2019-12-07T22:47:34.059Z' }
+{ level: 'info',
+  message:
+   'Worker 7884 started GraphQL server at http://localhost:4001/',
+  location: undefined,
+  timestamp: '2019-12-07T22:47:37.616Z' }
+{ level: 'info',
+  message: 'Master 15768 is running',
+  location: undefined,
+  timestamp: '2019-12-07T22:48:18.960Z' }
+{ level: 'info',
+  message:
+   'Worker 16216 started GraphQL server at http://localhost:4001/',
+  location: undefined,
+  timestamp: '2019-12-07T22:48:22.500Z' }
+{ level: 'info',
+  message: 'Master 10452 is running',
+  location: 'init',
+  timestamp: '2019-12-07T22:52:50.135Z' }
+{ level: 'info',
+  message:
+   'Worker 6996 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T22:52:53.690Z' }
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+{ level: 'info',
+  message: 'Master 13920 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:00:07.167Z' }
+{ level: 'info',
+  message:
+   'Worker 9032 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:16.817Z' }
+{ level: 'info',
+  message:
+   'Worker 6996 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:16.862Z' }
+{ level: 'info',
+  message:
+   'Worker 2644 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:16.909Z' }
+{ level: 'info',
+  message:
+   'Worker 9464 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:16.940Z' }
+{ level: 'info',
+  message:
+   'Worker 6924 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:16.982Z' }
+{ level: 'info',
+  message:
+   'Worker 15028 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:16.993Z' }
+{ level: 'info',
+  message:
+   'Worker 7548 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:17.054Z' }
+{ level: 'info',
+  message:
+   'Worker 15504 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:17.199Z' }
+{ level: 'info',
+  message: 'Master 12664 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:00:39.585Z' }
+{ level: 'info',
+  message:
+   'Worker 9676 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:45.832Z' }
+{ level: 'info',
+  message:
+   'Worker 10876 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:45.855Z' }
+{ level: 'info',
+  message:
+   'Worker 10536 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:45.891Z' }
+{ level: 'info',
+  message:
+   'Worker 6536 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:45.920Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:00:45.961Z' }
+{ level: 'info',
+  message:
+   'Worker 6940 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:00:45.981Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:00:48.139Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:00:50.194Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:00:52.259Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:00:54.319Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:00:56.366Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:00:58.404Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:01:00.445Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:01:02.489Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:01:04.526Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:01:06.564Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:01:08.609Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:01:10.648Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:01:12.688Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:01:14.742Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  timestamp: '2019-12-07T23:01:16.776Z' }
+{ level: 'info',
+  message: 'Master 16256 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:03:47.482Z' }
+{ level: 'info',
+  message:
+   'Worker 2608 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:03:55.760Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:03:55.829Z' }
+{ level: 'info',
+  message:
+   'Worker 15556 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:03:55.836Z' }
+{ level: 'info',
+  message:
+   'Worker 15028 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:03:55.851Z' }
+{ level: 'info',
+  message:
+   'Worker 2472 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:03:55.984Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:03:56.029Z' }
+{ level: 'info',
+  message:
+   'Worker 9428 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:03:56.045Z' }
+{ level: 'info',
+  message:
+   'Worker 3264 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:03:56.293Z' }
+{ level: 'info',
+  message:
+   'Worker 9204 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:03:56.314Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:03:58.097Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:04:00.138Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:04:02.174Z' }
+{ level: 'info',
+  message: 'Master 7180 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:19:55.411Z' }
+{ level: 'info',
+  message:
+   'Worker 14712 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:20:03.074Z' }
+{ level: 'info',
+  message:
+   'Worker 5620 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:20:03.079Z' }
+{ level: 'info',
+  message:
+   'Worker 16032 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:20:03.103Z' }
+{ level: 'info',
+  message: 'Worker 88 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:20:03.143Z' }
+{ level: 'info',
+  message:
+   'Worker 3916 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:20:03.148Z' }
+{ level: 'info',
+  message:
+   'Worker 1748 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:20:03.179Z' }
+{ level: 'info',
+  message:
+   'Worker 12920 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:20:03.220Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'GET' },
+  timestamp: '2019-12-07T23:21:18.353Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:19.697Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:19.876Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:20.666Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:23.883Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:26.017Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:28.064Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:30.101Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:32.146Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:34.184Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:36.215Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:38.251Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:40.289Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:42.318Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:44.343Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:21:46.369Z' }
+{ level: 'info',
+  message: 'Master 15436 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:23:12.444Z' }
+{ level: 'info',
+  message:
+   'Worker 16256 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:23:20.525Z' }
+{ level: 'info',
+  message:
+   'Worker 15356 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:23:20.626Z' }
+{ level: 'info',
+  message:
+   'Worker 11668 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:23:20.648Z' }
+{ level: 'info',
+  message:
+   'Worker 16020 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:23:20.693Z' }
+{ level: 'info',
+  message: 'Master 15932 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:23:56.000Z' }
+{ level: 'info',
+  message:
+   'Worker 10952 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:24:04.260Z' }
+{ level: 'info',
+  message:
+   'Worker 2592 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:24:04.807Z' }
+{ level: 'info',
+  message:
+   'Worker 13152 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:24:04.951Z' }
+{ level: 'info',
+  message:
+   'Worker 1568 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:24:05.021Z' }
+{ level: 'info',
+  message:
+   'Worker 13236 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:24:05.124Z' }
+{ level: 'info',
+  message:
+   'Worker 16220 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:24:05.129Z' }
+{ level: 'info',
+  message:
+   'Worker 5392 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:24:05.179Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:24:15.649Z' }
+{ level: 'info',
+  message: 'Master 16008 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:28:27.728Z' }
+{ level: 'info',
+  message:
+   'Worker 11668 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:28:31.406Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:28:36.606Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:28:48.137Z' }
+{ level: 'info',
+  message: 'Master 2912 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:29:04.260Z' }
+{ level: 'info',
+  message: 'Master 14872 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:29:28.665Z' }
+{ level: 'info',
+  message: 'Master 16020 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:29:32.893Z' }
+{ level: 'info',
+  message:
+   'Worker 7188 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:29:35.060Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:29:35.217Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'GET' },
+  timestamp: '2019-12-07T23:29:40.724Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:29:42.525Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:29:42.632Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:29:43.309Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:29:44.635Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:29:46.687Z' }
+{ level: 'info',
+  message: 'Master 11388 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:29:52.428Z' }
+{ level: 'info',
+  message: 'Master 15648 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:30:17.678Z' }
+{ level: 'info',
+  message: 'Master 15856 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:30:34.883Z' }
+{ level: 'info',
+  message:
+   'Worker 15044 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:30:40.553Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:30:43.822Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:30:44.931Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:30:47.021Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:30:49.062Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:30:51.090Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:30:53.122Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:30:55.151Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:30:55.751Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:30:57.195Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:30:59.239Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:31:01.299Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:31:03.326Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:31:05.361Z' }
+{ level: 'info',
+  message: 'Master 4372 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:31:10.374Z' }
+{ level: 'info',
+  message:
+   'Worker 6480 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:31:14.619Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:31:14.730Z' }
+{ level: 'info',
+  message: 'Master 15912 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:36:09.503Z' }
+{ level: 'info',
+  message: 'Master 10248 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:36:23.516Z' }
+{ level: 'info',
+  message:
+   'Worker 6912 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:36:27.116Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:27.645Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:29.798Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:31.836Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:31.929Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:34.054Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:36.107Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:38.151Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:40.197Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:42.243Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:44.297Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:46.334Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:48.388Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:50.422Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:52.460Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:54.498Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:56.537Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:36:58.586Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:00.637Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:02.672Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:04.728Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:06.766Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:08.798Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:10.837Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:12.882Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:14.916Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:16.962Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:19.015Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:21.058Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:23.097Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:25.143Z' }
+{ level: 'info',
+  message: 'Master 10544 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:37:33.868Z' }
+{ level: 'info',
+  message:
+   'Worker 15840 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:37:42.161Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:42.196Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:44.329Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:46.374Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:46.869Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:48.425Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:50.468Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:52.527Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:54.601Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:56.638Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:37:58.687Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'GET' },
+  timestamp: '2019-12-07T23:37:58.960Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:01.076Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:01.271Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:02.634Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:03.104Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:04.678Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:06.715Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:08.755Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:10.819Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:12.864Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:14.913Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:16.948Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:18.978Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:21.013Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:23.056Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:25.102Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:27.149Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:29.196Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:31.249Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:33.289Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:35.336Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:37.378Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:39.431Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:39.587Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:49.999Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:50.011Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:50.024Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:50.038Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:50.052Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:52.093Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:54.129Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:38:56.167Z' }
+{ level: 'info',
+  message: 'Master 1900 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:39:04.623Z' }
+{ level: 'info',
+  message:
+   'Worker 1480 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:39:08.327Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:11.268Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:13.442Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:14.034Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:32.861Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:32.877Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:32.894Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:32.910Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:32.930Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:32.944Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:32.956Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:32.975Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:32.990Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:42.840Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:43.906Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:46.177Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:48.086Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:55.199Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'GET' },
+  timestamp: '2019-12-07T23:39:56.031Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:39:59.902Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:02.033Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:03.584Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:12.666Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:12.679Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:12.692Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:12.706Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:12.726Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:12.749Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:12.765Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:15.734Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:23.003Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:24.043Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:24.558Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:27.903Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:31.056Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:32.892Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:32.902Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:32.912Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:32.924Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:32.942Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:34.986Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:37.020Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:39.068Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:41.116Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'GET' },
+  timestamp: '2019-12-07T23:40:41.976Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:43.552Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:43.713Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:44.342Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:45.062Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:47.136Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:49.222Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:51.264Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:40:51.386Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:07.737Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:07.755Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:07.770Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:07.786Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:07.800Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:07.813Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:07.829Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:07.847Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:15.200Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:15.212Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:15.227Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:17.290Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:19.337Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:21.367Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:23.408Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:25.449Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:27.513Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:29.547Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:31.579Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:33.612Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:35.668Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:41:37.698Z' }
+{ level: 'info',
+  message: 'Master 16288 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:43:06.472Z' }
+{ level: 'info',
+  message: 'Master 10172 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:43:59.631Z' }
+{ level: 'info',
+  message:
+   'Worker 15392 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:44:03.702Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'GET' },
+  timestamp: '2019-12-07T23:44:09.436Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:10.759Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:10.915Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:12.230Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:12.410Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:16.795Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:16.816Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:23.775Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:23.791Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:23.805Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:25.930Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:27.982Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:30.027Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:32.073Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:34.111Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:36.151Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:38.255Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:40.310Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:42.349Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:44.392Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:46.444Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:48.479Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:50.527Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:52.588Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:54.641Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:56.672Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:44:58.707Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:00.768Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:02.821Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:04.859Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:06.898Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:08.947Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:11.024Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:13.067Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:15.100Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:17.139Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:19.173Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:21.214Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:23.251Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:25.291Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:27.327Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:29.358Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:31.393Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:33.428Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:35.459Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:37.490Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:39.528Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:41.565Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:43.620Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:45.678Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:47.742Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:49.784Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:51.820Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:53.857Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:55.892Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:57.926Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:45:59.966Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:02.029Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:04.064Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:06.097Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:08.145Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:10.203Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:12.248Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:14.294Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:16.331Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:18.237Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:26.542Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:26.553Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:26.565Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:26.578Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:26.593Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:46:37.004Z' }
+{ level: 'info',
+  message: 'Master 11232 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:50:32.023Z' }
+{ level: 'info',
+  message:
+   'Worker 12876 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:50:38.216Z' }
+{ level: 'info',
+  message:
+   'Worker 15900 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:50:38.221Z' }
+{ level: 'info',
+  message:
+   'Worker 4808 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:50:38.221Z' }
+{ level: 'info',
+  message:
+   'Worker 16360 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:50:38.313Z' }
+{ level: 'info',
+  message:
+   'Worker 13652 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:50:38.316Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:51:06.441Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:51:08.606Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:51:10.686Z' }
+{ level: 'info',
+  message: 'Master 15392 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:51:46.335Z' }
+{ level: 'info',
+  message:
+   'Worker 13856 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:51:54.168Z' }
+{ level: 'info',
+  message:
+   'Worker 14796 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:51:54.249Z' }
+{ level: 'info',
+  message:
+   'Worker 4660 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:51:54.322Z' }
+{ level: 'info',
+  message:
+   'Worker 9172 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:51:54.547Z' }
+{ level: 'info',
+  message:
+   'Worker 10124 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:51:54.644Z' }
+{ level: 'info',
+  message:
+   'Worker 6572 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:51:54.673Z' }
+{ level: 'info',
+  message:
+   'Worker 9108 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:51:54.786Z' }
+{ level: 'info',
+  message:
+   'Worker 13572 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:51:54.830Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'GET' },
+  timestamp: '2019-12-07T23:55:11.461Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:12.829Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:13.022Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:14.288Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:14.449Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData: { limit: 10, sort: {}, filter: {} },
+  timestamp: '2019-12-07T23:55:14.459Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:17.795Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:19.826Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:28.708Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:30.601Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'ASC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:55:30.607Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'DESC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:55:30.611Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:30.766Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:32.796Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:34.833Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:36.863Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:38.901Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:40.935Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:42.965Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:44.997Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:47.027Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:48.511Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'ASC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:55:48.514Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'DESC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:55:48.518Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:49.059Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:51.094Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:53.125Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:55.162Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:57.204Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:55:59.244Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:56:01.286Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:56:03.319Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:56:05.353Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:56:07.387Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:56:09.431Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:56:11.469Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:56:13.519Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:56:22.140Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'ASC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:56:22.142Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'DESC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:56:22.144Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:56:22.918Z' }
+{ level: 'info',
+  message: 'Master 8196 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:56:34.666Z' }
+{ level: 'info',
+  message:
+   'Worker 15652 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:56:42.232Z' }
+{ level: 'info',
+  message:
+   'Worker 10816 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:56:42.303Z' }
+{ level: 'info',
+  message:
+   'Worker 8388 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:56:42.310Z' }
+{ level: 'info',
+  message:
+   'Worker 15584 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:56:42.383Z' }
+{ level: 'info',
+  message:
+   'Worker 16224 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:56:42.458Z' }
+{ level: 'info',
+  message:
+   'Worker 13168 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:56:42.482Z' }
+{ level: 'info',
+  message:
+   'Worker 5820 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:56:42.509Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:56:49.172Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'ASC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:56:53.588Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'DESC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:56:53.646Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'GET' },
+  timestamp: '2019-12-07T23:57:18.749Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'GET' },
+  timestamp: '2019-12-07T23:57:27.143Z' }
+{ level: 'info',
+  message: 'Master 17268 is running',
+  location: 'init',
+  timestamp: '2019-12-07T23:57:49.800Z' }
+{ level: 'info',
+  message:
+   'Worker 16664 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:58:02.657Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'GET' },
+  timestamp: '2019-12-07T23:58:02.716Z' }
+{ level: 'info',
+  message:
+   'Worker 16620 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:58:02.699Z' }
+{ level: 'info',
+  message:
+   'Worker 16652 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:58:02.875Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:05.174Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:05.579Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:06.331Z' }
+{ level: 'info',
+  message:
+   'Worker 16460 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:58:08.193Z' }
+{ level: 'info',
+  message:
+   'Worker 16696 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:58:08.433Z' }
+{ level: 'info',
+  message:
+   'Worker 2268 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:58:08.440Z' }
+{ level: 'info',
+  message:
+   'Worker 8272 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:58:08.443Z' }
+{ level: 'info',
+  message:
+   'Worker 16596 started GraphQL server at http://localhost:4001/',
+  location: 'app.listen',
+  timestamp: '2019-12-07T23:58:08.559Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:09.606Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:11.754Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:13.789Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:15.819Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:17.848Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:19.876Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:21.902Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:23.933Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:26.348Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'ASC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:58:19.627Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'DESC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:58:28.219Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:28.228Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:28.382Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:30.416Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:32.445Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:34.475Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:40.504Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:41.243Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:42.103Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:42.529Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:44.555Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:46.582Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:47.766Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:50.612Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:52.639Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:54.669Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:56.698Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:58:58.729Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:00.756Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:02.781Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'ASC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:58:59.236Z' }
+{ level: 'info',
+  message: 'cache miss',
+  location: 'Edges.resolver',
+  additionalData:
+   { sort: [Object: null prototype] { startTime: 'DESC' },
+     limit: 1,
+     filter: {} },
+  timestamp: '2019-12-07T23:59:02.870Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:04.259Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:04.806Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:06.833Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:08.861Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:10.885Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:16.918Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:18.604Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:18.947Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:19.841Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:20.974Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:23.002Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:25.028Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:27.054Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:29.081Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:31.108Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:33.146Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:34.197Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:37.178Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:39.210Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:41.243Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:43.272Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:45.296Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:47.330Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:49.377Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:51.402Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:53.436Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:55.459Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:57.484Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-07T23:59:59.513Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-08T00:00:01.559Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-08T00:00:03.586Z' }
+{ level: 'info',
+  message: 'express middleware',
+  location: 'app.use',
+  additionalData: { url: '/', method: 'POST' },
+  timestamp: '2019-12-08T00:00:05.609Z' }
