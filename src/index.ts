@@ -13,6 +13,14 @@ const cluster = require('cluster');
 
 const log = consts.LOG;
 
+// @ts-ignore
+process.on('uncaughtException', (err, origin) => {
+  log("error", "uncaughtException", "uncaughtException", {error: err});
+});
+// @ts-ignore
+process.on('unhandledRejection', (reason, promise) => {
+  log("error", "unhandledRejection", "unhandledRejection", {reason: reason, promise: promise});
+});
 
 
 
