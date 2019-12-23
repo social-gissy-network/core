@@ -13,6 +13,12 @@ let CHECK_HEAP_INTERVAL = PROJECT_STAGE === "production" ? 1000 : 1000; // milli
 let USE_CACHE = true;
 
 // logger
+const logDir = `logs`;
+const fs = require("fs");
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
+}
+
 const winston = require('winston'); // for transports.Console
 const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, label, prettyPrint } = format;
@@ -23,7 +29,7 @@ const logger = createLogger({
   ),
   transports: [
     new transports.Console(),
-    new winston.transports.File({filename: `logs/${(new Date()).toISOString().split("T")[0]}.log`})
+    new winston.transports.File({filename: `${logDir}/${(new Date()).toISOString().split("T")[0]}.log`})
   ]
 });
 

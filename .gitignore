@@ -10,6 +10,8 @@ node_modules/
 build
 src/fieldsMapping.ts
 src/types.ts
+logs
+
 
 #data
 data
