@@ -400,7 +400,7 @@ export class DBManager {
       query += ` WHERE ${whereArgsStopQuery}`
     }
     else if(whereArgsStartQuery.length > 0) {
-      query += ` WHERE ${whereArgsStopQuery}`
+      query += ` WHERE ${whereArgsStartQuery}`
     }
     else {
       // do nothing
