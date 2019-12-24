@@ -376,21 +376,34 @@ export class DBManager {
   // };
 
   public getPaths = async (startNodeIDs: string[], stopNodeIDs: string[], length: number, limit: number) => {
-    console.log(`cgetPaths handled by worker.pid = ${process.pid}`);
+    console.log(`getPaths handled by worker.pid = ${process.pid}`);
 
     let pathsLength = length ? `${length}..${length}` : ``;
 
     let query = `MATCH p = (s1:Node)-[e:EDGE*${pathsLength}]->(s2:Node)`;
 
-    let whereArgs: string[] = [];
+    let whereArgsStartQuery = "";
+    let whereArgsStopQuery = "";
+
     if (startNodeIDs) {
-      whereArgs = whereArgs.concat(startNodeIDs.map(id => `s1.id ="${id}"`));
+      whereArgsStartQuery = startNodeIDs.map(id => `s1.id ="${id}"`).reverse().join(" OR ");
+
     }
     if (stopNodeIDs) {
-      whereArgs = whereArgs.concat(stopNodeIDs.map(id => `s2.id ="${id}"`));
+      whereArgsStopQuery = stopNodeIDs.map(id => `s2.id ="${id}"`).reverse().join(" OR ");
     }
-    if (whereArgs.length > 0) {
-      query += ` WHERE ` + whereArgs.reverse().join(" OR ");
+
+    if (whereArgsStartQuery.length > 0 && whereArgsStopQuery.length > 0) {
+      query += ` WHERE (${whereArgsStartQuery}) AND (${whereArgsStopQuery})`;
+    }
+    else if(whereArgsStopQuery.length > 0) {
+      query += ` WHERE ${whereArgsStopQuery}`
+    }
+    else if(whereArgsStartQuery.length > 0) {
+      query += ` WHERE ${whereArgsStopQuery}`
+    }
+    else {
+      // do nothing
     }
 
     query += ` RETURN extract(e in relationships(p) | properties(e)) as e,properties(s1) as s1,properties(s2) as s2`;
