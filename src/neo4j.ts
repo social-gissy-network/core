@@ -406,7 +406,7 @@ export class DBManager {
       // do nothing
     }
 
-    query += ` RETURN extract(e in relationships(p) | properties(e)) as e,properties(s1) as s1,properties(s2) as s2`;
+    query += ` RETURN extract(r in relationships(p) | properties(startNode(r))) as startNodes, extract(r in relationships(p) | properties(endNode(r))) as stopNodes, extract(e in relationships(p) | properties(e)) as e,properties(s1) as s1,properties(s2) as s2`;
     if (limit) {
       query += " LIMIT " + limit;
     }
@@ -422,10 +422,13 @@ export class DBManager {
     for (const record of result.records) {
       // edges in a specific path
       let edges = record.get("e");
+      let startNodes = record.get("startNodes");
+      let stopNodes = record.get("stopNodes");
 
       let path = [];
-      for (const edge of edges) {
-        path.push({startNode: record.get("s1"), stopNode: record.get("s2"), edgeInfo: edge});
+      for (let i = 0; i < edges.length; i++) {
+        let edge = edges[i];
+        path.push({startNode: startNodes[i], stopNode: stopNodes[i], edgeInfo: edge});
       }
 
       paths.push(path);
