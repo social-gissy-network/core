@@ -411,6 +411,17 @@ export class DBManager {
       query += " LIMIT " + limit;
     }
 
+    /**
+     * todo for chronological order paths:
+     * MATCH p = (s1:Node)-[rels*3..3]->(s2:Node)
+     WHERE ALL(idx in range(0, size(rels)-2) WHERE (rels[idx]).startTime < (rels[idx+1]).startTime)
+     RETURN
+     extract(r in relationships(p) | properties(startNode(r))) as startNodes,
+     extract(r in relationships(p) | properties(endNode(r))) as stopNodes,
+     extract(e in relationships(p) | properties(e)) as e
+     LIMIT 1
+     */
+
     let result = await this.session.run(query);
 
     if (result.records.length < 1) {
