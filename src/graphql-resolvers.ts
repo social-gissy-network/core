@@ -74,7 +74,12 @@ queryResolverObject.Edges = async (obj, params, ctx, resolveInfo) => {
 
 
 queryResolverObject.Paths = async (obj, params, ctx, resolveInfo) => {
-  let result = await ctx.db.getPaths(params.startNodeIDs, params.stopNodeIDs, params.length, params.limit);
+  if (!params.filter) {
+    params.filter = {};
+  }
+
+  // let result = await ctx.db.getPaths(params.startNodeIDs, params.stopNodeIDs, params.length, params.limit);
+  let result = await ctx.db.getPaths(params);
   return result;
 };
 

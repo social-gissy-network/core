@@ -172,12 +172,16 @@ const queryTypeConfig = {
 
 
     Paths: {
-      type: new GraphQLList(new GraphQLList(edgeType)), args: {
+      type: new GraphQLList(new GraphQLList(edgeType)),
+      args: {
         startNodeIDs: { type: new GraphQLList(GraphQLString) },
         stopNodeIDs: { type: new GraphQLList(GraphQLString) },
         length: { type: GraphQLInt },
         limit: { type: GraphQLInt },
-      },
+
+        // filter by edges within the path
+        filter: { type: edgeFilterParameter },
+      }
     },
 
     // Relationship identifiers of a variable length path contain

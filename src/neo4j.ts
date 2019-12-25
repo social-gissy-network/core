@@ -375,8 +375,10 @@ export class DBManager {
   //   return paths;
   // };
 
-  public getPaths = async (startNodeIDs: string[], stopNodeIDs: string[], length: number, limit: number) => {
+  public getPaths = async (params: { [paramName: string]: string | string[] }) => {
     console.log(`getPaths handled by worker.pid = ${process.pid}`);
+
+    const {startNodeIDs, stopNodeIDs, length, limit} = params;
 
     let pathsLength = length ? `${length}..${length}` : ``;
 
@@ -385,11 +387,11 @@ export class DBManager {
     let whereArgsStartQuery = "";
     let whereArgsStopQuery = "";
 
-    if (startNodeIDs) {
+    if (Array.isArray(startNodeIDs)) {
       whereArgsStartQuery = startNodeIDs.map(id => `s1.id ="${id}"`).reverse().join(" OR ");
 
     }
-    if (stopNodeIDs) {
+    if (Array.isArray(stopNodeIDs)) {
       whereArgsStopQuery = stopNodeIDs.map(id => `s2.id ="${id}"`).reverse().join(" OR ");
     }
 
@@ -405,6 +407,38 @@ export class DBManager {
     else {
       // do nothing
     }
+
+    let filterQuery = ``;
+    let filteringKeys: string[] = [];
+    for (const filterKey of Object.keys(params.filter)) {
+      if (filterKey === "startNode" || filterKey === "stopNode") {
+        // for (const subKey of Object.keys(params[filterKey])) {
+        //   filteringKeys = filteringKeys.concat(this.mapOperators("rel", params[filterKey], subKey));
+        // }
+
+        //todo remove the skip
+        continue;
+      }
+      else {
+        // todo:".eq" unhardcode
+        // @ts-ignore
+        filteringKeys.push(`rel.${filterKey} = "${params.filter[filterKey].eq}"`);
+      }
+    }
+
+    if (query.split(" ").find(str => str === "WHERE")) {
+      query += ` AND`;
+    }
+    else if (filteringKeys.length > 0) {
+      query += ` WHERE`
+    }
+    if (filteringKeys.length > 0) {
+      query += ` all(rel in relationships(p) WHERE ${filteringKeys.reverse().join(" AND ")}) `;
+    }
+
+    // if (filterQuery.length > 3) {
+    //
+    // }
 
     query += ` RETURN extract(r in relationships(p) | properties(startNode(r))) as startNodes, extract(r in relationships(p) | properties(endNode(r))) as stopNodes, extract(e in relationships(p) | properties(e)) as e,properties(s1) as s1,properties(s2) as s2`;
     if (limit) {
