@@ -10,6 +10,8 @@ import * as consts from "./consts"
 import { HeapInfo } from "v8";
 export {};
 const cluster = require('cluster');
+import { makeExecutableSchema } from 'graphql-tools';
+
 
 const log = consts.LOG;
 
@@ -121,6 +123,67 @@ else {
 
   let db = new DBManager();
   const typeDefs = fs.readFileSync('build/schema.graphql').toString('utf-8');
+  const schema = makeExecutableSchema({
+    typeDefs
+  });
+
+  // return types to client for easy filtering (rather than introspect the graphQL from the client)
+  app.get("/types", function(req, res) {
+    let typesForClient = {
+      Node: {},
+      NodeSortParameter: {},
+      NodeFilterParameter: {},
+      NodeUpdateResponse: {},
+
+      Edge: {},
+      EdgeSortParameter: {},
+      EdgeFilterParameter: {},
+      EdgeUpdateResponse: {},
+
+      SortOrder: {},
+      StringOperators: {},
+
+    };
+
+    for (const typeName of Object.keys(typesForClient)) {
+      let typeMap = schema.getTypeMap();
+      if (!typeMap) {
+        res.json({success: false, errorMessage: "can't find schema.typeMap"});
+        return;
+      }
+
+      let astNode = typeMap[typeName].astNode;
+      if (!astNode) {
+        res.json({success: false, errorMessage: "can't find schema.typeMap.astNode"});
+        return;
+      }
+
+      if (typeof astNode.kind !== "string") {
+        res.json({success: false, errorMessage: "invalid type of schema.typeMap.astNode.kind"});
+        return;
+      }
+
+      if (astNode.kind.toLowerCase().indexOf("enum") > -1) {
+        // @ts-ignore
+        typesForClient[typeName].values = astNode.values.map(valueObj => valueObj.name.value);
+
+      }
+      else {
+        // @ts-ignore
+        let fields = typeMap[typeName].getFields();
+        let typeFields = Object.keys(fields).map(key => {
+          return {name: key, type: fields[key].type.name}
+        });
+        // @ts-ignore
+        typesForClient[typeName].fields = typeFields
+      }
+
+      // @ts-ignore
+      typesForClient[typeName].typeName = astNode.kind;
+    }
+
+    res.json({success: true, types: typesForClient});
+  });
 
   const server = new ApolloServer({
     typeDefs,
@@ -153,6 +216,8 @@ else {
 
 
   server.applyMiddleware(serverRegistration);
+
+
 
   app.listen({ port, path }, () => {
     // eslint-disable-next-line
