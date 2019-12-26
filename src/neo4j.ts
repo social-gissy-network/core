@@ -142,7 +142,7 @@ export class DBManager {
     return query;
   }
 
-  public close = () => this.driver.close();
+  public close = async () => await this.driver.close();
 
   public setConstraints = async () => {
     this.session.run('CREATE CONSTRAINT ON (n:Node) ASSERT n.id IS UNIQUE');

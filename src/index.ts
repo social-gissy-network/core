@@ -75,7 +75,7 @@ else {
     const initialStats: HeapInfo = v8.getHeapStatistics();
     const totalHeapSizeThreshold = initialStats.heap_size_limit * consts.MAX_HEAP_CAPACITY;
 
-    setInterval(() => {
+    setInterval(async () => {
       let stats = v8.getHeapStatistics();
       if ((stats.total_heap_size) > totalHeapSizeThreshold) {
         if (!res.finished) { // avoid "headers already sent" error
@@ -85,6 +85,7 @@ else {
           });
         }
 
+        await db.close();
         process.exit();
       }
     }, consts.CHECK_HEAP_INTERVAL);
