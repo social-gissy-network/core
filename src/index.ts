@@ -11,6 +11,7 @@ import { HeapInfo } from "v8";
 export {};
 const cluster = require('cluster');
 import { makeExecutableSchema } from 'graphql-tools';
+const cors = require('cors');
 
 
 const log = consts.LOG;
@@ -101,6 +102,7 @@ else {
   /**
    * app.use
    */
+  app.use(cors());
 
   app.use(compression({ filter: (req:any, res:any) => {
       // don't compress responses with this request header
