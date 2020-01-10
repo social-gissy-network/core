@@ -332,53 +332,10 @@ export class DBManager {
 
   // paths operations
 
-  // public getPathsOfLengthN = async (k: bigint, startNodeID: string, stopNodeID: string, limit: number) => {
-  //   console.log(`getPathsOfLengthN handled by worker.pid = ${process.pid}`);
-  //   let query = `MATCH p = (s1:Node)-[e:EDGE*${k}..${k}]->(s2:Node)`;
-  //
-  //   let whereArgs = [];
-  //   if (startNodeID) {
-  //     whereArgs.push(`s1.id ="${startNodeID}"`);
-  //   }
-  //   if (stopNodeID) {
-  //     whereArgs.push(`s2.id ="${stopNodeID}"`);
-  //   }
-  //   if (whereArgs.length > 0) {
-  //     query += ` WHERE ` + whereArgs.reverse().join(" AND ");
-  //   }
-  //
-  //   query += ` RETURN extract(e in relationships(p) | properties(e)) as e,properties(s1) as s1,properties(s2) as s2`;
-  //   if (limit) {
-  //     query += " LIMIT " + limit;
-  //   }
-  //
-  //   let result = await this.session.run(query);
-  //
-  //   if (result.records.length < 1) {
-  //     return [];
-  //   }
-  //
-  //   let paths = [];
-  //
-  //   for (const record of result.records) {
-  //     // edges in a specific path
-  //     let edges = record.get("e");
-  //
-  //     let path = [];
-  //     for (const edge of edges) {
-  //       path.push({startNode: record.get("s1"), stopNode: record.get("s2"), edgeInfo: edge});
-  //     }
-  //
-  //     paths.push(path);
-  //   }
-  //
-  //   return paths;
-  // };
-
   public getPaths = async (params: { [paramName: string]: string | string[] }) => {
     console.log(`getPaths handled by worker.pid = ${process.pid}`);
 
-    const {startNodeIDs, stopNodeIDs, length, limit} = params;
+    const {startNodeIDs, stopNodeIDs, length, limit, filter} = params;
 
     let pathsLength = length ? `${length}..${length}` : ``;
 
@@ -399,46 +356,40 @@ export class DBManager {
       query += ` WHERE (${whereArgsStartQuery}) AND (${whereArgsStopQuery})`;
     }
     else if(whereArgsStopQuery.length > 0) {
-      query += ` WHERE ${whereArgsStopQuery}`
+      query += ` WHERE (${whereArgsStopQuery})`
     }
     else if(whereArgsStartQuery.length > 0) {
-      query += ` WHERE ${whereArgsStartQuery}`
+      query += ` WHERE (${whereArgsStartQuery})`
     }
     else {
       // do nothing
     }
 
-    let filterQuery = ``;
-    let filteringKeys: string[] = [];
-    for (const filterKey of Object.keys(params.filter)) {
-      if (filterKey === "startNode" || filterKey === "stopNode") {
-        // for (const subKey of Object.keys(params[filterKey])) {
-        //   filteringKeys = filteringKeys.concat(this.mapOperators("rel", params[filterKey], subKey));
-        // }
 
-        //todo remove the skip
-        continue;
+    let filteringKeys: string[] = [];
+    for (const key of Object.keys(filter)) {
+      if (key === "startNode" || key === "stopNode") {
+        // @ts-ignore
+        for (const subKey of Object.keys(filter[key])) {
+          // @ts-ignore
+          filteringKeys = filteringKeys.concat(this.mapOperators(key === "startNode" ? "properties(startNode(r))" : "properties(endNode(rel))", filter[key], subKey));
+        }
       }
       else {
-        // todo:".eq" unhardcode
-        // @ts-ignore
-        filteringKeys.push(`rel.${filterKey} = "${params.filter[filterKey].eq}"`);
+        filteringKeys = filteringKeys.concat(this.mapOperators("rel", filter, key));
       }
     }
 
-    if (query.split(" ").find(str => str === "WHERE")) {
+    if (filteringKeys.length > 0 && (whereArgsStopQuery.length > 0 || whereArgsStartQuery.length > 0)) {
       query += ` AND`;
     }
     else if (filteringKeys.length > 0) {
-      query += ` WHERE`
+      query += ` WHERE `;
     }
+
     if (filteringKeys.length > 0) {
       query += ` all(rel in relationships(p) WHERE ${filteringKeys.reverse().join(" AND ")}) `;
     }
-
-    // if (filterQuery.length > 3) {
-    //
-    // }
 
     query += ` RETURN extract(r in relationships(p) | properties(startNode(r))) as startNodes, extract(r in relationships(p) | properties(endNode(r))) as stopNodes, extract(e in relationships(p) | properties(e)) as e,properties(s1) as s1,properties(s2) as s2`;
     if (limit) {
