@@ -86,6 +86,17 @@ queryResolverObject.Paths = async (obj, params, ctx, resolveInfo) => {
 
 
 
+// MostConnected
+
+
+queryResolverObject.MostConnected = async (obj, params, ctx, resolveInfo) => {
+  let result = await ctx.db.mostConnected(params);
+  return result;
+};
+
+
+
+
 
 
 queryResolverObject.Node = async (obj, params, ctx, resolveInfo) => await ctx.db.getNodeByID(params.id);

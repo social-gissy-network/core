@@ -367,7 +367,7 @@ export class DBManager {
 
 
     let filteringKeys: string[] = [];
-    for (const key of Object.keys(filter)) {
+    for (const key of filter ? Object.keys(filter) : []) {
       if (key === "startNode" || key === "stopNode") {
         // @ts-ignore
         for (const subKey of Object.keys(filter[key])) {
@@ -430,6 +430,27 @@ export class DBManager {
       paths.push(path);
     }
 
+    return paths;
+  };
+
+  public mostConnected = async (params: { [paramName: string]: string | string[] }) => {
+    let query = `MATCH (n)-[r:EDGE]->() RETURN n, count(r) AS num ORDER BY num DESC LIMIT ${params.nodesLimit}`;
+    let result: StatementResult = await this.session.run(query);
+    assert(Array.isArray(result.records));
+
+    let nodeIDs = result.records.map(record => record.get('n')).map(obj => obj.properties.id);
+
+    // prepare params for getPaths
+    params.length = params.pathLength;
+    params.limit = params.pathsLimit;
+    params.startNodeIDs = nodeIDs;
+
+    let pathsParams = JSON.parse(JSON.stringify(params));
+    delete pathsParams.nodesLimit;
+    delete pathsParams.pathsLimit;
+    delete pathsParams.pathLength;
+
+    let paths = await this.getPaths(pathsParams);
     return paths;
   };
 }

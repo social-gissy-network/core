@@ -176,10 +176,19 @@ const queryTypeConfig = {
       args: {
         startNodeIDs: { type: new GraphQLList(GraphQLString) },
         stopNodeIDs: { type: new GraphQLList(GraphQLString) },
-        length: { type: GraphQLInt },
-        limit: { type: GraphQLInt },
+        length: { type: new GraphQLNonNull(GraphQLInt) },
+        limit: { type: new GraphQLNonNull(GraphQLInt) },
+        filter: { type: edgeFilterParameter },
+      }
+    },
 
-        // filter by edges within the path
+
+    MostConnected: {
+      type: new GraphQLList(new GraphQLList(edgeType)),
+      args: {
+        nodesLimit: { type: new GraphQLNonNull(GraphQLInt) },
+        pathsLimit: { type: new GraphQLNonNull(GraphQLInt) },
+        pathLength: { type: new GraphQLNonNull(GraphQLInt) },
         filter: { type: edgeFilterParameter },
       }
     },
